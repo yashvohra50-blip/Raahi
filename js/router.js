@@ -1,11 +1,17 @@
 /**
- * RAAHI // Master Client-Side Router
- * Full state, city, place, dedicated cinematic route, and journey builder view routing
- * with integrated Travel Intelligence Layer.
+ * RAAHI // Master Client-Side Router & View Compiler
+ * Complete Pan-India Architecture covering 28 States, 8 Union Territories,
+ * 111+ Curated Destinations, Interactive Maps, Search & Travel Intelligence.
  */
 
-import { RAAHI_DATA } from './data.js';
+import { DataRegistry, RAAHI_DATA } from './data/dataRegistry.js';
+import { statesData } from './data/statesData.js';
+import { destinationsData } from './data/destinationsData.js';
+import { experiencesData } from './data/experiencesData.js';
+import { staysData } from './data/staysData.js';
+import { searchIndex } from './data/searchIndex.js';
 import { renderCinematicRoute } from './cinematicPage.js';
+import { renderIndiaMap } from './components/indiaMap.js';
 import { 
   renderJourneyBuilderView, 
   addToJourney, 
@@ -56,33 +62,15 @@ window.raahiAddToJourney = (id) => addToJourney(id);
 window.arvoraAddToJourney = window.raahiAddToJourney;
 window.raahiToggleSaveJourney = (id) => toggleSaveJourney(id);
 
-
-window.raahiOpenMapsModal = (placeId) => {
-  let place = RAAHI_DATA.places[placeId];
-  if (!place) {
-    for (const city of Object.values(RAAHI_DATA.cities)) {
-      if (city.places && city.places.includes(placeId)) {
-        const state = RAAHI_DATA.states[city.stateId] || { name: 'India' };
-        place = {
-          id: placeId,
-          name: placeId.replace(/-/g, ' ').toUpperCase(),
-          cityId: city.id,
-          stateId: city.stateId,
-          city: city.name,
-          state: state.name,
-          mapsQuery: `${placeId.replace(/-/g, ' ').toUpperCase()}, ${city.name}, ${state.name}, India`
-        };
-        break;
-      }
-    }
-  }
-  if (!place) return;
-  const city = RAAHI_DATA.cities[place.cityId] || { name: place.city || 'India' };
-  const state = RAAHI_DATA.states[place.stateId] || { name: place.state || 'India' };
+// Global Google Maps Modal Handler
+window.raahiOpenMapsModal = (destId) => {
+  const dest = DataRegistry.getDestination(destId);
+  const place = dest || RAAHI_DATA.places[destId] || {};
   
-  const placeName = place.name;
-  const locationText = `${city.name}, ${state.name}, India`;
-  const mapsQuery = place.mapsQuery || `${place.name}, ${city.name}, ${state.name}, India`;
+  const placeName = place.name || (destId ? destId.replace(/-/g, ' ').toUpperCase() : 'India Destination');
+  const stateName = place.state || 'India';
+  const locationText = `${placeName}, ${stateName}, India`;
+  const mapsQuery = place.mapsQuery || (place.coordinates ? `${place.coordinates.lat},${place.coordinates.lng}` : `${placeName}, ${stateName}, India`);
   const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(mapsQuery);
 
   const overlay = document.getElementById('raahi-maps-overlay');
@@ -118,6 +106,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// App Router Initializer
 export function initRouter() {
   window.addEventListener('hashchange', handleRoute);
   window.addEventListener('load', handleRoute);
@@ -127,6 +116,17 @@ export function initRouter() {
 export function navigateTo(hash) {
   window.location.hash = hash;
 }
+
+// Global state for progressive pagination on home view
+let currentDestFilter = {
+  region: 'all',
+  type: 'all',
+  budget: 'all',
+  season: 'all',
+  sort: 'featured',
+  page: 1,
+  pageSize: 12
+};
 
 function handleRoute() {
   const hash = window.location.hash || '#/home';
@@ -168,18 +168,39 @@ function handleRoute() {
     if (assistantTrigger) assistantTrigger.style.display = 'flex';
     document.body.classList.remove('in-cinematic-mode');
 
+    // Route matching
     if (hash.startsWith('#/destinations/')) {
-      const placeId = hash.replace('#/destinations/', '');
+      const slug = hash.replace('#/destinations/', '');
       if (destView) destView.style.display = 'block';
-      renderDestinationView(placeId);
-    } else if (hash.startsWith('#/cities/')) {
-      const cityId = hash.replace('#/cities/', '');
-      if (cityView) cityView.style.display = 'block';
-      renderCityView(cityId);
+      renderDestinationView(slug);
     } else if (hash.startsWith('#/states/')) {
-      const stateId = hash.replace('#/states/', '');
-      if (stateView) stateView.style.display = 'block';
-      renderStateView(stateId);
+      const rest = hash.replace('#/states/', '');
+      const parts = rest.split('/').filter(Boolean);
+      if (parts.length >= 2) {
+        // Hierarchical route: #/states/:stateSlug/:destSlug
+        const destSlug = parts[1];
+        if (destView) destView.style.display = 'block';
+        renderDestinationView(destSlug);
+      } else {
+        // State route: #/states/:stateSlug
+        const stateSlug = parts[0];
+        if (stateView) stateView.style.display = 'block';
+        renderStateView(stateSlug);
+      }
+    } else if (hash.startsWith('#/cities/')) {
+      // Legacy city route or destination redirect
+      const cityId = hash.replace('#/cities/', '');
+      const dest = DataRegistry.getDestination(cityId);
+      if (dest) {
+        if (destView) destView.style.display = 'block';
+        renderDestinationView(dest.slug);
+      } else if (RAAHI_DATA.cities && RAAHI_DATA.cities[cityId]) {
+        if (cityView) cityView.style.display = 'block';
+        renderCityView(cityId);
+      } else {
+        if (stateView) stateView.style.display = 'block';
+        renderStateView(cityId);
+      }
     } else if (hash === '#/journey') {
       if (journeyView) journeyView.style.display = 'block';
       renderJourneyBuilderView();
@@ -193,41 +214,266 @@ function handleRoute() {
   updateAllSaveButtons();
 }
 
+/**
+ * Render Master Pan-India Home View
+ */
 function renderHomeView() {
-  document.title = 'RAAHI — Discover Destinations, Stories & Experiences Across India';
+  document.title = 'RAAHI — Discover 28 States, 8 Union Territories & 111+ Destinations Across India';
+
+  // 1. Mount India Map
+  const mapMount = document.getElementById('india-map-mount');
+  if (mapMount && !mapMount.hasChildNodes()) {
+    renderIndiaMap('india-map-mount');
+  }
+
+  // 2. Render States Grid with Region Filter Chips
+  renderStatesGridWithFilter('all');
+  setupStateRegionFilterListeners();
+
+  // 3. Render Destinations Grid with Multi-Filter
+  renderDestinationsGrid();
+  setupDestinationsFilterListeners();
+
+  // 4. Render Stays Section
+  renderStaysSection();
+}
+
+function renderStatesGridWithFilter(regionFilter = 'all') {
   const grid = document.getElementById('states-grid-container');
   if (!grid) return;
-  const states = Object.values(RAAHI_DATA.states);
-  grid.innerHTML = states.map((s) => `
-    <div class="state-card" data-state="${s.id}" onclick="window.location.hash='#/states/${s.id}'">
-      <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" />
-      <div class="state-dest-count">${s.quickStats.placesCount} PLACES TO DISCOVER</div>
-      <div class="state-card-content">
-        <span class="eyebrow" style="margin-bottom: 6px;">${s.eyebrow}</span>
-        <h3 class="state-card-name">${s.name}</h3>
-        <p class="state-card-tagline">${s.tagline}</p>
-        <span class="state-card-action">EXPLORE ${s.name.toUpperCase()} →</span>
+
+  const allStates = DataRegistry.getAllStates();
+  const filteredStates = regionFilter === 'all' 
+    ? allStates 
+    : regionFilter === 'ut'
+      ? allStates.filter(s => s.type === 'Union Territory')
+      : allStates.filter(s => s.region.toLowerCase() === regionFilter.toLowerCase() && s.type !== 'Union Territory');
+
+  grid.innerHTML = filteredStates.map((s) => {
+    const destCount = s.destinationsCount || (s.featuredDestinations ? s.featuredDestinations.length : 3);
+    return `
+      <div class="state-card" data-state="${s.slug}" onclick="window.location.hash='#/states/${s.slug}'">
+        <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+        <div class="state-dest-count">${destCount} DESTINATIONS • ${s.type === 'Union Territory' ? 'UT' : s.region.toUpperCase()}</div>
+        <div class="state-card-content">
+          <span class="eyebrow" style="margin-bottom: 6px;">${s.eyebrow || s.type.toUpperCase()}</span>
+          <h3 class="state-card-name">${s.name}</h3>
+          <p class="state-card-tagline">${s.tagline}</p>
+          <span class="state-card-action">EXPLORE ${s.name.toUpperCase()} →</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function setupStateRegionFilterListeners() {
+  const container = document.getElementById('states-region-chips');
+  if (!container) return;
+
+  const chips = container.querySelectorAll('.filter-chip');
+  chips.forEach(chip => {
+    chip.onclick = () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const region = chip.dataset.region || 'all';
+      renderStatesGridWithFilter(region);
+    };
+  });
+}
+
+function renderDestinationsGrid() {
+  const grid = document.getElementById('all-destinations-grid');
+  const countLabel = document.getElementById('destinations-count-label');
+  const loadMoreBtn = document.getElementById('load-more-destinations-btn');
+  if (!grid) return;
+
+  let list = DataRegistry.getAllDestinations();
+
+  // Apply filters
+  if (currentDestFilter.region !== 'all') {
+    if (currentDestFilter.region === 'ut') {
+      const utStateSlugs = DataRegistry.getAllStates().filter(s => s.type === 'Union Territory').map(s => s.slug);
+      list = list.filter(d => utStateSlugs.includes(d.stateSlug) || d.region === 'Union Territory');
+    } else {
+      list = list.filter(d => d.region.toLowerCase() === currentDestFilter.region.toLowerCase());
+    }
+  }
+
+  if (currentDestFilter.type !== 'all') {
+    list = list.filter(d => d.type.toLowerCase().includes(currentDestFilter.type.toLowerCase()));
+  }
+
+  if (currentDestFilter.budget !== 'all') {
+    list = list.filter(d => (d.budget && d.budget.tier) ? d.budget.tier.toLowerCase() === currentDestFilter.budget.toLowerCase() : true);
+  }
+
+  if (currentDestFilter.season !== 'all') {
+    list = list.filter(d => {
+      const best = (d.bestTimeToVisit || d.bestSeason || '').toLowerCase();
+      if (currentDestFilter.season === 'winter') return best.includes('oct') || best.includes('nov') || best.includes('dec') || best.includes('jan') || best.includes('feb') || best.includes('mar');
+      if (currentDestFilter.season === 'monsoon') return best.includes('jun') || best.includes('jul') || best.includes('aug') || best.includes('sep') || best.includes('monsoon');
+      if (currentDestFilter.season === 'summer') return best.includes('apr') || best.includes('may') || best.includes('jun');
+      return true;
+    });
+  }
+
+  // Sort
+  if (currentDestFilter.sort === 'name') {
+    list.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (currentDestFilter.sort === 'rating') {
+    list.sort((a, b) => (b.rating || 4.8) - (a.rating || 4.8));
+  } else {
+    // Featured / Default
+    list.sort((a, b) => (b.cinematicAvailable ? 1 : 0) - (a.cinematicAvailable ? 1 : 0));
+  }
+
+  const totalFiltered = list.length;
+  if (countLabel) {
+    countLabel.textContent = `Showing ${Math.min(currentDestFilter.page * currentDestFilter.pageSize, totalFiltered)} of ${totalFiltered} destinations`;
+  }
+
+  const visibleList = list.slice(0, currentDestFilter.page * currentDestFilter.pageSize);
+
+  grid.innerHTML = visibleList.map(dest => {
+    const isSaved = isPlaceSaved(dest.id || dest.slug);
+    const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+    return `
+      <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
+        <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+        <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
+        <div class="state-card-content">
+          <span class="eyebrow" style="margin-bottom: 4px;">${dest.state} • ${dest.region.toUpperCase()}</span>
+          <h3 class="state-card-name" style="font-size: 1.9rem;">${dest.name}</h3>
+          <p class="state-card-tagline" style="font-size: 0.88rem;">${dest.tagline || dest.shortDesc || dest.overview.slice(0, 100) + '...'}</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+            <span class="state-card-action">EXPLORE DESTINATION →</span>
+            <button 
+              class="btn-save-journey ${isSaved ? 'saved' : ''}" 
+              style="padding: 6px 14px; font-size: 0.72rem;" 
+              data-save-place-id="${dest.id || dest.slug}" 
+              data-saved-text="♥ Saved" 
+              data-unsaved-text="♡ Save" 
+              onclick="event.stopPropagation(); window.raahiToggleSaveJourney('${dest.id || dest.slug}');">
+              ${isSaved ? '♥ Saved' : '♡ Save'}
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (loadMoreBtn) {
+    if (visibleList.length >= totalFiltered) {
+      loadMoreBtn.style.display = 'none';
+    } else {
+      loadMoreBtn.style.display = 'inline-flex';
+      loadMoreBtn.textContent = `LOAD MORE DESTINATIONS (${totalFiltered - visibleList.length} REMAINING) ↓`;
+    }
+  }
+}
+
+function setupDestinationsFilterListeners() {
+  const regionSelect = document.getElementById('dest-filter-region');
+  const typeSelect = document.getElementById('dest-filter-type');
+  const budgetSelect = document.getElementById('dest-filter-budget');
+  const seasonSelect = document.getElementById('dest-filter-season');
+  const sortSelect = document.getElementById('dest-filter-sort');
+  const loadMoreBtn = document.getElementById('load-more-destinations-btn');
+
+  if (regionSelect) {
+    regionSelect.onchange = (e) => {
+      currentDestFilter.region = e.target.value;
+      currentDestFilter.page = 1;
+      renderDestinationsGrid();
+    };
+  }
+
+  if (typeSelect) {
+    typeSelect.onchange = (e) => {
+      currentDestFilter.type = e.target.value;
+      currentDestFilter.page = 1;
+      renderDestinationsGrid();
+    };
+  }
+
+  if (budgetSelect) {
+    budgetSelect.onchange = (e) => {
+      currentDestFilter.budget = e.target.value;
+      currentDestFilter.page = 1;
+      renderDestinationsGrid();
+    };
+  }
+
+  if (seasonSelect) {
+    seasonSelect.onchange = (e) => {
+      currentDestFilter.season = e.target.value;
+      currentDestFilter.page = 1;
+      renderDestinationsGrid();
+    };
+  }
+
+  if (sortSelect) {
+    sortSelect.onchange = (e) => {
+      currentDestFilter.sort = e.target.value;
+      renderDestinationsGrid();
+    };
+  }
+
+  if (loadMoreBtn) {
+    loadMoreBtn.onclick = () => {
+      currentDestFilter.page += 1;
+      renderDestinationsGrid();
+    };
+  }
+}
+
+function renderStaysSection() {
+  const container = document.getElementById('stays-editorial-grid');
+  if (!container) return;
+
+  container.innerHTML = staysData.map(stay => `
+    <div class="editorial-card" onclick="window.location.hash='#/destinations/${stay.destSlug}'" style="cursor: pointer;">
+      <span class="editorial-tag">${stay.type} // ${stay.state}</span>
+      <h3>${stay.name}</h3>
+      <p>${stay.desc}</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-family: var(--font-display); font-size: 0.78rem;">
+        <span style="color: var(--gold);">${stay.priceRange}</span>
+        <span style="color: var(--muted); text-decoration: underline;">View Destination →</span>
       </div>
     </div>
   `).join('');
 }
 
-function renderStateView(stateId) {
-  const state = RAAHI_DATA.states[stateId];
+/**
+ * Render Dedicated State / Union Territory View
+ */
+function renderStateView(stateSlug) {
+  const state = DataRegistry.getState(stateSlug);
   if (!state) {
     navigateTo('#/home');
     return;
   }
-  document.title = `${state.name} — RAAHI State Experience`;
+
+  document.title = `${state.name} (${state.type}) — RAAHI Pan-India Travel Discovery`;
   const container = document.getElementById('view-state');
   if (!container) return;
-  const cityList = state.cities.map(cId => RAAHI_DATA.cities[cId]).filter(Boolean);
+
+  const stateDests = DataRegistry.getDestinationsByState(state.slug);
+  const destsCount = stateDests.length;
 
   container.innerHTML = `
+    <div class="breadcrumb-bar wrap">
+      <a href="#/home">RAAHI</a>
+      <span class="sep">/</span>
+      <a href="#states">States & UTs</a>
+      <span class="sep">/</span>
+      <span style="color: var(--cream);">${state.name}</span>
+    </div>
+
     <div class="state-hero">
-      <div class="state-hero-bg" style="background-image: url('${state.heroImage}');"></div>
+      <div class="state-hero-bg" style="background-image: url('${state.heroImage}'); filter: saturate(1.1) brightness(0.48);"></div>
       <div class="state-hero-content">
-        <span class="eyebrow">${state.eyebrow}</span>
+        <span class="eyebrow">${state.eyebrow || (state.type.toUpperCase() + ' // ' + state.region.toUpperCase() + ' INDIA')}</span>
         <h1 class="state-hero-title">${state.name}</h1>
         <p class="state-hero-tagline">${state.tagline}</p>
       </div>
@@ -235,633 +481,292 @@ function renderStateView(stateId) {
 
     <div class="state-stats-bar">
       <div class="stat-box">
-        <span class="stat-label">Featured Cities</span>
-        <span class="stat-value">${state.quickStats.citiesCount} Regional Hubs</span>
+        <span class="stat-label">Administrative Status</span>
+        <span class="stat-value">${state.type}</span>
       </div>
       <div class="stat-box">
-        <span class="stat-label">Places to Discover</span>
-        <span class="stat-value">${state.quickStats.placesCount} Curated Monuments</span>
+        <span class="stat-label">Curated Destinations</span>
+        <span class="stat-value">${destsCount} Premier Hubs</span>
       </div>
       <div class="stat-box">
         <span class="stat-label">Ideal Season</span>
-        <span class="stat-value">${state.quickStats.bestTime}</span>
+        <span class="stat-value">${state.quickStats ? state.quickStats.bestTime : (state.bestTimeToVisit || 'Oct — Mar')}</span>
       </div>
       <div class="stat-box">
-        <span class="stat-label">State Capital</span>
-        <span class="stat-value">${state.quickStats.capital}</span>
+        <span class="stat-label">Capital / Headquarters</span>
+        <span class="stat-value">${state.quickStats ? state.quickStats.capital : state.capital}</span>
       </div>
     </div>
 
     <div class="wrap">
-      <section class="state-story-section">
+      <!-- State Narrative Section -->
+      <section class="state-story-section" style="padding: 60px 0 40px;">
         <div class="story-grid">
           <div>
-            <span class="eyebrow">THE STATE NARRATIVE</span>
+            <span class="eyebrow">THE REGIONAL NARRATIVE</span>
             <h2 class="heading-large" style="text-transform: uppercase;">A Tapestry of Soul & Stone</h2>
           </div>
           <div>
-            <p class="lead" style="color: var(--cream); font-size: 1.2rem; line-height: 1.8;">
-              ${state.story}
+            <p class="lead" style="color: var(--cream); font-size: 1.18rem; line-height: 1.8;">
+              ${state.story || state.narrative || `Discover the timeless cultural traditions, architectural marvels, and breathtaking landscapes of ${state.name}.`}
             </p>
           </div>
         </div>
       </section>
 
-      <section style="padding: 60px 0;">
+      <!-- Curated Destinations in this State -->
+      <section style="padding: 40px 0 60px;">
         <div class="section-head">
           <div>
-            <span class="eyebrow">FEATURED DESTINATIONS</span>
-            <h2 class="heading-medium" style="text-transform: uppercase;">Cities in ${state.name}</h2>
+            <span class="eyebrow">EXPLORE ${state.name.toUpperCase()}</span>
+            <h2 class="heading-medium" style="text-transform: uppercase;">Curated Destinations (${destsCount})</h2>
           </div>
-          <p style="color: var(--muted); font-size: 0.85rem; max-width: 320px;">
-            Select a city to explore its 8–12 dedicated places and smart travel planner.
+          <p style="color: var(--muted); font-size: 0.9rem; max-width: 340px;">
+            Select any destination below for in-depth travel intelligence, pacing, and 3D exploration.
           </p>
         </div>
 
-        <div class="states-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-          ${cityList.map(c => `
-            <div class="state-card" style="height: 440px;" onclick="window.location.hash='#/cities/${c.id}'">
-              <img src="${c.heroImage}" alt="${c.name}" class="state-card-image" loading="lazy" />
-              <div class="state-dest-count">${c.places.length} PLACES</div>
-              <div class="state-card-content">
-                <span class="eyebrow" style="margin-bottom: 4px;">${c.tagline}</span>
-                <h3 class="state-card-name" style="font-size: 2rem;">${c.name}</h3>
-                <p class="state-card-tagline" style="font-size: 0.85rem;">${c.description}</p>
-                <span class="state-card-action">EXPLORE ${c.name.toUpperCase()} PLACES →</span>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </section>
-
-      <section style="padding: 60px 0;">
-        <span class="eyebrow">SIGNATURE EXPERIENCES</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Beyond the Obvious</h2>
-        <div class="editorial-grid">
-          ${state.experiences.map((exp) => `
-            <div class="editorial-card">
-              <span class="editorial-tag">${exp.tag}</span>
-              <h3>${exp.title}</h3>
-              <p>${exp.desc}</p>
-            </div>
-          `).join('')}
-        </div>
-      </section>
-
-      <section style="padding: 60px 0;">
-        <span class="eyebrow">CULINARY TRADITIONS</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Taste of the Soil</h2>
-        <div class="editorial-grid">
-          ${state.food.map((f) => `
-            <div class="editorial-card">
-              <span class="editorial-tag">${f.region}</span>
-              <h3>${f.name}</h3>
-              <p>${f.desc}</p>
-            </div>
-          `).join('')}
-        </div>
-      </section>
-
-      <section style="padding: 60px 0;">
-        <span class="eyebrow">LIVING HERITAGE</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Crafts & Lineages</h2>
-        <div class="travel-info-box">
-          <div class="info-item">
-            <h4>Traditional Crafts</h4>
-            <p>${state.culture.crafts}</p>
-          </div>
-          <div class="info-item">
-            <h4>Major Festivals</h4>
-            <p>${state.culture.festivals}</p>
-          </div>
-          <div class="info-item">
-            <h4>Music & Rhythms</h4>
-            <p>${state.culture.music}</p>
-          </div>
-        </div>
-      </section>
-
-      <section style="padding: 60px 0 80px;">
-        <span class="eyebrow">PRACTICAL INTELLIGENCE</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Travel Essentials</h2>
-        <div class="travel-info-box">
-          <div class="info-item">
-            <h4>Airports & Gateways</h4>
-            <p>${state.travelInfo.airports}</p>
-          </div>
-          <div class="info-item">
-            <h4>Rail & Highway Corridors</h4>
-            <p>${state.travelInfo.railways}</p>
-          </div>
-          <div class="info-item">
-            <h4>Seasonal Advice</h4>
-            <p>${state.travelInfo.seasonTips}</p>
-          </div>
-        </div>
-      </section>
-
-      <div style="text-align: center; padding-top: 40px; border-top: 1px solid var(--line);">
-        <button class="btn light" onclick="window.location.hash='#/home'">
-          ← Back to All States
-        </button>
-      </div>
-    </div>
-  `;
-}
-
-function renderCityView(cityId) {
-  const city = RAAHI_DATA.cities[cityId];
-  if (!city) {
-    navigateTo('#/home');
-    return;
-  }
-
-  document.title = `${city.name} (${city.stateName}) — RAAHI City Experience`;
-  const container = document.getElementById('view-city');
-  if (!container) return;
-
-  const placesList = city.places.map(pId => RAAHI_DATA.places[pId] || {
-    id: pId,
-    name: pId.replace(/-/g, ' ').toUpperCase(),
-    category: 'Cultural Landmark',
-    heroImage: VERIFIED_IMAGE_MAP[pId] || city.heroImage,
-    shortDesc: 'A historic destination in ' + city.name + ' preserving ancient heritage.',
-    durationNeeded: '2 Hours'
-  });
-
-  container.innerHTML = `
-    <div class="breadcrumb-bar wrap">
-      <a href="#/home">RAAHI</a>
-      <span class="sep">/</span>
-      <a href="#/states/${city.stateId}">${city.stateName}</a>
-      <span class="sep">/</span>
-      <span style="color: var(--cream);">${city.name}</span>
-    </div>
-
-    <div class="state-hero city-hero-${city.id}" style="height: 65vh; min-height: 500px; position: relative; overflow: hidden;">
-      <div class="state-hero-bg" style="background-image: url('${city.heroImage}'); filter: saturate(1.1) brightness(0.48);"></div>
-      <div class="city-ambient-motif-layer city-motif-${city.id}"></div>
-      <div class="state-hero-content" style="position: relative; z-index: 3;">
-        <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-          <span class="eyebrow" style="margin-bottom: 0;">${city.stateName.toUpperCase()} ARCHIVE</span>
-          <span style="color: var(--gold); font-size: 0.75rem;">✦</span>
-          <span style="font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold);">${city.tagline}</span>
-        </div>
-        <h1 class="state-hero-title" style="font-size: clamp(3.2rem, 7vw, 6.5rem); margin-bottom: 16px;">${city.name}</h1>
-        <p class="state-hero-tagline" style="max-width: 720px; font-size: 1.1rem; line-height: 1.7; color: rgba(232, 228, 220, 0.9);">${city.description}</p>
-        ${city.id === 'jaipur' ? `
-          <div style="margin-top: 24px;">
-            <button class="btn gold" onclick="window.location.hash='#/cinematic/amber-fort'" style="box-shadow: 0 0 25px rgba(212,175,55,0.4); padding: 14px 28px; font-size: 0.85rem;">
-              ⚡ EXPERIENCE AMBER FORT (3D CINEMATIC) →
-            </button>
-          </div>
-        ` : ''}
-      </div>
-    </div>
-
-    <div class="state-stats-bar">
-      <div class="stat-box">
-        <span class="stat-label">⏱️ How Long to Stay?</span>
-        <span class="stat-value">${city.idealDuration || '3 Days'} Recommended</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">🗓️ Best Time to Visit</span>
-        <span class="stat-value">${city.bestTime || 'Oct to Mar'}</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">💰 Approx. Daily Budget</span>
-        <span class="stat-value" style="color: var(--gold);">~₹4,500 / day (Mid-Range)</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">🏛️ Curated Places</span>
-        <span class="stat-value">${placesList.length} Historic Sites</span>
-      </div>
-    </div>
-
-    <div class="wrap">
-      <div style="background: var(--bg-surface); border: 1px solid var(--line); padding: 24px 30px; border-radius: 6px; margin: 30px 0 50px;">
-        <div style="font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; margin-bottom: 6px;">
-          IDEAL PACING INTELLIGENCE
-        </div>
-        <p style="color: var(--cream); font-size: 1.05rem; line-height: 1.7; margin: 0;">
-          <strong>Why ${city.idealDuration || '3 Days'}?</strong> ${city.whyDuration || 'Allows you to comfortably explore the major heritage citadels, sample authentic local culinary traditions, and experience hidden craft quarters without rushing.'}
-        </p>
-      </div>
-
-      <section class="city-smart-planner-section" style="padding: 40px 0 60px; border-bottom: 1px solid var(--line);">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow">INTELLIGENT ROUTE COMPILER</span>
-            <h2 class="heading-large" style="text-transform: uppercase;">PLAN YOUR ${city.name.toUpperCase()} JOURNEY</h2>
-          </div>
-          <p style="color: var(--muted); font-size: 0.92rem; max-width: 380px;">
-            Configure your duration, pace, and interests to generate a structured day-by-day expedition.
-          </p>
-        </div>
-
-        <div class="planner-config-grid">
-          <div class="config-group">
-            <label class="config-label">1. Duration</label>
-            <div class="config-pills" id="planner-duration-pills">
-              <button class="config-pill active" data-duration="1">1 Day (Sprint)</button>
-              <button class="config-pill" data-duration="2">2 Days (Balanced)</button>
-              <button class="config-pill" data-duration="3">3 Days (Deep Dive)</button>
-            </div>
-          </div>
-
-          <div class="config-group">
-            <label class="config-label">2. Travel Style & Budget</label>
-            <div class="config-pills" id="planner-style-pills">
-              <button class="config-pill" data-style="budget">🎒 Budget (₹)</button>
-              <button class="config-pill active" data-style="mid">🏨 Mid-Range (₹₹)</button>
-              <button class="config-pill" data-style="luxury">👑 Luxury (₹₹₹)</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="generated-itinerary-card" id="generated-itinerary-container" style="margin-top: 30px;">
-          ${renderGeneratedCityPlan(city, 1)}
-        </div>
-      </section>
-
-      <section style="padding: 60px 0 40px;">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow">DISCOVERY ARCHETYPES</span>
-            <h2 class="heading-medium" style="text-transform: uppercase;">WHAT KIND OF TRIP ARE YOU LOOKING FOR?</h2>
-          </div>
-          <p style="color: var(--muted); font-size: 0.88rem; max-width: 340px;">
-            Filter places in ${city.name} to match your travel focus.
-          </p>
-        </div>
-
-        <div class="filter-chips-container" id="city-archetype-chips" style="margin-bottom: 30px;">
-          <button class="filter-chip active" data-archetype="all">ALL PLACES (${placesList.length})</button>
-          <button class="filter-chip" data-archetype="heritage">HERITAGE FORTS</button>
-          <button class="filter-chip" data-archetype="food">CULINARY & TASTE</button>
-          <button class="filter-chip" data-archetype="photography">PHOTOGRAPHY</button>
-          <button class="filter-chip" data-archetype="hidden_gems">HIDDEN GEMS</button>
-          <button class="filter-chip" data-archetype="culture">LIVING CRAFTS</button>
-        </div>
-
-        <div class="states-grid" id="city-places-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
-          ${placesList.map(p => `
-            <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${p.id}'">
-              <img src="${p.heroImage}" alt="${p.name}" class="state-card-image" loading="lazy" />
-              <div class="state-dest-count">${p.category || 'HERITAGE'} • ⏱️ ${p.durationNeeded || '2-3h'}</div>
-              <div class="state-card-content">
-                <span class="eyebrow" style="margin-bottom: 4px;">${city.name} • ${city.stateName}</span>
-                <h3 class="state-card-name" style="font-size: 2.1rem;">${p.name}</h3>
-                <p class="state-card-tagline" style="font-size: 0.88rem;">${p.shortDesc}</p>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                  <span class="state-card-action">EXPLORE PLACE →</span>
-                  <button class="btn-save-journey ${isPlaceSaved(p.id) ? 'saved' : ''}" style="padding: 6px 14px; font-size: 0.7rem;" data-save-place-id="${p.id}" data-saved-text="♥ Saved" data-unsaved-text="♡ Save" onclick="event.stopPropagation(); window.raahiToggleSaveJourney('${p.id}');">
-                    ${isPlaceSaved(p.id) ? '♥ Saved' : '♡ Save'}
-                  </button>
+        <div class="states-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
+          ${stateDests.map(dest => {
+            const isSaved = isPlaceSaved(dest.id || dest.slug);
+            const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+            return `
+              <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
+                <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+                <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
+                <div class="state-card-content">
+                  <span class="eyebrow" style="margin-bottom: 4px;">${state.name} • ${dest.bestSeason || 'BEST: OCT-MAR'}</span>
+                  <h3 class="state-card-name" style="font-size: 2.1rem;">${dest.name}</h3>
+                  <p class="state-card-tagline" style="font-size: 0.88rem;">${dest.tagline || dest.shortDesc || dest.overview.slice(0, 100) + '...'}</p>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+                    <span class="state-card-action">EXPLORE DESTINATION →</span>
+                    <button 
+                      class="btn-save-journey ${isSaved ? 'saved' : ''}" 
+                      style="padding: 6px 14px; font-size: 0.72rem;" 
+                      data-save-place-id="${dest.id || dest.slug}" 
+                      data-saved-text="♥ Saved" 
+                      data-unsaved-text="♡ Save" 
+                      onclick="event.stopPropagation(); window.raahiToggleSaveJourney('${dest.id || dest.slug}');">
+                      ${isSaved ? '♥ Saved' : '♡ Save'}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       </section>
 
-      <section style="padding: 40px 0 60px; border-top: 1px solid var(--line);">
-        <span class="eyebrow">LOCAL INTELLIGENCE</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Know Before You Go to ${city.name}</h2>
-        <div class="travel-info-box">
-          ${(city.knowBefore || []).map(k => `
+      <!-- Signature Experiences -->
+      ${state.experiences && state.experiences.length > 0 ? `
+        <section style="padding: 40px 0 60px; border-top: 1px solid var(--line);">
+          <span class="eyebrow">SIGNATURE EXPERIENCES</span>
+          <h2 class="heading-medium" style="text-transform: uppercase;">Beyond the Obvious</h2>
+          <div class="editorial-grid">
+            ${state.experiences.map((exp) => `
+              <div class="editorial-card">
+                <span class="editorial-tag">${exp.tag || 'EXPERIENCE'}</span>
+                <h3>${exp.title}</h3>
+                <p>${exp.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- Culinary Traditions -->
+      ${state.food && state.food.length > 0 ? `
+        <section style="padding: 40px 0 60px; border-top: 1px solid var(--line);">
+          <span class="eyebrow">CULINARY TRADITIONS</span>
+          <h2 class="heading-medium" style="text-transform: uppercase;">Taste of the Soil</h2>
+          <div class="editorial-grid">
+            ${state.food.map((f) => `
+              <div class="editorial-card">
+                <span class="editorial-tag">${f.region || state.name}</span>
+                <h3>${f.name}</h3>
+                <p>${f.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- Living Heritage -->
+      ${state.culture ? `
+        <section style="padding: 40px 0 60px; border-top: 1px solid var(--line);">
+          <span class="eyebrow">LIVING HERITAGE</span>
+          <h2 class="heading-medium" style="text-transform: uppercase;">Crafts & Lineages</h2>
+          <div class="travel-info-box">
             <div class="info-item">
-              <h4>${k.title}</h4>
-              <p>${k.tip}</p>
+              <h4>Traditional Crafts</h4>
+              <p>${state.culture.crafts || 'Centuries of indigenous artisan techniques.'}</p>
             </div>
-          `).join('')}
-        </div>
-      </section>
+            <div class="info-item">
+              <h4>Major Festivals</h4>
+              <p>${state.culture.festivals || 'Vibrant regional celebrations.'}</p>
+            </div>
+            <div class="info-item">
+              <h4>Music & Rhythms</h4>
+              <p>${state.culture.music || 'Classical and folk music traditions.'}</p>
+            </div>
+          </div>
+        </section>
+      ` : ''}
 
-      <div style="display: flex; gap: 1rem; justify-content: center; padding-top: 40px; border-top: 1px solid var(--line); margin-bottom: 80px;">
-        <button class="btn" onclick="window.location.hash='#/states/${city.stateId}'">
-          ← Back to ${city.stateName}
+      <!-- Practical Intelligence -->
+      ${state.travelInfo ? `
+        <section style="padding: 40px 0 80px; border-top: 1px solid var(--line);">
+          <span class="eyebrow">PRACTICAL INTELLIGENCE</span>
+          <h2 class="heading-medium" style="text-transform: uppercase;">Travel Essentials</h2>
+          <div class="travel-info-box">
+            <div class="info-item">
+              <h4>Airports & Gateways</h4>
+              <p>${state.travelInfo.airports || 'Regional and international flight gateways.'}</p>
+            </div>
+            <div class="info-item">
+              <h4>Rail & Highway Corridors</h4>
+              <p>${state.travelInfo.railways || 'National highway and rail network linkages.'}</p>
+            </div>
+            <div class="info-item">
+              <h4>Seasonal Advice</h4>
+              <p>${state.travelInfo.seasonTips || 'Plan according to regional weather patterns.'}</p>
+            </div>
+          </div>
+        </section>
+      ` : ''}
+
+      <div style="text-align: center; padding: 40px 0 60px; border-top: 1px solid var(--line); display: flex; gap: 16px; justify-content: center;">
+        <button class="btn light" onclick="window.location.hash='#states'">
+          ← Explore All 36 States & UTs
         </button>
-        <button class="btn light" onclick="window.location.hash='#/home'">
+        <button class="btn" onclick="window.location.hash='#/home'">
           Home
         </button>
       </div>
     </div>
   `;
-
-  setupCityPlannerListeners(city);
 }
 
-function renderGeneratedCityPlan(city, days) {
-  const presetKey = days === 1 ? '1-day' : days === 2 ? '2-day' : '3-day';
-  const preset = (city.plannerPresets && city.plannerPresets[presetKey]) ? city.plannerPresets[presetKey] : {
-    title: `${days}-Day ${city.name} Expedition`,
-    pace: "Balanced",
-    focus: "Essential Highlights",
-    estimatedCost: "Approx. ₹4,500 + Admissions",
-    timeline: [
-      { time: "08:30 AM", placeName: `${city.places[0] ? city.places[0].replace(/-/g, ' ').toUpperCase() : 'Monument'}`, activity: "Arrive at opening to explore the primary citadel.", duration: "2.5 Hours", transitNext: "Approx. 15 min drive" },
-      { time: "12:00 PM", placeName: "Local Heritage Lunch", activity: "Traditional regional specialties.", duration: "1 Hour", transitNext: "Approx. 10 min drive" },
-      { time: "02:00 PM", placeName: `${city.places[1] ? city.places[1].replace(/-/g, ' ').toUpperCase() : 'Bazaar'}`, activity: "Explore artisan quarters and historical courtyards.", duration: "2 Hours", transitNext: "Approx. 20 min drive" },
-      { time: "05:30 PM", placeName: "Scenic Sunset Point", activity: "Golden hour sunset vistas over the city skyline.", duration: "1.5 Hours", transitNext: "Dinner" }
-    ]
-  };
+/**
+ * Render Universal Destination View (111+ destinations)
+ */
+function renderDestinationView(destSlug) {
+  let dest = DataRegistry.getDestination(destSlug);
 
-  if (days === 1) {
-    return `
-      <div class="itinerary-header-bar">
-        <div>
-          <span class="eyebrow" style="color: var(--gold); margin-bottom: 4px;">RECOMMENDED ROUTE // ${preset.pace.toUpperCase()}</span>
-          <h3 style="font-family: var(--font-display); font-size: 1.8rem; text-transform: uppercase; margin: 0;">${preset.title}</h3>
-          <span style="font-size: 0.85rem; color: var(--muted);">${preset.focus} • Estimated Cost: <strong style="color: var(--cream);">${preset.estimatedCost}</strong></span>
-        </div>
-        <button class="btn gold" onclick="window.raahiAddCityPresetToJourney('${city.id}', 1)">
-          + Add This Entire Plan to Journey
-        </button>
-      </div>
-
-      <div class="itinerary-timeline-list">
-        ${preset.timeline.map((step) => `
-          <div class="timeline-step-row">
-            <div class="time-col">${step.time}</div>
-            <div class="marker-col"><div class="marker-dot"></div></div>
-            <div class="detail-col">
-              <h4>${step.placeName || step.title} <span class="step-dur">⏱️ ${step.duration || '1.5h'}</span></h4>
-              <p>${step.activity || step.desc}</p>
-              ${step.transitNext ? `<div class="transit-tag">🚗 ${step.transitNext}</div>` : ''}
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  } else {
-    const dayGroups = preset.days || [
-      { day: 1, title: "Grand Monuments & Citadels", stops: [ { time: "08:30 AM", title: city.places[0] ? city.places[0].replace(/-/g, ' ').toUpperCase() : 'Monument', desc: 'Primary Citadel exploration.' }, { time: "02:00 PM", title: 'Sunset Ridge', desc: 'Aravalli views.' } ] },
-      { day: 2, title: "Living Crafts & Bazaars", stops: [ { time: "09:00 AM", title: 'Historic Courtyard', desc: 'Fresco chambers.' }, { time: "02:00 PM", title: 'Artisan Alley', desc: 'Traditional craft masters.' } ] }
-    ];
-
-    return `
-      <div class="itinerary-header-bar">
-        <div>
-          <span class="eyebrow" style="color: var(--gold); margin-bottom: 4px;">RECOMMENDED ROUTE // ${preset.pace.toUpperCase()}</span>
-          <h3 style="font-family: var(--font-display); font-size: 1.8rem; text-transform: uppercase; margin: 0;">${preset.title}</h3>
-          <span style="font-size: 0.85rem; color: var(--muted);">${preset.focus} • Estimated Cost: <strong style="color: var(--cream);">${preset.estimatedCost}</strong></span>
-        </div>
-        <button class="btn gold" onclick="window.raahiAddCityPresetToJourney('${city.id}', ${days})">
-          + Add This Entire Plan to Journey
-        </button>
-      </div>
-
-      <div class="multi-day-container">
-        ${dayGroups.map(d => `
-          <div class="day-group-card">
-            <div class="day-group-badge">DAY 0${d.day} // ${d.title.toUpperCase()}</div>
-            <div class="itinerary-timeline-list" style="margin-top: 16px;">
-              ${d.stops.map(st => `
-                <div class="timeline-step-row">
-                  <div class="time-col">${st.time || 'Morning'}</div>
-                  <div class="marker-col"><div class="marker-dot"></div></div>
-                  <div class="detail-col">
-                    <h4>${st.title || st}</h4>
-                    ${st.desc ? `<p>${st.desc}</p>` : ''}
-                    ${st.transitNext ? `<div class="transit-tag">🚗 ${st.transitNext}</div>` : ''}
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-}
-
-function setupCityPlannerListeners(city) {
-  const pills = document.querySelectorAll('#planner-duration-pills .config-pill');
-  const container = document.getElementById('generated-itinerary-container');
-
-  pills.forEach(p => {
-    p.addEventListener('click', () => {
-      pills.forEach(el => el.classList.remove('active'));
-      p.classList.add('active');
-      const days = parseInt(p.dataset.duration) || 1;
-      if (container) {
-        container.innerHTML = renderGeneratedCityPlan(city, days);
-      }
-    });
-  });
-
-  const archetypeChips = document.querySelectorAll('#city-archetype-chips .filter-chip');
-  const placesGrid = document.getElementById('city-places-grid');
-
-  archetypeChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      archetypeChips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const archetype = chip.dataset.archetype;
-      
-      let filteredPlaces = city.places.map(pId => RAAHI_DATA.places[pId]).filter(Boolean);
-      if (archetype !== 'all' && city.tripArchetypes && city.tripArchetypes[archetype]) {
-        const allowed = city.tripArchetypes[archetype];
-        filteredPlaces = filteredPlaces.filter(p => allowed.includes(p.id));
-      }
-
-      if (placesGrid) {
-        placesGrid.innerHTML = filteredPlaces.map(p => `
-          <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${p.id}'">
-            <img src="${p.heroImage}" alt="${p.name}" class="state-card-image" loading="lazy" />
-            <div class="state-dest-count">${p.category || 'HERITAGE'} • ⏱️ ${p.durationNeeded || '2-3h'}</div>
-            <div class="state-card-content">
-              <span class="eyebrow" style="margin-bottom: 4px;">${city.name} • ${city.stateName}</span>
-              <h3 class="state-card-name" style="font-size: 2.1rem;">${p.name}</h3>
-              <p class="state-card-tagline" style="font-size: 0.88rem;">${p.shortDesc}</p>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                <span class="state-card-action">EXPLORE PLACE →</span>
-                <button class="btn-save-journey ${isPlaceSaved(p.id) ? 'saved' : ''}" style="padding: 6px 14px; font-size: 0.7rem;" data-save-place-id="${p.id}" data-saved-text="♥ Saved" data-unsaved-text="♡ Save" onclick="event.stopPropagation(); window.raahiToggleSaveJourney('${p.id}');">
-                  ${isPlaceSaved(p.id) ? '♥ Saved' : '♡ Save'}
-                </button>
-              </div>
-            </div>
-          </div>
-        `).join('');
-      }
-    });
-  });
-}
-
-window.raahiAddCityPresetToJourney = (cityId, days) => {
-  const city = RAAHI_DATA.cities[cityId];
-  if (!city) return;
-  const count = days === 1 ? 3 : days === 2 ? 5 : 7;
-  const placesToAdd = city.places.slice(0, count).map(pId => RAAHI_DATA.places[pId]).filter(Boolean);
-  addMultipleToJourney(placesToAdd);
-};
-
-function renderDestinationView(placeId) {
-  let place = RAAHI_DATA.places[placeId];
-
-  if (!place) {
-    for (const city of Object.values(RAAHI_DATA.cities)) {
-      if (city.places.includes(placeId)) {
-        place = {
-          id: placeId,
-          cityId: city.id,
-          stateId: city.stateId,
-          name: placeId.replace(/-/g, ' ').toUpperCase(),
-          category: 'Heritage Landmark',
-          heroImage: VERIFIED_IMAGE_MAP[placeId] || city.heroImage,
-          durationNeeded: '2–3 Hours',
-          goodFor: ['Architecture', 'History', 'Photography'],
-          shortDesc: `A historic monument in ${city.name}, ${city.stateName}.`,
-          overview: `${placeId.replace(/-/g, ' ').toUpperCase()} is one of the premier historical and architectural landmarks of ${city.name}.`,
-          whyItMatters: `An enduring symbol of craftsmanship and regional heritage in ${city.name}.`,
-          whatToSee: [
-            { title: 'Central Courtyard & Facades', desc: 'Carved sandstone and architectural stonework.' },
-            { title: 'Historic Chambers', desc: 'Preserved royal halls and historical chambers.' }
-          ],
-          history: `Constructed centuries ago, it has stood as a center of cultural and civic life in ${city.name}.`,
-          experiences: [
-            { title: 'Guided Heritage Walk', desc: 'Explore historical corridors with certified historians.', timing: 'Daily' }
-          ],
-          foodNearby: [
-            { name: 'Local Heritage Restaurant', desc: 'Authentic local cuisine.' }
-          ],
-          placesNearby: [
-            { name: city.name + ' City Center', dist: '1 km away', desc: 'Historic street markets.' }
-          ],
-          travelInfo: {
-            timings: '09:00 AM to 05:30 PM',
-            entryFee: 'Standard Heritage Admission',
-            bestTimeToVisit: 'October to March',
-            howToReach: `Conveniently accessible via local transport in ${city.name}.`
-          }
-        };
-        break;
-      }
-    }
+  // Fallback lookup
+  if (!dest) {
+    const all = DataRegistry.getAllDestinations();
+    dest = all.find(d => d.id === destSlug || d.slug === destSlug || d.name.toLowerCase() === destSlug.toLowerCase().replace(/-/g, ' '));
   }
 
-  if (!place) {
+  // Legacy place fallback
+  if (!dest && RAAHI_DATA.places && RAAHI_DATA.places[destSlug]) {
+    const p = RAAHI_DATA.places[destSlug];
+    const city = (RAAHI_DATA.cities && RAAHI_DATA.cities[p.cityId]) || { name: p.city || 'India', stateName: p.state || 'India' };
+    dest = {
+      id: p.id,
+      name: p.name,
+      slug: p.id,
+      state: city.stateName || 'India',
+      stateSlug: p.stateId || 'rajasthan',
+      region: 'North',
+      type: p.category || 'Heritage Landmark',
+      tagline: p.shortDesc || 'Historic architectural monument',
+      overview: p.overview || p.shortDesc || 'An iconic historical destination.',
+      whyItMatters: p.whyItMatters || 'Preserves vital cultural lineage.',
+      heroImage: VERIFIED_IMAGE_MAP[p.id] || p.heroImage || 'assets/images/destinations/amber-fort.jpg',
+      idealDuration: p.durationNeeded || '2-3 Hours',
+      bestTimeToVisit: 'October to March',
+      bestSeason: 'OCT — MAR',
+      attractions: p.whatToSee ? p.whatToSee.map(s => ({ name: s.title, desc: s.desc })) : [],
+      experiences: p.experiences ? p.experiences.map(e => ({ name: e.title, desc: e.desc })) : [],
+      foods: p.foodNearby ? p.foodNearby.map(f => ({ name: f.name, desc: f.desc })) : [],
+      history: p.history || 'Centuries of rich architectural heritage.',
+      didYouKnow: p.didYouKnow || [],
+      knowBefore: p.knowBeforeYouGo || [],
+      hiddenGems: p.hiddenGems || [],
+      placesNearby: p.placesNearby || [],
+      stays: [],
+      travelInfo: p.travelInfo || {},
+      cinematicAvailable: p.id === 'amber-fort' || p.hasCinematic
+    };
+  }
+
+  if (!dest) {
     navigateTo('#/home');
     return;
   }
 
-  const state = RAAHI_DATA.states[place.stateId] || { name: place.state || 'India' };
-  const city = RAAHI_DATA.cities[place.cityId] || { name: place.city || place.cityId };
-
-  document.title = `${place.name} (${city.name}, ${state.name}) — RAAHI`;
+  document.title = `${dest.name} (${dest.state}) — RAAHI Travel Intelligence`;
 
   const container = document.getElementById('view-destination');
   if (!container) return;
 
-  const goodForList = place.goodFor || ['Architecture', 'History', 'Photography'];
-  const quickTagsText = goodForList.map(g => g.toUpperCase()).join(' · ');
-  const durationText = place.durationNeeded || '2–3 Hours';
-  const bestSeasonText = place.bestSeason || (place.bestTimeDetailed && place.bestTimeDetailed.season ? place.bestTimeDetailed.season.split('(')[0].trim() : 'OCT — MAR');
-  const crowdLevelText = (place.crowdLevel || (placeId === 'taj-mahal' || placeId === 'dashashwamedh-ghat' ? 'HIGH' : placeId === 'jantar-mantar' || placeId === 'panna-meena' ? 'LOW' : 'MODERATE')).toUpperCase();
-  const locationText = `${city.name.toUpperCase()}, ${state.name.toUpperCase()}`;
+  const isSaved = isPlaceSaved(dest.id || dest.slug);
+  const heroImg = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+  const durationText = dest.idealDuration || '2–3 Days';
+  const bestSeasonText = dest.bestSeason || dest.bestTimeToVisit || 'OCT — MAR';
+  const crowdLevelText = (dest.crowdLevel || (dest.slug === 'amber-fort' || dest.slug === 'taj-mahal' || dest.slug === 'dashashwamedh-ghat' ? 'HIGH' : 'MODERATE')).toUpperCase();
+  const locationText = `${dest.name.toUpperCase()}, ${dest.state.toUpperCase()}`;
 
-  // Verified destination facts ("DID YOU KNOW?")
-  const verifiedFacts = place.didYouKnow || (
-    placeId === 'amber-fort' ? [
-      "A UNESCO World Heritage property as part of the Hill Forts of Rajasthan.",
-      "Its Sheesh Mahal (Hall of Mirrors) is encrusted with convex Belgian mirrors positioned so that the flame of a single candle illuminates the entire ceiling like a starlit sky.",
-      "The fort is connected to Jaigarh Fort via subterranean escape tunnels spanning over 1.5 km through the rugged Aravalli hills."
-    ] : placeId === 'hawa-mahal' ? [
-      "Constructed in 1799 by Maharaja Sawai Pratap Singh, its five-storey pyramid facade features 953 intricately carved jharokhas (casements).",
-      "Engineered with the Venturi effect, natural breeze circulates continuously throughout the interior even during peak summer heat.",
-      "The building has no foundation and stands on an incline of 87 degrees, stabilized by its curved honeycomb structure."
-    ] : placeId === 'city-palace-jaipur' ? [
-      "Houses two enormous sterling silver vessels (Gangajalis) recorded in the Guinness World Records as the world's largest silver vessels, each crafted from 14,000 melted coins to carry holy Ganges water to England in 1902.",
-      "The Pritam Niwas Chowk features four legendary painted doorways representing the four seasons, including the iconic Peacock Gate.",
-      "A portion of the palace remains the private residence of the titular Royal Family of Jaipur to this day."
-    ] : placeId === 'jantar-mantar' ? [
-      "Features the Vrihat Samrat Yantra, the world's largest stone sundial standing at 27 meters tall, capable of measuring local solar time to an accuracy of 2 seconds.",
-      "Built in 1734 by Maharaja Sawai Jai Singh II, it houses 19 colossal architectural astronomical instruments.",
-      "The instruments were sculpted from local stone and marble to achieve greater scale and precision than handheld brass astrolabes."
-    ] : placeId === 'jal-mahal' ? [
-      "Though it appears to have only a single storey from the water, the palace actually has five storeys—four of which remain submerged beneath Man Sagar Lake.",
-      "Constructed with specially treated lime mortar, its submerged walls have resisted water pressure and leakage for over 250 years.",
-      "The rooftop features a Chameli Bagh (jasmine garden) with aromatic flower beds designed for royal pleasure excursions."
-    ] : placeId === 'panna-meena' ? [
-      "An eight-storey geometric stepwell built with a symmetrical criss-cross pattern of stairs arranged so you cannot ascend the same stairs you used to descend.",
-      "It functioned as a vital cooling subterranean oasis and community gathering place for desert travelers and village women.",
-      "Located near Amber village, its pristine yellow and ochre geometry has made it an architectural masterpiece for photographers worldwide."
-    ] : placeId === 'taj-mahal' ? [
-      "Commissioned in 1631 by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal.",
-      "The four minarets were deliberately engineered with a slight outward tilt to prevent them from falling onto the central dome during an earthquake.",
-      "The translucent Makrana marble changes color throughout the day: blush pink at dawn, brilliant white at midday, and glowing gold under moonlight."
-    ] : placeId === 'dashashwamedh-ghat' ? [
-      "One of India's oldest and most sacred ghats on the Ganges; legend says Lord Brahma sacrificed ten horses here in a sacred yajna to welcome Lord Shiva.",
-      "The daily evening Ganga Aarti ceremony has been conducted continuously at twilight with huge brass multi-tiered lamps for centuries.",
-      "Boatmen have rowed wooden hand-carved boats along this sacred waterfront for over 2,000 recorded years of pilgrimage."
-    ] : placeId === 'eravikulam-national-park' ? [
-      "Home to the largest surviving wild population of the endangered Nilgiri Tahr mountain goat in the world.",
-      "Famous for the mass blooming of the Neelakurinji flower, which covers the hillsides in vibrant blue once every 12 years.",
-      "Encompasses Anamudi (2,695m), the highest peak in South India and the Western Ghats."
-    ] : [
-      `${place.name} is one of the premier historical and architectural landmarks of ${city.name}, celebrated for its enduring cultural lineage.`,
-      `Constructed with indigenous regional masonry designed to harmonize with local terrain and seasonal climate conditions.`,
-      `Protected as part of India's national living heritage and cultural preservation network.`
-    ]
-  );
-
-  // Time periods & recommended slot
+  // Time periods
   const timePeriods = [
-    { period: "Sunrise", icon: "🌅", hours: "05:30 – 07:30 AM", recommended: placeId === 'taj-mahal' || placeId === 'dashashwamedh-ghat' || placeId === 'jal-mahal' || placeId === 'panna-meena' || placeId === 'eravikulam-national-park', reason: "Dawn provides soft pastel light, fresh morning air, and minimal crowds." },
-    { period: "Morning", icon: "☀️", hours: "08:30 – 11:30 AM", recommended: placeId === 'amber-fort' || placeId === 'hawa-mahal' || placeId === 'city-palace-jaipur' || placeId === 'jantar-mantar', reason: "Cooler stone floors, low group tour traffic, and golden eastern sunlight across facades." },
-    { period: "Afternoon", icon: "🌤", hours: "12:00 – 03:30 PM", recommended: placeId === 'jantar-mantar', reason: "Direct overhead solar angles enable accurate sundial shadow and solar transit observation." },
-    { period: "Sunset", icon: "🌇", hours: "04:30 – 06:30 PM", recommended: placeId === 'amber-fort' || placeId === 'jal-mahal' || placeId === 'dashashwamedh-ghat' || placeId === 'taj-mahal', reason: "Spectacular golden hour tones reflecting off stone ramparts, waterfronts, and surrounding ridges." },
-    { period: "Evening", icon: "🌙", hours: "07:00 – 09:30 PM", recommended: placeId === 'dashashwamedh-ghat' || placeId === 'jal-mahal', reason: "Atmospheric evening illuminations, sacred bells, and illuminated night water reflections." }
+    { period: "Sunrise", icon: "🌅", hours: "05:30 – 07:30 AM", recommended: dest.slug === 'taj-mahal' || dest.slug === 'dashashwamedh-ghat' || dest.slug === 'munnar-tea' || dest.slug === 'pangong-lake' || dest.slug === 'radhanagar-beach', reason: "Soft pastel lighting, fresh morning air, and undisturbed reflections." },
+    { period: "Morning", icon: "☀️", hours: "08:30 – 11:30 AM", recommended: true, reason: "Comfortable temperatures, clear visibility, and low group tour traffic." },
+    { period: "Afternoon", icon: "🌤", hours: "12:00 – 03:30 PM", recommended: dest.type.includes('Museum') || dest.slug === 'jantar-mantar', reason: "Ideal for indoor galleries, shaded courtyards, or solar observatories." },
+    { period: "Sunset", icon: "🌇", hours: "04:30 – 06:30 PM", recommended: dest.slug === 'amber-fort' || dest.slug === 'alleppey-backwaters' || dest.slug === 'hampi-ruins' || dest.slug === 'mehrangarh-fort', reason: "Spectacular golden hour tones across ancient stone ramparts and waterways." },
+    { period: "Evening", icon: "🌙", hours: "07:00 – 09:30 PM", recommended: dest.slug === 'dashashwamedh-ghat' || dest.slug === 'golden-temple', reason: "Atmospheric evening illuminations, sacred bells, and lighted water reflections." }
   ];
 
   const crowdPatternList = [
     { time: "Early morning (06:00 – 09:00)", status: "Low", statusClass: "low", feel: "Quiet & Serene — Minimal wait times, peaceful photography" },
     { time: "Late morning (09:30 – 12:30)", status: "Moderate", statusClass: "moderate", feel: "Steady Flow — Independent travelers and guided groups arrive" },
-    { time: "Afternoon (01:00 – 04:00)", status: "High", statusClass: "high", feel: "Peak Busy — Heaviest footfall in central courtyards and galleries" },
+    { time: "Afternoon (01:00 – 04:00)", status: "High", statusClass: "high", feel: "Peak Busy — Heaviest footfall in central courtyards and viewpoints" },
     { time: "Evening (04:30 – 07:00)", status: "Moderate", statusClass: "moderate", feel: "Pleasant — Golden hour visitors and cool evening breezes" }
   ];
 
-  const isSaved = isPlaceSaved(place.id);
+  const facts = (dest.didYouKnow && dest.didYouKnow.length > 0) ? dest.didYouKnow : [
+    `${dest.name} is celebrated as one of ${dest.state}'s most culturally significant landmarks.`,
+    `Engineered with regional craftsmanship adapted precisely to local climate and terrain.`,
+    `Protected as part of India's living cultural and architectural heritage network.`
+  ];
 
   container.innerHTML = `
     <div class="breadcrumb-bar wrap">
       <a href="#/home">RAAHI</a>
       <span class="sep">/</span>
-      <a href="#/states/${place.stateId}">${state.name}</a>
+      <a href="#/states/${dest.stateSlug}">${dest.state}</a>
       <span class="sep">/</span>
-      <a href="#/cities/${place.cityId}">${city.name}</a>
-      <span class="sep">/</span>
-      <span style="color: var(--cream);">${place.name}</span>
+      <span style="color: var(--cream);">${dest.name}</span>
     </div>
 
     <div class="dest-hero">
-      <div class="dest-hero-bg" style="background-image: url('${place.heroImage}');"></div>
+      <div class="dest-hero-bg" style="background-image: url('${heroImg}');"></div>
       <div class="dest-hero-content">
         <div>
-          <div class="dest-hero-loc">${city.name} • ${state.name}</div>
-          <h1 class="dest-hero-title">${place.name}</h1>
+          <div class="dest-hero-loc">${dest.type.toUpperCase()} • ${dest.state.toUpperCase()} (${dest.region.toUpperCase()})</div>
+          <h1 class="dest-hero-title">${dest.name}</h1>
         </div>
         <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-          ${(place.hasCinematic || place.id === 'amber-fort') ? `
-            <button class="btn-cinematic-launch" onclick="window.location.hash='#/cinematic/${place.id}'" style="background: linear-gradient(135deg, #d4af37 0%, #b89628 100%); color: #030705; font-weight: 700; border: none; box-shadow: 0 0 25px rgba(212,175,55,0.45); padding: 12px 24px; border-radius: 100px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
+          ${dest.cinematicAvailable ? `
+            <button class="btn-cinematic-launch" onclick="window.location.hash='#/cinematic/${dest.slug}'" style="background: linear-gradient(135deg, #d4af37 0%, #b89628 100%); color: #030705; font-weight: 700; border: none; box-shadow: 0 0 25px rgba(212,175,55,0.45); padding: 12px 24px; border-radius: 100px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease;">
               ⚡ ENTER CINEMATIC 3D EXPEDITION →
             </button>
           ` : ''}
-          <button class="btn-save-journey ${isSaved ? 'saved' : ''}" data-save-place-id="${place.id}" data-saved-text="♥ SAVED TO JOURNEY" data-unsaved-text="♡ SAVE TO MY JOURNEY" onclick="window.raahiToggleSaveJourney('${place.id}')">
+          <button class="btn-save-journey ${isSaved ? 'saved' : ''}" data-save-place-id="${dest.id || dest.slug}" data-saved-text="♥ SAVED TO JOURNEY" data-unsaved-text="♡ SAVE TO MY JOURNEY" onclick="window.raahiToggleSaveJourney('${dest.id || dest.slug}')">
             ${isSaved ? '♥ SAVED TO JOURNEY' : '♡ SAVE TO MY JOURNEY'}
           </button>
-          <button class="btn" style="border-color: rgba(212, 175, 55, 0.45); color: var(--cream);" onclick="window.raahiOpenMapsModal('${place.id}')">
+          <button class="btn" style="border-color: rgba(212, 175, 55, 0.45); color: var(--cream);" onclick="window.raahiOpenMapsModal('${dest.slug}')">
             📍 View on Google Maps
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Quick Intelligence Summary Strip ("UNDER THIS") -->
+    <!-- Quick Intelligence Summary Strip -->
     <div class="quick-intel-strip">
       <div class="quick-intel-tag-row">
-        <span>${quickTagsText}</span>
+        <span>${dest.type.toUpperCase()} · ${dest.state.toUpperCase()} · INDIA</span>
       </div>
       <div class="quick-intel-grid">
         <div class="quick-intel-box">
@@ -888,23 +793,22 @@ function renderDestinationView(placeId) {
         <a href="#overview" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">OVERVIEW</a>
         <a href="#best-time" class="btn" style="padding: 6px 14px; font-size: 0.7rem; border-color: var(--gold); color: var(--gold);">BEST TIME & CROWD</a>
         <a href="#did-you-know" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">DID YOU KNOW?</a>
-        <a href="#what-to-see" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">WHAT TO SEE</a>
+        <a href="#attractions" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">TOP ATTRACTIONS</a>
         <a href="#know-before" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">KNOW BEFORE YOU GO</a>
         <a href="#taste" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">TASTE THE PLACE</a>
-        <a href="#hidden-gems" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">HIDDEN GEMS</a>
-        <a href="#places-nearby" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">PLACES NEARBY</a>
         <a href="#where-to-stay" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">WHERE TO STAY</a>
         <a href="#travel-info" class="btn" style="padding: 6px 14px; font-size: 0.7rem;">VISITOR INFO</a>
       </div>
     </div>
 
     <div class="wrap dest-content-section">
-      <div class="overview-grid" id="overview">
+      <!-- 1. Destination Overview -->
+      <div class="overview-grid" id="overview" style="padding: 40px 0 20px;">
         <div>
           <span class="eyebrow">DESTINATION OVERVIEW</span>
           <h2 class="heading-medium" style="text-transform: uppercase; margin-bottom: 1.5rem;">The Architecture of Memory</h2>
           <p class="lead" style="color: var(--cream); font-size: 1.15rem; line-height: 1.8;">
-            ${place.overview}
+            ${dest.overview}
           </p>
         </div>
         <div>
@@ -912,14 +816,14 @@ function renderDestinationView(placeId) {
             <span class="eyebrow" style="color: var(--gold); margin-bottom: 8px;">SIGNIFICANCE</span>
             <h3>Why It Matters</h3>
             <p style="color: var(--muted); line-height: 1.7; font-size: 0.95rem;">
-              ${place.whyItMatters}
+              ${dest.whyItMatters || dest.tagline || `A testament to Indian architectural and cultural greatness.`}
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Feature 2: Best Time to Visit & Crowd Feel Section -->
-      <section class="best-time-section" id="best-time">
+      <!-- 2. Best Time & Crowd Feel Section -->
+      <section class="best-time-section" id="best-time" style="padding: 40px 0;">
         <span class="eyebrow">PACING & TRAVEL INTELLIGENCE</span>
         <h2 class="heading-medium" style="text-transform: uppercase;">Best Time to Visit & Crowd Feel</h2>
 
@@ -947,7 +851,7 @@ function renderDestinationView(placeId) {
 
             <div class="time-slot-reason">
               <strong style="color: var(--gold); display: block; margin-bottom: 4px;">💡 Local Visiting Advice:</strong>
-              ${place.bestTimeDetailed ? place.bestTimeDetailed.reasoning : (timePeriods.find(t => t.recommended) ? timePeriods.find(t => t.recommended).reason : 'Early morning or late afternoon arrival ensures comfortable walking temperatures and optimal lighting.')}
+              ${dest.bestTimeReason || 'Early morning or late afternoon arrival ensures comfortable walking temperatures and optimal lighting for exploration.'}
             </div>
           </div>
 
@@ -981,22 +885,22 @@ function renderDestinationView(placeId) {
               </div>
 
               <p class="crowd-disclaimer">
-                * Note: Typical/expected visitor patterns based on historical seasonality. Not real-time sensor feed.
+                * Note: Typical seasonal patterns based on regional tourism analytics.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Feature 3: Did You Know? Destination Facts -->
-      <section id="did-you-know">
+      <!-- 3. Did You Know? Facts -->
+      <section id="did-you-know" style="padding: 20px 0 40px;">
         <div class="did-you-know-card">
           <div class="did-you-know-header">
             <span class="did-you-know-badge">🏛️ DID YOU KNOW?</span>
-            <span class="eyebrow" style="margin: 0;">ARCHITECTURAL & HISTORICAL FACTS</span>
+            <span class="eyebrow" style="margin: 0;">AUTHENTIC HISTORICAL & ARCHITECTURAL FACTS</span>
           </div>
           <div class="facts-list">
-            ${verifiedFacts.map(f => `
+            ${facts.map(f => `
               <div class="fact-quote-item">
                 ${f}
               </div>
@@ -1005,28 +909,32 @@ function renderDestinationView(placeId) {
         </div>
       </section>
 
-      <section style="padding: 40px 0;" id="what-to-see">
-        <span class="eyebrow">EXPLORE KEY SECTIONS</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">What to See Inside</h2>
-        <div class="what-to-see-grid">
-          ${place.whatToSee.map((sight) => `
-            <div class="sight-card">
-              <h4>${sight.title}</h4>
-              <p>${sight.desc}</p>
-            </div>
-          `).join('')}
-        </div>
-      </section>
+      <!-- 4. Key Attractions -->
+      ${dest.attractions && dest.attractions.length > 0 ? `
+        <section style="padding: 40px 0;" id="attractions">
+          <span class="eyebrow">KEY HIGHLIGHTS</span>
+          <h2 class="heading-medium" style="text-transform: uppercase;">What to See & Experience</h2>
+          <div class="what-to-see-grid">
+            ${dest.attractions.map((sight) => `
+              <div class="sight-card">
+                <h4>${sight.name || sight.title}</h4>
+                <p>${sight.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      ` : ''}
 
+      <!-- 5. Know Before You Go -->
       <section style="padding: 40px 0;" id="know-before">
         <span class="eyebrow">LOCAL INTELLIGENCE</span>
         <h2 class="heading-medium" style="text-transform: uppercase;">Know Before You Go</h2>
         <div class="travel-info-box">
-          ${(place.knowBeforeYouGo || [
-            { title: "Footwear & Steps", tip: "Wear comfortable walking shoes with grip; historic stone ramparts require walking." },
-            { title: "Photography", tip: "Handheld photography and smartphones permitted. Tripods require prior ASI authorization." },
-            { title: "Queue Bypass", tip: "Arrive at opening (08:30 AM) or acquire a Composite Monument Pass to skip separate lines." },
-            { title: "Attire", tip: "Modest attire covering shoulders and knees is appreciated near active shrines." }
+          ${(dest.knowBefore && dest.knowBefore.length > 0 ? dest.knowBefore : [
+            { title: "Footwear & Terrain", tip: "Wear comfortable walking footwear with firm grip for stone ramparts and natural pathways." },
+            { title: "Photography Guidelines", tip: "Handheld photography and smartphones welcome. Professional rigs or drones require local permits." },
+            { title: "Queue Bypass & Timing", tip: "Early morning arrival (around 08:30 AM) ensures direct access without long ticket queues." },
+            { title: "Cultural Attire", tip: "Modest attire covering shoulders and knees is appreciated at sacred and consecrated shrines." }
           ]).map(k => `
             <div class="info-item">
               <h4>${k.title}</h4>
@@ -1036,139 +944,98 @@ function renderDestinationView(placeId) {
         </div>
       </section>
 
-      <section style="padding: 60px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 40px 0;" id="history">
-        <div class="story-grid">
-          <div>
-            <span class="eyebrow">CHRONICLES & LINEAGE</span>
-            <h2 class="heading-large" style="text-transform: uppercase;">Centuries of History</h2>
+      <!-- 6. History & Heritage -->
+      ${dest.history ? `
+        <section style="padding: 60px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 40px 0;" id="history">
+          <div class="story-grid">
+            <div>
+              <span class="eyebrow">CHRONICLES & LINEAGE</span>
+              <h2 class="heading-large" style="text-transform: uppercase;">Centuries of History</h2>
+            </div>
+            <div>
+              <p class="lead" style="line-height: 1.8; font-size: 1.05rem;">
+                ${dest.history}
+              </p>
+            </div>
           </div>
-          <div>
-            <p class="lead" style="line-height: 1.8; font-size: 1.05rem;">
-              ${place.history}
-            </p>
-          </div>
-        </div>
-      </section>
+        </section>
+      ` : ''}
 
-      <section style="padding: 40px 0;" id="taste">
-        <span class="eyebrow">CULINARY INTELLIGENCE</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Taste the Place // ${city.name}</h2>
-        <div class="nearby-grid">
-          ${(place.foodSpecialties || place.foodNearby || []).map((f) => `
-            <div class="nearby-card">
-              <span class="tag-pill">${f.type || f.cuisine || 'Regional Specialty'}</span>
-              <h4>${f.name}</h4>
-              <p>${f.desc}</p>
-              <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--gold); margin-top: 8px;">
-                ${f.price ? `${f.price} • ` : ''}${f.where || 'Nearby Eatery'}
+      <!-- 7. Taste the Place -->
+      ${dest.foods && dest.foods.length > 0 ? `
+        <section style="padding: 40px 0;" id="taste">
+          <span class="eyebrow">CULINARY INTELLIGENCE</span>
+          <h2 class="heading-medium" style="text-transform: uppercase;">Taste the Place // ${dest.name}</h2>
+          <div class="nearby-grid">
+            ${dest.foods.map((f) => `
+              <div class="nearby-card">
+                <span class="tag-pill">${f.type || 'Regional Specialty'}</span>
+                <h4>${f.name}</h4>
+                <p>${f.desc}</p>
               </div>
-            </div>
-          `).join('')}
-        </div>
-      </section>
+            `).join('')}
+          </div>
+        </section>
+      ` : ''}
 
-      <section style="padding: 40px 0;" id="hidden-gems">
-        <span class="eyebrow">GO BEYOND THE OBVIOUS</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Hidden Discoveries Nearby</h2>
-        <div class="editorial-grid">
-          ${(place.hiddenGems || [
-            { name: "Quiet Morning Courtyards", type: "Architectural Detail", desc: "Lesser-visited rear corridors offering intimate stone carvings." },
-            { name: "Artisan Guild Haveli", type: "Living Craft", desc: "Local workshops preserving centuries-old regional handicrafts." },
-            { name: "Panoramic Ridge Point", type: "Scenic Vista", desc: "An elevated viewpoint overlooking the monument." }
-          ]).map(g => `
-            <div class="editorial-card">
-              <span class="editorial-tag">${g.type}</span>
-              <h3>${g.name}</h3>
-              <p>${g.desc}</p>
-              ${g.dist ? `<div style="font-family: var(--font-display); font-size: 0.72rem; color: var(--gold); margin-top: 10px;">📍 ${g.dist}</div>` : ''}
-            </div>
-          `).join('')}
-        </div>
-      </section>
+      <!-- 8. Where to Stay -->
+      ${dest.stays && dest.stays.length > 0 ? `
+        <section style="padding: 40px 0;" id="where-to-stay">
+          <span class="eyebrow">SANCTUARIES OF REST</span>
+          <h2 class="heading-medium" style="text-transform: uppercase;">Recommended Stays in ${dest.name}</h2>
+          <div class="editorial-grid">
+            ${dest.stays.map(s => `
+              <div class="editorial-card">
+                <span class="editorial-tag">${s.tier || 'Heritage'} Stay</span>
+                <h3>${s.name}</h3>
+                <p>${s.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      ` : ''}
 
-      <section style="padding: 40px 0;" id="places-nearby">
-        <span class="eyebrow">TIME + DISTANCE CONTEXT</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Places Nearby & Transit Times</h2>
-        <div class="nearby-grid">
-          ${(place.travelContext && place.travelContext.nearbyTransit && place.travelContext.nearbyTransit.length > 0 ? place.travelContext.nearbyTransit : (place.placesNearby || [])).map((p) => `
-            <div class="nearby-card">
-              <span class="tag-pill">⏱️ ${p.time || p.dist || 'Nearby'}</span>
-              <h4>${p.destination || p.name}</h4>
-              <p>${p.desc || `Approx. travel distance: ${p.distance || '1-3 km'}`}</p>
+      <!-- 9. Practical Visitor Info -->
+      ${dest.travelInfo ? `
+        <section style="padding: 40px 0 60px;" id="travel-info">
+          <span class="eyebrow">VISITOR INTELLIGENCE</span>
+          <h2 class="heading-medium" style="text-transform: uppercase;">Practical Travel Information</h2>
+          <div class="travel-info-box">
+            <div class="info-item">
+              <h4>Opening Hours & Access</h4>
+              <p>${dest.travelInfo.timings || '09:00 AM – 05:30 PM (Daily)'}</p>
             </div>
-          `).join('')}
-        </div>
-      </section>
+            <div class="info-item">
+              <h4>Entry Fee & Permits</h4>
+              <p>${dest.travelInfo.entryFee || 'Standard Heritage Admission'}</p>
+            </div>
+            <div class="info-item">
+              <h4>Transit & How to Reach</h4>
+              <p>Airport: ${dest.travelInfo.nearestAirport || 'Nearest regional airport'}<br>Railway: ${dest.travelInfo.nearestRailway || 'Nearest major junction'}<br>${dest.travelInfo.howToReach || 'Well connected via state highway and private cab corridors.'}</p>
+            </div>
+          </div>
+        </section>
+      ` : ''}
 
-      <section style="padding: 40px 0;" id="where-to-stay">
-        <span class="eyebrow">SANCTUARIES OF REST</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Where to Stay in ${city.name}</h2>
-        <div class="editorial-grid">
-          <div class="editorial-card">
-            <span class="editorial-tag">Royal Palace Stay // Luxury</span>
-            <h3>${place.staysByCategory && place.staysByCategory.luxury ? place.staysByCategory.luxury[0].name : 'Grand Heritage Palace'}</h3>
-            <p>${place.staysByCategory && place.staysByCategory.luxury ? place.staysByCategory.luxury[0].desc : 'Palatial accommodations with royal gardens.'}</p>
-            <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--gold); margin-top: 10px;">
-              ${place.staysByCategory && place.staysByCategory.luxury ? place.staysByCategory.luxury[0].price : '₹35,000+ / night'}
-            </div>
-          </div>
-          <div class="editorial-card">
-            <span class="editorial-tag">Historic Restored Haveli // Heritage</span>
-            <h3>${place.staysByCategory && place.staysByCategory.heritage ? place.staysByCategory.heritage[0].name : 'Ancestral Haveli Hotel'}</h3>
-            <p>${place.staysByCategory && place.staysByCategory.heritage ? place.staysByCategory.heritage[0].desc : 'Century-old ancestral residence with painted courtyards.'}</p>
-            <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--gold); margin-top: 10px;">
-              ${place.staysByCategory && place.staysByCategory.heritage ? place.staysByCategory.heritage[0].price : '₹8,000 – ₹16,000 / night'}
-            </div>
-          </div>
-          <div class="editorial-card">
-            <span class="editorial-tag">Boutique & Social // Budget-Mid</span>
-            <h3>${place.staysByCategory && place.staysByCategory.boutique ? place.staysByCategory.boutique[0].name : 'Artisan Design Guesthouse'}</h3>
-            <p>${place.staysByCategory && place.staysByCategory.boutique ? place.staysByCategory.boutique[0].desc : 'Eco-conscious design haven in central quarters.'}</p>
-            <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--gold); margin-top: 10px;">
-              ${place.staysByCategory && place.staysByCategory.boutique ? place.staysByCategory.boutique[0].price : '₹4,500 – ₹8,000 / night'}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section style="padding: 40px 0 60px;" id="travel-info">
-        <span class="eyebrow">VISITOR INTELLIGENCE</span>
-        <h2 class="heading-medium" style="text-transform: uppercase;">Practical Travel Information</h2>
-        <div class="travel-info-box">
-          <div class="info-item">
-            <h4>Opening Hours</h4>
-            <p>${place.travelInfo ? place.travelInfo.timings : '09:00 AM – 05:30 PM'}</p>
-          </div>
-          <div class="info-item">
-            <h4>Ticketing & Access</h4>
-            <p>${place.travelInfo ? place.travelInfo.entryFee : 'Standard Heritage Admission'}</p>
-          </div>
-          <div class="info-item">
-            <h4>Best Timing & Transit</h4>
-            <p>${place.travelInfo ? place.travelInfo.bestTimeToVisit : 'Oct to Mar'} <br><br>${place.travelInfo ? place.travelInfo.howToReach : 'Easily accessible via local transport.'}</p>
-          </div>
-        </div>
-      </section>
-
-      ${place.hasCinematic ? `
+      ${dest.cinematicAvailable ? `
         <section style="margin: 40px 0 60px; background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(7,11,9,0.9) 100%); border: 1px solid var(--gold); border-radius: 8px; padding: 40px; text-align: center;">
           <span class="eyebrow" style="color: var(--gold);">IMMERSIVE 3D SPATIAL TOUR</span>
-          <h2 class="heading-medium" style="text-transform: uppercase; margin: 8px 0 16px;">Step Inside ${place.name}</h2>
+          <h2 class="heading-medium" style="text-transform: uppercase; margin: 8px 0 16px;">Step Inside ${dest.name}</h2>
           <p style="color: var(--muted-bright); max-width: 600px; margin: 0 auto 24px;">
             Experience 7 scroll-driven storytelling scenes, interactive spatial hotspots, and architectural telemetries.
           </p>
-          <button class="btn gold" onclick="window.location.hash='#/cinematic/${place.id}'" style="padding: 14px 28px; font-size: 0.85rem;">
+          <button class="btn gold" onclick="window.location.hash='#/cinematic/${dest.slug}'" style="padding: 14px 28px; font-size: 0.85rem;">
             ✨ Enter Cinematic Mode ↗
           </button>
         </section>
       ` : ''}
 
-      <div style="display: flex; gap: 1rem; justify-content: center; padding-top: 40px; border-top: 1px solid var(--line);">
-        <button class="btn" onclick="window.location.hash='#/cities/${place.cityId}'">
-          ← Back to ${city.name}
+      <div style="display: flex; gap: 1rem; justify-content: center; padding: 40px 0 60px; border-top: 1px solid var(--line);">
+        <button class="btn" onclick="window.location.hash='#/states/${dest.stateSlug}'">
+          ← Back to ${dest.state}
         </button>
-        <button class="btn" onclick="window.location.hash='#/states/${place.stateId}'">
-          ← Back to ${state.name}
+        <button class="btn" onclick="window.location.hash='#states'">
+          All States & UTs
         </button>
         <button class="btn light" onclick="window.location.hash='#/home'">
           Home
@@ -1176,4 +1043,9 @@ function renderDestinationView(placeId) {
       </div>
     </div>
   `;
+}
+
+// Backward-compatible city view placeholder if referenced
+function renderCityView(cityId) {
+  renderStateView(cityId);
 }

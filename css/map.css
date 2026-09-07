@@ -1,0 +1,142 @@
+/* =========================================================
+   RAAHI // Interactive India Map & Tooltip Styles
+   ========================================================= */
+
+.raahi-map-section {
+  padding: 80px 0;
+  background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.04), transparent 70%), var(--bg-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.map-container {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 40px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+@media (max-width: 900px) {
+  .map-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.india-svg-wrapper {
+  position: relative;
+  background: rgba(13, 20, 16, 0.6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 520px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.india-svg-map {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5));
+}
+
+.state-path {
+  fill: #16241c;
+  stroke: rgba(212, 175, 55, 0.3);
+  stroke-width: 1.2;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.state-path:hover, .state-path.active {
+  fill: #d4af37;
+  stroke: #fff;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.8));
+}
+
+.map-preview-panel {
+  background: #0d1410;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.map-preview-badge {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.map-preview-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--cream);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.map-preview-story {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.map-preview-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line);
+  padding: 14px;
+  border-radius: var(--radius-sm);
+}
+
+.map-stat-item small {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--muted-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.map-stat-item span {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--cream);
+  font-weight: 600;
+}
+
+/* Floating Tooltip */
+.map-floating-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(7, 11, 9, 0.95);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  color: var(--cream);
+  letter-spacing: 0.06em;
+  transform: translate(-50%, -120%);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  opacity: 0;
+  z-index: 100;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+
+.map-floating-tooltip.active {
+  opacity: 1;
+}

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>RAAHI — Enter the Journey | National Tourism Platform</title>
-  <meta name="description" content="Discover destinations, stories, and travel intelligence across India. An editorial and cinematic journey through Rajasthan, Kerala, Himachal Pradesh, Goa, and Uttar Pradesh.">
+  <title>RAAHI — Pan-India Tourism & Discovery Platform | 28 States, 8 UTs, 111+ Destinations</title>
+  <meta name="description" content="Discover destinations, stories, and travel intelligence across all 28 States and 8 Union Territories in India. An editorial and cinematic journey with interactive maps and 3D spatial expeditions.">
   
   <!-- Google Fonts: Space Grotesk & DM Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +14,7 @@
   <!-- Modular CSS Design System -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/map.css">
   <link rel="stylesheet" href="css/state-page.css">
   <link rel="stylesheet" href="css/destination-page.css">
   <link rel="stylesheet" href="css/cinematic.css">
@@ -32,14 +33,22 @@
 
     <nav class="navlinks">
       <a href="#/home" class="active">Explore</a>
-      <a href="#states">Destinations</a>
+      <a href="#interactive-map">Map</a>
+      <a href="#states">All States (36)</a>
+      <a href="#all-destinations">Destinations (111)</a>
       <a href="#journey-discovery">Journeys</a>
       <a href="#/journey">Build Route</a>
       <a href="#stays">Stays</a>
       <a href="#about">About</a>
     </nav>
 
-    <div style="display: flex; align-items: center; gap: 14px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button onclick="window.raahiOpenSearchModal()" class="search-nav-btn" title="Search all 36 States & 111+ Destinations (Ctrl+K)">
+        <span class="search-icon">🔍</span>
+        <span class="search-text">Search India...</span>
+        <kbd class="search-kbd">Ctrl K</kbd>
+      </button>
+
       <button onclick="window.raahiOpenJourneyDrawer()" class="plan-btn" style="border-color: var(--gold); color: var(--gold); display: inline-flex; align-items: center; gap: 6px; cursor: pointer; background: transparent;" title="Open My Journey">
         ♡ My Journey (<span class="journey-count-badge">0</span>)
       </button>
@@ -55,17 +64,24 @@
       </div>
       <button class="stage-btn" id="mobile-menu-close" style="width: 44px; height: 44px;">✕</button>
     </div>
+
+    <button onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll'); window.raahiOpenSearchModal();" class="search-nav-btn" style="width: 100%; margin: 12px 0 20px; justify-content: flex-start; padding: 12px 18px; border-radius: 8px;">
+      🔍 Search 36 States & 111+ Destinations...
+    </button>
+
     <nav class="mobile-nav-links">
-      <a href="#/home" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Explore</a>
-      <a href="#states" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Destinations</a>
+      <a href="#/home" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Explore Home</a>
+      <a href="#interactive-map" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Interactive India Map</a>
+      <a href="#states" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">28 States & 8 UTs</a>
+      <a href="#all-destinations" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">111+ Destinations</a>
       <a href="#journey-discovery" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Curated Journeys</a>
       <a href="javascript:void(0)" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll'); window.raahiOpenJourneyDrawer();">♡ My Journey (<span class="journey-count-badge">0</span>)</a>
       <a href="#/journey" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Build Route</a>
-      <a href="#stays" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Stays</a>
-      <a href="#about" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">About</a>
+      <a href="#stays" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Heritage Stays</a>
+      <a href="#about" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">About RAAHI</a>
     </nav>
-    <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--muted-dim); letter-spacing: 0.1em;">
-      RAAHI NATIONAL TOURISM PLATFORM © 2026
+    <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--muted-dim); letter-spacing: 0.1em; margin-top: 30px;">
+      RAAHI PAN-INDIA TOURISM PLATFORM © 2026
     </div>
   </div>
 
@@ -77,25 +93,170 @@
       <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content">
-          <span class="eyebrow">NATIONAL TOURISM PLATFORM // INDIA</span>
+          <span class="eyebrow">NATIONAL TOURISM PLATFORM // 28 STATES & 8 UNION TERRITORIES</span>
           <h1>
             RAAHI<br>
             DON'T JUST VISIT.<br>
-            <span>EXPERIENCE.</span>
+            <span>EXPERIENCE INDIA.</span>
           </h1>
           <p>
-            Discover destinations, stories, and travel intelligence across India — and decide how deeply you want to explore.
+            Discover 111+ curated destinations across all 36 Indian states and union territories. Explore royal citadels, high-altitude passes, sacred ghats, and living artisan quarters.
           </p>
           <div class="hero-actions">
-            <a href="#states" class="btn light">EXPLORE DESTINATIONS →</a>
-            <a href="#journey-discovery" class="btn">FIND YOUR JOURNEY →</a>
+            <button onclick="window.raahiOpenSearchModal()" class="btn gold" style="display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);">
+              🔍 SEARCH ALL 36 STATES & DESTINATIONS
+            </button>
+            <a href="#interactive-map" class="btn light">INTERACTIVE INDIA MAP →</a>
+            <a href="#states" class="btn">EXPLORE 36 STATES & UTS →</a>
           </div>
         </div>
-        <div class="hero-meta">NATIONAL ARCHIVE // 2026</div>
+        <div class="hero-meta">NATIONAL ARCHIVE // 2026 // 36 DIVISIONS</div>
         <div class="hero-line"></div>
       </section>
 
-      <!-- Interactive Discovery: What kind of journey are you looking for? -->
+      <!-- Interactive India Map Section -->
+      <section class="raahi-map-section" id="interactive-map">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">GEOGRAPHIC EXPLORATION // 28 STATES & 8 UNION TERRITORIES</span>
+              <h2 class="heading-large" style="text-transform: uppercase;">INTERACTIVE MAP OF INDIA</h2>
+            </div>
+            <p style="color: var(--muted); font-size: 0.95rem; max-width: 400px;">
+              Hover over any state or union territory on the map below to preview regional highlights, capital, and curated destinations, or click to enter the state experience.
+            </p>
+          </div>
+
+          <div id="india-map-mount">
+            <!-- Dynamic SVG Map Mounted Here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Direct State Discovery (All 28 States + 8 Union Territories) -->
+      <section class="states-section" id="states" style="padding: 100px 0;">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">NATIONAL ARCHIVE // 36 ADMINISTRATIVE DIVISIONS</span>
+              <h2 class="heading-large" style="text-transform: uppercase;">WHERE WILL YOU GO?</h2>
+            </div>
+            <p style="color: var(--muted); font-size: 0.95rem; max-width: 380px;">
+              Explore all 28 sovereign Indian states and 8 union territories, complete with regional cuisine, living crafts, and heritage monuments.
+            </p>
+          </div>
+
+          <!-- Region Filter Tabs -->
+          <div class="filter-chips-container" id="states-region-chips" style="margin-bottom: 36px;">
+            <button class="filter-chip active" data-region="all">ALL REGIONS (36)</button>
+            <button class="filter-chip" data-region="north">NORTH (7)</button>
+            <button class="filter-chip" data-region="south">SOUTH (5)</button>
+            <button class="filter-chip" data-region="west">WEST (3)</button>
+            <button class="filter-chip" data-region="east">EAST (4)</button>
+            <button class="filter-chip" data-region="central">CENTRAL (2)</button>
+            <button class="filter-chip" data-region="northeast">NORTHEAST (8)</button>
+            <button class="filter-chip" data-region="ut">UNION TERRITORIES (8)</button>
+          </div>
+
+          <!-- Dynamic State Cards Grid (Populated by js/router.js) -->
+          <div class="states-grid" id="states-grid-container">
+            <!-- Rendered by JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. All Destinations Discovery Grid with Multi-Filter -->
+      <section class="all-destinations-section" id="all-destinations" style="padding: 100px 0; background: #080d0a; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">PAN-INDIA DISCOVERY DATABASE</span>
+              <h2 class="heading-large" style="text-transform: uppercase;">ALL DESTINATIONS & MONUMENTS</h2>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+              <span id="destinations-count-label" style="font-family: var(--font-display); font-size: 0.8rem; color: var(--gold); letter-spacing: 0.1em;">
+                Showing 12 of 111 destinations
+              </span>
+              <button onclick="window.raahiOpenSearchModal()" class="btn" style="padding: 6px 14px; font-size: 0.72rem; border-color: var(--line-strong);">
+                🔍 Open Search Index (Ctrl+K)
+              </button>
+            </div>
+          </div>
+
+          <!-- Multi-Dimensional Filter Bar -->
+          <div class="dest-multi-filter-bar" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 36px; background: rgba(13, 20, 16, 0.7); padding: 20px; border-radius: 8px; border: 1px solid var(--line);">
+            <div class="filter-select-group">
+              <label style="display: block; font-family: var(--font-display); font-size: 0.7rem; color: var(--muted-bright); margin-bottom: 6px; letter-spacing: 0.1em;">REGION</label>
+              <select id="dest-filter-region" class="raahi-select">
+                <option value="all">All Regions (India)</option>
+                <option value="north">North India</option>
+                <option value="south">South India</option>
+                <option value="west">West India</option>
+                <option value="east">East India</option>
+                <option value="central">Central India</option>
+                <option value="northeast">Northeast India</option>
+                <option value="ut">Union Territories</option>
+              </select>
+            </div>
+
+            <div class="filter-select-group">
+              <label style="display: block; font-family: var(--font-display); font-size: 0.7rem; color: var(--muted-bright); margin-bottom: 6px; letter-spacing: 0.1em;">EXPERIENCE TYPE</label>
+              <select id="dest-filter-type" class="raahi-select">
+                <option value="all">All Types</option>
+                <option value="heritage">Heritage & Citadels</option>
+                <option value="spiritual">Spiritual & Ghats</option>
+                <option value="nature">Nature & Hill Stations</option>
+                <option value="coastal">Coastal & Backwaters</option>
+                <option value="wildlife">Wildlife & Safaris</option>
+                <option value="adventure">High Altitude & Adventure</option>
+              </select>
+            </div>
+
+            <div class="filter-select-group">
+              <label style="display: block; font-family: var(--font-display); font-size: 0.7rem; color: var(--muted-bright); margin-bottom: 6px; letter-spacing: 0.1em;">BUDGET TIER</label>
+              <select id="dest-filter-budget" class="raahi-select">
+                <option value="all">All Budgets</option>
+                <option value="budget">Budget (₹ / Backpacking)</option>
+                <option value="mid-range">Mid-Range (₹₹ / Comfort)</option>
+                <option value="luxury">Luxury (₹₹₹ / Heritage Palace)</option>
+              </select>
+            </div>
+
+            <div class="filter-select-group">
+              <label style="display: block; font-family: var(--font-display); font-size: 0.7rem; color: var(--muted-bright); margin-bottom: 6px; letter-spacing: 0.1em;">IDEAL SEASON</label>
+              <select id="dest-filter-season" class="raahi-select">
+                <option value="all">All Seasons</option>
+                <option value="winter">Winter (Oct — Mar)</option>
+                <option value="monsoon">Monsoon (Jun — Sep)</option>
+                <option value="summer">Summer (Apr — Jun)</option>
+              </select>
+            </div>
+
+            <div class="filter-select-group">
+              <label style="display: block; font-family: var(--font-display); font-size: 0.7rem; color: var(--muted-bright); margin-bottom: 6px; letter-spacing: 0.1em;">SORT ORDER</label>
+              <select id="dest-filter-sort" class="raahi-select">
+                <option value="featured">Featured / Curated</option>
+                <option value="name">Name (A — Z)</option>
+                <option value="rating">Top Rated</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Destinations Grid -->
+          <div class="states-grid" id="all-destinations-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
+            <!-- Rendered by JavaScript with Progressive Chunking -->
+          </div>
+
+          <!-- Progressive Load More Trigger -->
+          <div style="text-align: center; margin-top: 50px;">
+            <button id="load-more-destinations-btn" class="btn gold" style="padding: 14px 32px; font-size: 0.85rem; box-shadow: 0 0 25px rgba(212,175,55,0.25);">
+              LOAD MORE DESTINATIONS ↓
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Curated Discovery Archetypes -->
       <section class="discovery-section" id="journey-discovery">
         <div class="wrap">
           <div class="section-head">
@@ -132,95 +293,18 @@
             <div>
               <span class="eyebrow">THE RAAHI PHILOSOPHY</span>
               <h2 class="heading-large" style="text-transform: uppercase;">
-                A digital way to discover places.
+                A digital way to discover India.
               </h2>
             </div>
             <div>
               <p class="lead" style="margin-bottom: 2rem;">
-                RAAHI is not a generic booking directory or travel blog. It is an editorial discovery platform built to connect travelers with regional soul, architectural masterpieces, practical travel intelligence, and living cultural lineages.
+                RAAHI is not a generic booking directory or travel blog. It is an editorial discovery platform built to connect travelers with regional soul, architectural masterpieces, practical travel intelligence, and living cultural lineages across all 28 States and 8 Union Territories.
               </p>
               <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">HERITAGE FORTS</span>
-                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">SACRED RIVERS</span>
-                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">HIMALAYAN PASSES</span>
-                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">TROPICAL LAGOONS</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. Direct State Discovery (Where Will You Go?) -->
-      <section class="states-section" id="states">
-        <div class="wrap">
-          <div class="section-head">
-            <div>
-              <span class="eyebrow">DIRECT STATE DISCOVERY</span>
-              <h2 class="heading-large" style="text-transform: uppercase;">WHERE WILL YOU GO?</h2>
-            </div>
-            <p style="color: var(--muted); font-size: 0.95rem; max-width: 360px;">
-              Select a state to enter its regional experience, curated destinations, culinary traditions, and cultural stories.
-            </p>
-          </div>
-
-          <!-- Dynamic State Cards Grid (Populated by js/router.js) -->
-          <div class="states-grid" id="states-grid-container">
-            <!-- Rendered by JavaScript -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Featured Destinations Rail -->
-      <section class="destinations-rail-section" id="featured">
-        <div class="wrap">
-          <div class="section-head">
-            <div>
-              <span class="eyebrow">FEATURED HIGHLIGHTS</span>
-              <h2 class="heading-large" style="text-transform: uppercase;">ICONIC MONUMENTS</h2>
-            </div>
-            <span style="font-family: var(--font-display); font-size: 0.75rem; color: var(--gold); letter-spacing: 0.15em;">
-              CLICK ANY DESTINATION TO EXPLORE →
-            </span>
-          </div>
-
-          <div class="rail">
-            <div class="destination-card" onclick="window.location.hash='#/destinations/amber-fort'">
-              <img src="assets/images/destinations/amber-fort.jpg" alt="Amber Fort" />
-              <div class="enter-circle">→</div>
-              <div class="dest-copy">
-                <small>Jaipur • Rajasthan</small>
-                <h3>Amber Fort</h3>
-                <p>The crown fortress of the Aravalli hills above Maota Lake with optional cinematic 3D exploration.</p>
-              </div>
-            </div>
-
-            <div class="destination-card" onclick="window.location.hash='#/destinations/taj-mahal'">
-              <img src="assets/images/destinations/taj-mahal.jpg" alt="Taj Mahal" />
-              <div class="enter-circle">→</div>
-              <div class="dest-copy">
-                <small>Agra • Uttar Pradesh</small>
-                <h3>Taj Mahal</h3>
-                <p>The sublime ivory-white marble wonder on the banks of the sacred Yamuna River.</p>
-              </div>
-            </div>
-
-            <div class="destination-card" onclick="window.location.hash='#/destinations/alleppey-backwaters'">
-              <img src="assets/images/destinations/alleppey-backwaters.jpg" alt="Alleppey" />
-              <div class="enter-circle">→</div>
-              <div class="dest-copy">
-                <small>Alappuzha • Kerala</small>
-                <h3>Alleppey Canals</h3>
-                <p>Serene interconnected backwaters flanked by coconut groves and hand-woven kettuvallams.</p>
-              </div>
-            </div>
-
-            <div class="destination-card" onclick="window.location.hash='#/destinations/spiti-key-monastery'">
-              <img src="assets/images/destinations/key-monastery.jpg" alt="Key Monastery" />
-              <div class="enter-circle">→</div>
-              <div class="dest-copy">
-                <small>Spiti Valley • Himachal Pradesh</small>
-                <h3>Key Monastery</h3>
-                <p>A thousand-year-old fort-monastery perched at 13,668 feet in the trans-Himalayas.</p>
+                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">28 STATES</span>
+                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">8 UNION TERRITORIES</span>
+                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">111+ CURATED DESTINATIONS</span>
+                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">INTERACTIVE MAP</span>
               </div>
             </div>
           </div>
@@ -239,11 +323,11 @@
           <p class="lead" style="color: var(--cream); max-width: 600px; margin-bottom: 2.5rem;">
             Whether observing dawn aartis on ancient stone ghats or entering full-screen cinematic explorations of royal fortresses, RAAHI puts the visitor in command of the narrative.
           </p>
-          <a href="#states" class="btn light">Start Your Exploration →</a>
+          <a href="#states" class="btn light">Explore All 36 States & UTs →</a>
         </div>
       </section>
 
-      <!-- Stays & Heritage Accommodations Preview -->
+      <!-- Stays & Heritage Accommodations -->
       <section class="wrap" id="stays" style="padding: 100px 0;">
         <div class="section-head">
           <div>
@@ -255,22 +339,8 @@
           </p>
         </div>
 
-        <div class="editorial-grid">
-          <div class="editorial-card">
-            <span class="editorial-tag">Royal Palace Stay // Rajasthan</span>
-            <h3>Samode Palace & Haveli</h3>
-            <p>475-year-old Rajput architectural gem adorned with intricate mirror work, royal suites, and serene courtyards.</p>
-          </div>
-          <div class="editorial-card">
-            <span class="editorial-tag">Eco Waterway Villa // Kerala</span>
-            <h3>Kumarakom Lake Heritage Villas</h3>
-            <p>Reconstructed 16th-century traditional Tharavadu wooden homes set alongside tranquil backwater lagoons.</p>
-          </div>
-          <div class="editorial-card">
-            <span class="editorial-tag">Himalayan Cedar Estate // Himachal</span>
-            <h3>The Oberoi Cecil Heritage</h3>
-            <p>Grand British colonial heritage retreat nestled in the Himalayan cedar forests of Shimla since 1884.</p>
-          </div>
+        <div class="editorial-grid" id="stays-editorial-grid">
+          <!-- Populated from staysData by js/router.js -->
         </div>
       </section>
     </div>
@@ -278,10 +348,10 @@
     <!-- 2. State Experience View Container -->
     <div id="view-state" style="display: none;"></div>
 
-    <!-- 3. City Experience View Container (8-12 places + Smart Planner) -->
+    <!-- 3. City Experience View Container -->
     <div id="view-city" style="display: none;"></div>
 
-    <!-- 4. Destination Experience View Container (Travel Intelligence) -->
+    <!-- 4. Destination Experience View Container -->
     <div id="view-destination" style="display: none;"></div>
 
     <!-- 5. Dedicated Full-Page Cinematic Route Container (#/cinematic/:placeId) -->
@@ -334,18 +404,19 @@
             <span class="mark"></span>RAAHI
           </div>
           <p style="max-width: 320px; line-height: 1.6; color: var(--muted-dim);">
-            A digital discovery platform celebrating the destinations, living culture, and timeless architecture across India.
+            A digital discovery platform celebrating the destinations, living culture, and timeless architecture across all 28 States and 8 Union Territories of India.
           </p>
         </div>
 
         <div class="footer-col">
-          <h4>Destinations</h4>
+          <h4>Key Regions</h4>
           <ul>
-            <li><a href="#/states/rajasthan">Rajasthan</a></li>
-            <li><a href="#/states/kerala">Kerala</a></li>
-            <li><a href="#/states/himachal-pradesh">Himachal Pradesh</a></li>
-            <li><a href="#/states/goa">Goa</a></li>
-            <li><a href="#/states/uttar-pradesh">Uttar Pradesh</a></li>
+            <li><a href="#/states/rajasthan">Rajasthan (North)</a></li>
+            <li><a href="#/states/kerala">Kerala (South)</a></li>
+            <li><a href="#/states/maharashtra">Maharashtra (West)</a></li>
+            <li><a href="#/states/west-bengal">West Bengal (East)</a></li>
+            <li><a href="#/states/assam">Assam (Northeast)</a></li>
+            <li><a href="#/states/ladakh">Ladakh (UT)</a></li>
           </ul>
         </div>
 
@@ -354,6 +425,7 @@
           <ul>
             <li><a href="#/cinematic/amber-fort">Amber Fort Cinematic Expedition</a></li>
             <li><a href="#/journey">Build My Journey Planner</a></li>
+            <li><a href="#interactive-map">Interactive India Map</a></li>
             <li><a href="#stays">Palace & Eco Stays</a></li>
             <li><a href="#about">Living Culture & Crafts</a></li>
           </ul>
@@ -363,17 +435,20 @@
           <h4>Platform</h4>
           <ul>
             <li><a href="#about">About RAAHI</a></li>
-            <li><a href="#states">Direct State Discovery</a></li>
+            <li><a href="#states">All 36 States & UTs</a></li>
+            <li><a href="#all-destinations">111+ Curated Destinations</a></li>
             <li><a href="#/home">National Archive</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <div>RAAHI NATIONAL TOURISM PLATFORM © 2026</div>
-        <div>DESIGNED FOR NATIONAL-SCALE HACKATHON EXCELLENCE</div>
+        <div>RAAHI NATIONAL TOURISM PLATFORM © 2026 // 28 STATES & 8 UNION TERRITORIES</div>
+        <div>ENGINEERED FOR PAN-INDIA TRAVEL DISCOVERY EXCELLENCE</div>
       </div>
     </div>
+  </footer>
+
   <!-- Google Maps Location Modal -->
   <div class="raahi-maps-overlay" id="raahi-maps-overlay" onclick="window.raahiCloseMapsModal()"></div>
   <div class="raahi-maps-modal" id="raahi-maps-modal" role="dialog" aria-modal="true" aria-label="Google Maps Location">
