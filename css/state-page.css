@@ -1,0 +1,239 @@
+/* ==========================================================================
+   RAAHI // State Experience Page Styles
+   ========================================================================== */
+
+.state-view {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: 80px;
+}
+
+/* State Hero */
+.state-hero {
+  position: relative;
+  height: 80vh;
+  min-height: 600px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 80px;
+  overflow: hidden;
+}
+
+.state-hero-bg {
+  position: absolute;
+  inset: -6%;
+  background-position: center;
+  background-size: cover;
+  animation: heroKenBurns 20s ease-in-out infinite alternate;
+}
+
+.state-hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, var(--bg) 0%, rgba(7, 11, 9, 0.5) 50%, rgba(7, 11, 9, 0.75) 100%);
+}
+
+.state-hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(1320px, 90vw);
+  margin: 0 auto;
+}
+
+.state-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 8vw, 7.5rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  margin: 8px 0 16px;
+}
+
+.state-hero-tagline {
+  font-size: 1.25rem;
+  color: var(--cream);
+  max-width: 650px;
+  line-height: 1.6;
+}
+
+/* Quick Stats Ribbon */
+.state-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  background: rgba(14, 20, 17, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px 32px;
+  margin: -40px auto 80px;
+  width: min(1320px, 90vw);
+  position: relative;
+  z-index: 10;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+/* State Story Section */
+.state-story-section {
+  padding: 60px 0;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* Experiences & Food Grids */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.editorial-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 32px;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.editorial-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+}
+
+.editorial-tag {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.editorial-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.editorial-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Travel Info Section */
+.travel-info-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.info-item h4 {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.info-item p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .state-stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .story-grid { grid-template-columns: 1fr; gap: 40px; }
+  .editorial-grid { grid-template-columns: 1fr; }
+  .travel-info-box { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   City Visual Identity & Cultural Ambient Layers
+   ========================================================================== */
+.city-ambient-motif-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: screen;
+  opacity: 0.35;
+}
+
+/* Jaipur: Pink Sandstone Jharokha & Warm Amber Shimmer */
+.city-motif-jaipur {
+  background: 
+    radial-gradient(ellipse at 80% 20%, rgba(212, 175, 55, 0.3) 0%, transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(224, 90, 71, 0.25) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, transparent 100%);
+}
+
+/* Jaisalmer: Golden Desert Sandstone & Warm Duneland Glow */
+.city-motif-jaisalmer {
+  background: 
+    radial-gradient(ellipse at 70% 30%, rgba(245, 158, 11, 0.35) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(217, 119, 6, 0.2) 0%, transparent 50%);
+}
+
+/* Udaipur: Mewar Lakes & Royal Marble Palace Water Shimmer */
+.city-motif-udaipur {
+  background: 
+    radial-gradient(ellipse at 75% 25%, rgba(56, 189, 248, 0.25) 0%, transparent 60%),
+    radial-gradient(circle at 25% 85%, rgba(212, 175, 55, 0.2) 0%, transparent 50%);
+}
+
+/* Varanasi: Sacred Ganga Twilight Aarti & Temple Flame Glow */
+.city-motif-varanasi {
+  background: 
+    radial-gradient(ellipse at 80% 20%, rgba(249, 115, 22, 0.35) 0%, transparent 60%),
+    radial-gradient(circle at 15% 75%, rgba(212, 175, 55, 0.25) 0%, transparent 50%);
+}
+
+/* Munnar: Western Ghats Emerald Tea Hills & Mountain Mist */
+.city-motif-munnar {
+  background: 
+    radial-gradient(ellipse at 80% 20%, rgba(16, 185, 129, 0.3) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(5, 150, 105, 0.2) 0%, transparent 50%);
+}
+
+

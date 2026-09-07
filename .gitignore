@@ -1,0 +1,13 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Gemini / Editor Artifacts
+.gemini/
+.system_generated/
+*.tmp
+*.log

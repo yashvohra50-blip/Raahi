@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>RAAHI — Enter the Journey | National Tourism Platform</title>
+  <meta name="description" content="Discover destinations, stories, and travel intelligence across India. An editorial and cinematic journey through Rajasthan, Kerala, Himachal Pradesh, Goa, and Uttar Pradesh.">
+  
+  <!-- Google Fonts: Space Grotesk & DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Modular CSS Design System -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/state-page.css">
+  <link rel="stylesheet" href="css/destination-page.css">
+  <link rel="stylesheet" href="css/cinematic.css">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
+</head>
+<body>
+  <!-- Ambient Subtle Noise Texture -->
+  <div class="grain"></div>
+
+  <!-- Sticky Premium Navigation Bar -->
+  <header class="nav">
+    <a href="#/home" class="logo">
+      <span class="mark"></span>RAAHI
+    </a>
+
+    <nav class="navlinks">
+      <a href="#/home" class="active">Explore</a>
+      <a href="#states">Destinations</a>
+      <a href="#journey-discovery">Journeys</a>
+      <a href="#/journey">Build Route</a>
+      <a href="#stays">Stays</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <button onclick="window.raahiOpenJourneyDrawer()" class="plan-btn" style="border-color: var(--gold); color: var(--gold); display: inline-flex; align-items: center; gap: 6px; cursor: pointer; background: transparent;" title="Open My Journey">
+        ♡ My Journey (<span class="journey-count-badge">0</span>)
+      </button>
+      <button class="menu-toggle" id="menu-toggle-btn" aria-label="Open Navigation Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Drawer -->
+  <div class="mobile-menu-drawer" id="mobile-menu-drawer">
+    <div class="mobile-menu-header">
+      <div class="logo">
+        <span class="mark"></span>RAAHI
+      </div>
+      <button class="stage-btn" id="mobile-menu-close" style="width: 44px; height: 44px;">✕</button>
+    </div>
+    <nav class="mobile-nav-links">
+      <a href="#/home" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Explore</a>
+      <a href="#states" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Destinations</a>
+      <a href="#journey-discovery" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Curated Journeys</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll'); window.raahiOpenJourneyDrawer();">♡ My Journey (<span class="journey-count-badge">0</span>)</a>
+      <a href="#/journey" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Build Route</a>
+      <a href="#stays" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Stays</a>
+      <a href="#about" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">About</a>
+    </nav>
+    <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--muted-dim); letter-spacing: 0.1em;">
+      RAAHI NATIONAL TOURISM PLATFORM © 2026
+    </div>
+  </div>
+
+  <!-- Dynamic Views Container -->
+  <main>
+    <!-- 1. Master Home View -->
+    <div id="view-home">
+      <!-- Master Hero Section -->
+      <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+          <span class="eyebrow">NATIONAL TOURISM PLATFORM // INDIA</span>
+          <h1>
+            RAAHI<br>
+            DON'T JUST VISIT.<br>
+            <span>EXPERIENCE.</span>
+          </h1>
+          <p>
+            Discover destinations, stories, and travel intelligence across India — and decide how deeply you want to explore.
+          </p>
+          <div class="hero-actions">
+            <a href="#states" class="btn light">EXPLORE DESTINATIONS →</a>
+            <a href="#journey-discovery" class="btn">FIND YOUR JOURNEY →</a>
+          </div>
+        </div>
+        <div class="hero-meta">NATIONAL ARCHIVE // 2026</div>
+        <div class="hero-line"></div>
+      </section>
+
+      <!-- Interactive Discovery: What kind of journey are you looking for? -->
+      <section class="discovery-section" id="journey-discovery">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">CURATED EXPLORATION</span>
+              <h2 class="heading-large" style="text-transform: uppercase;">WHAT KIND OF JOURNEY ARE YOU LOOKING FOR?</h2>
+            </div>
+            <p style="color: var(--muted); font-size: 0.95rem; max-width: 380px;">
+              Filter places across India by travel archetype, architectural heritage, and natural solitude.
+            </p>
+          </div>
+
+          <!-- Discovery Category Filter Chips -->
+          <div class="filter-chips-container" id="discovery-filter-chips">
+            <button class="filter-chip active" data-category="all">ALL EXPERIENCES</button>
+            <button class="filter-chip" data-category="forts">ROYAL FORTRESSES</button>
+            <button class="filter-chip" data-category="himalayas">HIMALAYAN SOLITUDE</button>
+            <button class="filter-chip" data-category="sacred">SACRED RIVERS & GHATS</button>
+            <button class="filter-chip" data-category="backwaters">BACKWATERS & COASTS</button>
+            <button class="filter-chip" data-category="culture">LIVING TRADITIONS</button>
+          </div>
+
+          <!-- Filter Results Grid -->
+          <div class="discovery-results-grid" id="discovery-results-grid">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Editorial Intro Grid -->
+      <section class="intro" id="about" style="padding: 120px 5vw 80px; background: #0a100d;">
+        <div class="wrap">
+          <div class="intro-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;">
+            <div>
+              <span class="eyebrow">THE RAAHI PHILOSOPHY</span>
+              <h2 class="heading-large" style="text-transform: uppercase;">
+                A digital way to discover places.
+              </h2>
+            </div>
+            <div>
+              <p class="lead" style="margin-bottom: 2rem;">
+                RAAHI is not a generic booking directory or travel blog. It is an editorial discovery platform built to connect travelers with regional soul, architectural masterpieces, practical travel intelligence, and living cultural lineages.
+              </p>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">HERITAGE FORTS</span>
+                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">SACRED RIVERS</span>
+                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">HIMALAYAN PASSES</span>
+                <span class="btn" style="padding: 8px 16px; font-size: 0.72rem; cursor: default;">TROPICAL LAGOONS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Direct State Discovery (Where Will You Go?) -->
+      <section class="states-section" id="states">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">DIRECT STATE DISCOVERY</span>
+              <h2 class="heading-large" style="text-transform: uppercase;">WHERE WILL YOU GO?</h2>
+            </div>
+            <p style="color: var(--muted); font-size: 0.95rem; max-width: 360px;">
+              Select a state to enter its regional experience, curated destinations, culinary traditions, and cultural stories.
+            </p>
+          </div>
+
+          <!-- Dynamic State Cards Grid (Populated by js/router.js) -->
+          <div class="states-grid" id="states-grid-container">
+            <!-- Rendered by JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Destinations Rail -->
+      <section class="destinations-rail-section" id="featured">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">FEATURED HIGHLIGHTS</span>
+              <h2 class="heading-large" style="text-transform: uppercase;">ICONIC MONUMENTS</h2>
+            </div>
+            <span style="font-family: var(--font-display); font-size: 0.75rem; color: var(--gold); letter-spacing: 0.15em;">
+              CLICK ANY DESTINATION TO EXPLORE →
+            </span>
+          </div>
+
+          <div class="rail">
+            <div class="destination-card" onclick="window.location.hash='#/destinations/amber-fort'">
+              <img src="assets/images/destinations/amber-fort.jpg" alt="Amber Fort" />
+              <div class="enter-circle">→</div>
+              <div class="dest-copy">
+                <small>Jaipur • Rajasthan</small>
+                <h3>Amber Fort</h3>
+                <p>The crown fortress of the Aravalli hills above Maota Lake with optional cinematic 3D exploration.</p>
+              </div>
+            </div>
+
+            <div class="destination-card" onclick="window.location.hash='#/destinations/taj-mahal'">
+              <img src="assets/images/destinations/taj-mahal.jpg" alt="Taj Mahal" />
+              <div class="enter-circle">→</div>
+              <div class="dest-copy">
+                <small>Agra • Uttar Pradesh</small>
+                <h3>Taj Mahal</h3>
+                <p>The sublime ivory-white marble wonder on the banks of the sacred Yamuna River.</p>
+              </div>
+            </div>
+
+            <div class="destination-card" onclick="window.location.hash='#/destinations/alleppey-backwaters'">
+              <img src="assets/images/destinations/alleppey-backwaters.jpg" alt="Alleppey" />
+              <div class="enter-circle">→</div>
+              <div class="dest-copy">
+                <small>Alappuzha • Kerala</small>
+                <h3>Alleppey Canals</h3>
+                <p>Serene interconnected backwaters flanked by coconut groves and hand-woven kettuvallams.</p>
+              </div>
+            </div>
+
+            <div class="destination-card" onclick="window.location.hash='#/destinations/spiti-key-monastery'">
+              <img src="assets/images/destinations/key-monastery.jpg" alt="Key Monastery" />
+              <div class="enter-circle">→</div>
+              <div class="dest-copy">
+                <small>Spiti Valley • Himachal Pradesh</small>
+                <h3>Key Monastery</h3>
+                <p>A thousand-year-old fort-monastery perched at 13,668 feet in the trans-Himalayas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Manifesto Section -->
+      <section class="manifesto" id="experiences">
+        <div class="manifesto-bg"></div>
+        <div class="wrap">
+          <span class="eyebrow">THE RAAHI STANDARD</span>
+          <h2>
+            Travel is not a checklist.<br>
+            It is an <em>invitation to feel</em>.
+          </h2>
+          <p class="lead" style="color: var(--cream); max-width: 600px; margin-bottom: 2.5rem;">
+            Whether observing dawn aartis on ancient stone ghats or entering full-screen cinematic explorations of royal fortresses, RAAHI puts the visitor in command of the narrative.
+          </p>
+          <a href="#states" class="btn light">Start Your Exploration →</a>
+        </div>
+      </section>
+
+      <!-- Stays & Heritage Accommodations Preview -->
+      <section class="wrap" id="stays" style="padding: 100px 0;">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">SANCTUARIES OF REST</span>
+            <h2 class="heading-large" style="text-transform: uppercase;">HERITAGE STAYS</h2>
+          </div>
+          <p style="color: var(--muted); font-size: 0.95rem; max-width: 360px;">
+            Handpicked architectural havelis, eco-lodges, and royal palace stays preserving local craftsmanship.
+          </p>
+        </div>
+
+        <div class="editorial-grid">
+          <div class="editorial-card">
+            <span class="editorial-tag">Royal Palace Stay // Rajasthan</span>
+            <h3>Samode Palace & Haveli</h3>
+            <p>475-year-old Rajput architectural gem adorned with intricate mirror work, royal suites, and serene courtyards.</p>
+          </div>
+          <div class="editorial-card">
+            <span class="editorial-tag">Eco Waterway Villa // Kerala</span>
+            <h3>Kumarakom Lake Heritage Villas</h3>
+            <p>Reconstructed 16th-century traditional Tharavadu wooden homes set alongside tranquil backwater lagoons.</p>
+          </div>
+          <div class="editorial-card">
+            <span class="editorial-tag">Himalayan Cedar Estate // Himachal</span>
+            <h3>The Oberoi Cecil Heritage</h3>
+            <p>Grand British colonial heritage retreat nestled in the Himalayan cedar forests of Shimla since 1884.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 2. State Experience View Container -->
+    <div id="view-state" style="display: none;"></div>
+
+    <!-- 3. City Experience View Container (8-12 places + Smart Planner) -->
+    <div id="view-city" style="display: none;"></div>
+
+    <!-- 4. Destination Experience View Container (Travel Intelligence) -->
+    <div id="view-destination" style="display: none;"></div>
+
+    <!-- 5. Dedicated Full-Page Cinematic Route Container (#/cinematic/:placeId) -->
+    <div id="view-cinematic" style="display: none;"></div>
+
+    <!-- 6. Custom Journey Builder View Container (#/journey) -->
+    <div id="view-journey" style="display: none;"></div>
+  </main>
+
+  <!-- Contextual Intelligent Travel Assistant ("Ask RAAHI") -->
+  <button class="raahi-assistant-trigger" id="raahi-assistant-trigger" title="Ask RAAHI Travel Intelligence">
+    ✦ Ask RAAHI
+  </button>
+
+  <div class="raahi-assistant-overlay" id="raahi-assistant-overlay"></div>
+
+  <div class="raahi-assistant-drawer" id="raahi-assistant-drawer" role="dialog" aria-modal="true" aria-label="RAAHI Travel Intelligence Assistant">
+    <div>
+      <div class="assistant-drawer-header">
+        <div class="assistant-brand-title">
+          <span class="mark"></span>
+          RAAHI INTELLIGENCE
+        </div>
+        <button class="stage-btn" id="raahi-assistant-close" style="width: 36px; height: 36px; font-size: 0.9rem;">✕</button>
+      </div>
+      <div class="assistant-context-badge" id="raahi-context-badge">
+        EXPLORING: INDIA NATIONAL ARCHIVE
+      </div>
+      <div class="assistant-prompt-chips" id="raahi-context-chips">
+        <!-- Dynamic Contextual Prompt Chips Generated by assistant.js -->
+      </div>
+    </div>
+
+    <div class="raahi-messages-container" id="raahi-messages-container">
+      <!-- Conversational Intelligence Stream -->
+    </div>
+
+    <div class="assistant-input-bar">
+      <input type="text" class="assistant-input" id="raahi-assistant-input" placeholder="Ask about timing, budget, hidden gems, food..." />
+      <button class="assistant-send-btn" id="raahi-assistant-send" aria-label="Send Query">↑</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-col">
+          <div class="logo" style="margin-bottom: 1.25rem;">
+            <span class="mark"></span>RAAHI
+          </div>
+          <p style="max-width: 320px; line-height: 1.6; color: var(--muted-dim);">
+            A digital discovery platform celebrating the destinations, living culture, and timeless architecture across India.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Destinations</h4>
+          <ul>
+            <li><a href="#/states/rajasthan">Rajasthan</a></li>
+            <li><a href="#/states/kerala">Kerala</a></li>
+            <li><a href="#/states/himachal-pradesh">Himachal Pradesh</a></li>
+            <li><a href="#/states/goa">Goa</a></li>
+            <li><a href="#/states/uttar-pradesh">Uttar Pradesh</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Experiences</h4>
+          <ul>
+            <li><a href="#/cinematic/amber-fort">Amber Fort Cinematic Expedition</a></li>
+            <li><a href="#/journey">Build My Journey Planner</a></li>
+            <li><a href="#stays">Palace & Eco Stays</a></li>
+            <li><a href="#about">Living Culture & Crafts</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="#about">About RAAHI</a></li>
+            <li><a href="#states">Direct State Discovery</a></li>
+            <li><a href="#/home">National Archive</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>RAAHI NATIONAL TOURISM PLATFORM © 2026</div>
+        <div>DESIGNED FOR NATIONAL-SCALE HACKATHON EXCELLENCE</div>
+      </div>
+    </div>
+  <!-- Google Maps Location Modal -->
+  <div class="raahi-maps-overlay" id="raahi-maps-overlay" onclick="window.raahiCloseMapsModal()"></div>
+  <div class="raahi-maps-modal" id="raahi-maps-modal" role="dialog" aria-modal="true" aria-label="Google Maps Location">
+    <div class="maps-modal-header">
+      <div class="maps-badge">
+        <span>📍</span> GEOGRAPHIC LOCATION
+      </div>
+      <button class="stage-btn" id="raahi-maps-close" onclick="window.raahiCloseMapsModal()" style="width: 36px; height: 36px; font-size: 0.9rem;" title="Close">✕</button>
+    </div>
+
+    <div class="maps-modal-body">
+      <div class="maps-pin-visual">
+        <div class="maps-pin-core"></div>
+        <div class="maps-pin-pulse"></div>
+      </div>
+      <h3 id="maps-modal-place-name">Amber Fort & Palace</h3>
+      <div class="maps-modal-location" id="maps-modal-place-loc">Jaipur, Rajasthan, India</div>
+      
+      <div class="maps-query-preview" id="maps-modal-query-preview">
+        query: Amber Fort, Jaipur, Rajasthan, India
+      </div>
+
+      <a href="#" target="_blank" rel="noopener noreferrer" class="btn gold" id="maps-modal-open-link" style="width: 100%; justify-content: center; padding: 14px 20px; font-size: 0.85rem; margin-top: 20px; box-shadow: 0 0 25px rgba(212,175,55,0.3);">
+        OPEN IN GOOGLE MAPS ↗
+      </a>
+      <button class="btn" onclick="window.raahiCloseMapsModal()" style="width: 100%; justify-content: center; padding: 10px; font-size: 0.75rem; margin-top: 10px; border: 1px solid var(--line); color: var(--muted);">
+        ✕ Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Persistent My Journey Drawer -->
+  <div class="raahi-journey-overlay" id="raahi-journey-overlay" onclick="window.raahiCloseJourneyDrawer()"></div>
+  <div class="raahi-journey-drawer" id="raahi-journey-drawer" role="dialog" aria-modal="true" aria-label="My Journey Drawer">
+    <!-- Rendered dynamically by renderJourneyDrawer() -->
+  </div>
+
+  <!-- Master Application Scripts -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
