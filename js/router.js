@@ -121,6 +121,7 @@ document.addEventListener('keydown', (e) => {
 export function initRouter() {
   window.addEventListener('hashchange', handleRoute);
   window.addEventListener('load', handleRoute);
+  handleRoute();
 }
 
 export function navigateTo(hash) {

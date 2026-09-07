@@ -128,7 +128,7 @@ function initDiscoveryFilters() {
   renderCategory('all');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function bootstrapApp() {
   // 1. Initialize Core Router & Assistant
   initRouter();
   initDiscoveryFilters();
@@ -169,4 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (route) navigateTo(route);
     });
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootstrapApp);
+} else {
+  bootstrapApp();
+}
