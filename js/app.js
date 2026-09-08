@@ -6,6 +6,7 @@ import { initRouter, navigateTo } from './router.js';
 import { initAssistant } from './assistant.js';
 import { initSearchModal } from './components/searchModal.js';
 import { initAuthModal } from './components/loginModal.js';
+import { initFirebaseAuth } from './services/firebaseAuth.js';
 import { updateJourneyBadgeCount, isPlaceSaved, updateAllSaveButtons } from './journeyBuilder.js';
 import { DataRegistry, RAAHI_DATA } from './data/dataRegistry.js';
 import { experiencesData } from './data/experiencesData.js';
@@ -68,6 +69,7 @@ function bootstrapApp() {
   initRouter();
   initSearchModal();
   initAuthModal();
+  initFirebaseAuth();
   initDiscoveryFilters();
   initAssistant();
   updateJourneyBadgeCount();

@@ -60,6 +60,7 @@ let currentQuoteIdx = 0;
 let quoteTimer = null;
 
 export function initAuthModal() {
+  window.updateAuthNavButton = updateAuthNavButton;
   updateAuthNavButton();
 }
 
@@ -297,17 +298,21 @@ window.raahiHandleAuthSubmit = function(e) {
 };
 
 window.raahiSocialLogin = function(provider) {
-  const userObj = {
-    email: `explorer.${provider.toLowerCase()}@raahi.in`,
-    name: `${provider} Traveler`,
-    avatar: provider.charAt(0),
-    loginTime: new Date().toISOString()
-  };
+  if (window.raahiTriggerFirebaseSignIn) {
+    window.raahiTriggerFirebaseSignIn(provider);
+  } else {
+    const userObj = {
+      email: `explorer.${provider.toLowerCase()}@raahi.in`,
+      name: `${provider} Traveler`,
+      avatar: provider.charAt(0),
+      loginTime: new Date().toISOString()
+    };
 
-  localStorage.setItem('raahi_user', JSON.stringify(userObj));
-  updateAuthNavButton();
-  showToast(`Successfully authenticated with ${provider}!`);
-  window.location.hash = '#/home';
+    localStorage.setItem('raahi_user', JSON.stringify(userObj));
+    updateAuthNavButton();
+    showToast(`Successfully authenticated with ${provider}!`);
+    window.location.hash = '#/home';
+  }
 };
 
 window.raahiLogout = function() {
