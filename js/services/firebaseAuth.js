@@ -75,52 +75,60 @@ export function initFirebaseAuth() {
   });
 }
 
-// Google Authentication - Direct Page Transfer with Async Error Fallback
-window.loginWithGoogle = function() {
+// Google Authentication - signInWithPopup + Popup Blocked Redirect Fallback
+window.loginWithGoogle = async function() {
   const errEl = document.getElementById("auth-error-msg");
-  if (errEl) errEl.textContent = "Connecting to Google OAuth...";
+  if (errEl) errEl.textContent = "Connecting to Google...";
 
-  if (!auth) {
+  if (typeof firebase === 'undefined' || !firebase.auth) {
+    if (errEl) errEl.textContent = "Firebase Auth SDK not loaded. Check script imports.";
     simulateFallbackLogin('Google');
     return;
   }
 
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
+
   try {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.addScope('email');
-    provider.addScope('profile');
-    
-    auth.signInWithRedirect(provider).catch((err) => {
-      console.warn('[RAAHI Auth] Google Redirect Promise rejection:', err.code, err.message);
-      handleAuthError(err, 'Google');
-    });
+    const res = await firebase.auth().signInWithPopup(provider);
+    console.log("Logged in:", res.user);
+    if (typeof closeAuthModal === 'function') closeAuthModal();
   } catch (err) {
-    console.error('[RAAHI Auth] Google Sync error:', err);
-    handleAuthError(err, 'Google');
+    console.error("Google Auth error:", err);
+    if (err.code === "auth/popup-blocked") {
+      if (errEl) errEl.textContent = "Popup blocked! Redirecting...";
+      firebase.auth().signInWithRedirect(provider);
+    } else {
+      handleAuthError(err, 'Google');
+    }
   }
 };
 
-// GitHub Authentication - Direct Page Transfer with Async Error Fallback
-window.loginWithGitHub = function() {
+// GitHub Authentication - signInWithPopup + Popup Blocked Redirect Fallback
+window.loginWithGitHub = async function() {
   const errEl = document.getElementById("auth-error-msg");
-  if (errEl) errEl.textContent = "Connecting to GitHub OAuth...";
+  if (errEl) errEl.textContent = "Connecting to GitHub...";
 
-  if (!auth) {
+  if (typeof firebase === 'undefined' || !firebase.auth) {
+    if (errEl) errEl.textContent = "Firebase Auth SDK not loaded. Check script imports.";
     simulateFallbackLogin('GitHub');
     return;
   }
 
+  const provider = new firebase.auth.GithubAuthProvider();
+
   try {
-    const provider = new firebase.auth.GithubAuthProvider();
-    provider.addScope('user:email');
-    
-    auth.signInWithRedirect(provider).catch((err) => {
-      console.warn('[RAAHI Auth] GitHub Redirect Promise rejection:', err.code, err.message);
-      handleAuthError(err, 'GitHub');
-    });
+    const res = await firebase.auth().signInWithPopup(provider);
+    console.log("Logged in with GitHub:", res.user);
+    if (typeof closeAuthModal === 'function') closeAuthModal();
   } catch (err) {
-    console.error('[RAAHI Auth] GitHub Sync error:', err);
-    handleAuthError(err, 'GitHub');
+    console.error("GitHub Auth error:", err);
+    if (err.code === "auth/popup-blocked") {
+      if (errEl) errEl.textContent = "Popup blocked! Redirecting...";
+      firebase.auth().signInWithRedirect(provider);
+    } else {
+      handleAuthError(err, 'GitHub');
+    }
   }
 };
 
