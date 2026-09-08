@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RAAHI // Comprehensive Pan-India Scalable Destination Database
  * Complete authentic destinations covering all 28 States & 8 UTs (36 Entities)
  */
@@ -83,16 +83,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Amber Fort & Palace Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -113,7 +113,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Jaipur, the UNESCO World Heritage Pink City, was founded in 1727 by Maharaja Sawai Jai Singh II as India's first planned city. Renowned for its terracotta-pink facade, geometric grid street plan, celestial Jantar Mantar observatory, and honeycomb Hawa Mahal.",
     "shortDescription": "The Pink City of grand palaces, astronomical observatories, and gemstone bazaars.",
-    "image": "assets/images/destinations/amber-fort.jpg",
+    "image": "assets/images/destinations/hawa-mahal.jpg",
     "gallery": [
       "assets/images/destinations/hawa-mahal.jpg",
       "assets/images/destinations/city-palace-jaipur.jpg",
@@ -163,16 +163,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Jaipur Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -241,16 +241,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Udaipur Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -271,7 +271,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The Golden City rises out of the Thar Desert, crowned by the living UNESCO-listed Jaisalmer Fort (Sonar Qila). Constructed with yellow sandstone that turns golden at sunset, it houses merchant havelis and sand dunes.",
     "shortDescription": "Golden sandstone living fort in the heart of the Great Thar Desert.",
-    "image": "https://images.unsplash.com/photo-1572445271230-a78b5944a659?q=80&w=1200",
+    "image": "assets/images/destinations/jaisalmer-fort.jpg",
     "gallery": [
       "assets/images/destinations/jaisalmer-fort.jpg",
       "assets/images/destinations/patwon-ki-haveli.jpg",
@@ -320,16 +320,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Jaisalmer Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -350,7 +350,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The Blue City of Marwar is dominated by the colossal Mehrangarh Fort rising 400 feet above the indigo-painted houses of the old town. Known for royal palaces, zipline tours over ramparts, and spicy street food.",
     "shortDescription": "The Sun City with blue-painted houses beneath the mighty Mehrangarh Fort.",
-    "image": "https://images.unsplash.com/photo-1589793463357-5fb813435467?q=80&w=1200",
+    "image": "assets/images/destinations/mehrangarh-fort.jpg",
     "gallery": [
       "assets/images/destinations/mehrangarh-fort.jpg",
       "assets/images/destinations/amber-fort-detail.jpg"
@@ -398,16 +398,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Jodhpur Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -428,7 +428,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "One of the oldest sacred towns in India, nestled around the holy Pushkar Lake with 52 bathing ghats and the rare 14th-century Brahma Temple, surrounded by desert dunes.",
     "shortDescription": "Sacred lake town home to the rare Brahma Temple and annual Camel Fair.",
-    "image": "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
+    "image": "assets/images/destinations/bada-bagh.jpg",
     "gallery": [
       "assets/images/destinations/panna-meena.jpg"
     ],
@@ -474,16 +474,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Pushkar Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -552,16 +552,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Spiti Valley Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -629,16 +629,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Manali Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -659,7 +659,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The erstwhile summer capital of British India, Shimla sprawls along a mountain ridge lined with colonial architecture, the Mall Road, Viceregal Lodge, and the UNESCO Kalka-Shimla Mountain Railway.",
     "shortDescription": "Colonial summer capital, heritage toy train, Mall Road, and cedar forests.",
-    "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200",
+    "image": "assets/images/destinations/darjeeling.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -705,16 +705,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Shimla Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -735,7 +735,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The residence of His Holiness the 14th Dalai Lama and the Tibetan Government-in-Exile, set against the dramatic Dhauladhar mountain range with fluttering prayer flags and cedar trails.",
     "shortDescription": "Little Lhasa of India set against dramatic Dhauladhar snow ridges.",
-    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -781,16 +781,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Dharamshala & McLeod Ganj Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -811,7 +811,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "A tranquil riverside hamlet nestled along the roaring Parvati River, the base for Kheerganga hot springs, Tosh village, and ancient Malana village trails.",
     "shortDescription": "Parvati river hamlet, alpine cedar trails, and natural hot water springs.",
-    "image": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -857,16 +857,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Kasol & Parvati Valley Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -935,16 +935,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Varanasi (Kashi) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1014,16 +1014,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Agra Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1044,7 +1044,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The city of Nawabs, tehzeeb, and culinary sophistication. Celebrated for Bara Imambara, Rumi Darwaza, delicate Chikankari hand-embroidery, and Galouti kebabs.",
     "shortDescription": "City of Nawabs, architectural wonders, Chikankari embroidery, and Awadhi cuisine.",
-    "image": "https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1200",
+    "image": "assets/images/destinations/taj-mahal.jpg",
     "gallery": [
       "assets/images/destinations/taj-mahal.jpg"
     ],
@@ -1091,16 +1091,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Lucknow Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1121,7 +1121,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The sacred birthplace of Lord Rama on the banks of the holy Saryu River, home to the monumental Shri Ram Janmabhoomi Mandir, Hanuman Garhi, and illuminated evening Saryu Aarti ghats.",
     "shortDescription": "Sacred holy city on the Saryu River, birthplace of Lord Rama.",
-    "image": "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
+    "image": "assets/images/destinations/dashashwamedh-ghat.jpg",
     "gallery": [
       "assets/images/destinations/taj-mahal.jpg"
     ],
@@ -1167,16 +1167,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Ayodhya Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1197,7 +1197,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The sacred land of Braj Bhoomi on the Yamuna River, birthplace of Lord Krishna, famous for Shri Krishna Janmasthan, Banke Bihari Temple, Prem Mandir, and world-renowned Lathmar Holi.",
     "shortDescription": "Sacred birthplace of Lord Krishna with ancient temple courtyards and vibrant Holi.",
-    "image": "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
+    "image": "assets/images/destinations/taj-mahal.jpg",
     "gallery": [
       "assets/images/destinations/taj-mahal.jpg"
     ],
@@ -1243,16 +1243,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Mathura & Vrindavan Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1320,16 +1320,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Alleppey (Alappuzha) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1397,16 +1397,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Munnar Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1427,7 +1427,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The Queen of the Arabian Sea, Kochi showcases iconic Chinese fishing nets, 16th-century Portuguese churches, Dutch palaces in Mattancherry, and the Kochi-Muziris Biennale.",
     "shortDescription": "Historic spice port with Chinese fishing nets, colonial streets, and modern art.",
-    "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200",
+    "image": "assets/images/destinations/kochi.jpg",
     "gallery": [
       "assets/images/destinations/alleppey-backwaters.jpg"
     ],
@@ -1474,16 +1474,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Kochi (Cochin) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1504,7 +1504,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Famous for its unique dramatic red laterite cliffs bordering the Arabian Sea, natural coastal sulfur springs, Janardhana Swamy temple, and sunset cliff cafes.",
     "shortDescription": "Dramatic red cliff beach with coastal hot springs and bohemian seaside cafes.",
-    "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1200",
+    "image": "assets/images/destinations/fort-aguada.jpg",
     "gallery": [
       "assets/images/destinations/alleppey-backwaters.jpg"
     ],
@@ -1551,16 +1551,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Varkala Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1627,16 +1627,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Thekkady (Periyar) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1657,7 +1657,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "The charming riverside capital of Goa on the Mandovi River, famous for the pastel-hued Latin Quarter of Fontainhas, baroque churches, and Old Goa UNESCO basilicas.",
     "shortDescription": "Colorful Latin quarter, baroque churches, and Mandovi riverfront promenade.",
-    "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1200",
+    "image": "assets/images/destinations/basilica-bom-jesus.jpg",
     "gallery": [
       "assets/images/destinations/fort-aguada.jpg",
       "assets/images/destinations/basilica-bom-jesus.jpg"
@@ -1705,16 +1705,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Panaji (Panjim) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1782,16 +1782,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "North Goa Coast (Calangute, Anjuna, Vagator) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1812,7 +1812,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "South Goa represents the tranquil soul of the coastline with serene crescent bays like Palolem and Agonda, silent headphone beach parties, and dolphin sightings.",
     "shortDescription": "Tranquil crescent bays, pristine white sand beaches, and peaceful coastal living.",
-    "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1200",
+    "image": "assets/images/destinations/basilica-bom-jesus.jpg",
     "gallery": [
       "assets/images/destinations/fort-aguada.jpg"
     ],
@@ -1859,16 +1859,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "South Goa (Palolem, Agonda, Colva) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1889,7 +1889,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The capital of Ladakh situated at 11,500 feet in the Indus River Valley, featuring the 9-story Leh Palace, Shanti Stupa, ancient gompas, and mountain bazars.",
     "shortDescription": "High-altitude Himalayan capital with 17th-century palaces, gompas, and mountain bazars.",
-    "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200",
+    "image": "assets/images/destinations/leh.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -1936,16 +1936,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Leh Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -1966,7 +1966,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Perched at 14,270 feet, Pangong Tso is an endorheic high-altitude saline lake extending 134 km across the border, renowned for surreal blue waters shifting colors under mountain skies.",
     "shortDescription": "Cobalt high-altitude saline lake shifting colors under the trans-Himalayan sky.",
-    "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200",
+    "image": "assets/images/destinations/leh.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -2013,16 +2013,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Pangong Tso Lake Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2043,7 +2043,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The valley of flowers accessed across the world-famous Khardung La pass (17,982 ft), known for white sand dunes, double-humped Bactrian camels, and Diskit Monastery.",
     "shortDescription": "Desert sand dunes with double-humped camels surrounded by snow peaks.",
-    "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200",
+    "image": "assets/images/destinations/leh.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -2089,16 +2089,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Nubra Valley & Hunder Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2119,7 +2119,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The historic and political capital of India, blending UNESCO monuments like Qutub Minar, Humayun's Tomb, and Red Fort with vibrant Chandni Chowk bazars and Lutyens' boulevards.",
     "shortDescription": "Monumental Mughal red stone, British colonial avenues, and epic street food.",
-    "image": "https://images.unsplash.com/photo-1592639296346-560c37a0f711?q=80&w=1200",
+    "image": "assets/images/destinations/delhi.jpg",
     "gallery": [
       "assets/images/destinations/taj-mahal.jpg"
     ],
@@ -2166,16 +2166,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "New Delhi & Old Delhi Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2196,7 +2196,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The summer capital of J&K on the banks of the Jhelum River, renowned for its cedar-wood houseboats floating on Dal Lake, dawn shikara rides, and historic Mughal terraced gardens.",
     "shortDescription": "Dal Lake houseboats, shikara rides, saffron fields, and Mughal terraced gardens.",
-    "image": "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=1200",
+    "image": "assets/images/destinations/srinagar.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -2243,16 +2243,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Srinagar & Dal Lake Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2273,7 +2273,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The Meadow of Flowers at 8,690 feet in the Pir Panjal range, featuring Asia's highest cable car (Gulmarg Gondola to Mt. Apharwat) and premier snow skiing slopes.",
     "shortDescription": "Asia's premier ski resort, high-altitude cable car, and wildflower meadows.",
-    "image": "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=1200",
+    "image": "assets/images/destinations/srinagar.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -2320,16 +2320,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Gulmarg Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2350,7 +2350,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The Valley of Shepherds on the Lidder River, surrounded by pine forests, snow-clad peaks, and serving as the starting base for the annual holy Amarnath Cave pilgrimage.",
     "shortDescription": "Lidder river valley, pine forests, and alpine trekking meadows.",
-    "image": "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -2396,16 +2396,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Pahalgam & Betaab Valley Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2426,7 +2426,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The Yoga Capital of the World and gateway to the Garhwal Himalayas on the Ganga River, famous for yoga ashrams, suspension bridges (Lakshman Jhula), and white-water river rafting.",
     "shortDescription": "Yoga capital of the world, sacred river ghats, and Himalayan white-water rafting.",
-    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
+    "image": "assets/images/destinations/dashashwamedh-ghat.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -2473,16 +2473,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Rishikesh Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2503,7 +2503,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Set around the emerald eye-shaped Naini Lake in the Kumaon foothills at 6,837 feet, offering yacht boating, the Naina Devi Temple, and panoramic snow views from Snow View Point.",
     "shortDescription": "Emerald lake hill town with sailboat rides and Himalayan viewpoints.",
-    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -2549,16 +2549,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Nainital Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2577,9 +2577,9 @@ export const DESTINATIONS_DATA = {
     "stateSlug": "uttarakhand",
     "type": "Hill Station",
     "region": "North",
-    "description": "India's premier skiing destination in the Garhwal Himalayas at 9,500–10,500 feet, surrounded by coniferous forests and 360-degree views of Nanda Devi (7,816m).",
+    "description": "India's premier skiing destination in the Garhwal Himalayas at 9,500â€“10,500 feet, surrounded by coniferous forests and 360-degree views of Nanda Devi (7,816m).",
     "shortDescription": "Snow ski slopes and cable cars with panoramic views of Mount Nanda Devi.",
-    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -2625,16 +2625,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Auli Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2655,7 +2655,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The spiritual heart of Sikhism, home to the resplendent Sri Harmandir Sahib (Golden Temple) surrounded by the Amrit Sarovar, Jallianwala Bagh memorial, and Wagah Border.",
     "shortDescription": "The Golden Temple, world's largest free community kitchen, and Wagah Border.",
-    "image": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200",
+    "image": "assets/images/destinations/amritsar.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -2702,16 +2702,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Amritsar Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2732,7 +2732,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Designed by Le Corbusier as independent India's first planned city, featuring the Capitol Complex UNESCO monuments, Nek Chand's Rock Garden, and Sukhna Lake promenade.",
     "shortDescription": "Le Corbusier's planned modernist city, Nek Chand Rock Garden, and Sukhna Lake.",
-    "image": "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?q=80&w=1200",
+    "image": "assets/images/destinations/city-palace-jaipur.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -2778,16 +2778,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Chandigarh Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2808,7 +2808,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The sacred battleground of the epic Mahabharata and birthplace of the Bhagavad Gita, featuring Brahma Sarovar water tank, Jyotisar, and the Sheikh Chilli Tomb.",
     "shortDescription": "Sacred land of the Bhagavad Gita and monumental Brahma Sarovar lake.",
-    "image": "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -2854,16 +2854,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Kurukshetra Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2884,7 +2884,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "One of the world's largest white salt deserts, transforming into a glowing sheet of silver under the full moon during the annual Rann Utsav cultural festival.",
     "shortDescription": "Vast white salt desert glowing under the full moon with vibrant Kutchi culture.",
-    "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200",
+    "image": "assets/images/destinations/amber-fort.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -2931,16 +2931,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Great Rann of Kutch (Dhordo) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -2961,7 +2961,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "The sole remaining natural wild sanctuary of the endangered Asiatic Lion (Panthera leo persica), spanning dry deciduous teak forests and rocky scrublands.",
     "shortDescription": "The world's only natural home of the wild Asiatic Lion.",
-    "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200",
+    "image": "assets/images/destinations/munnar-tea.jpg",
     "gallery": [
       "assets/images/destinations/eravikulam-national-park.jpg"
     ],
@@ -3007,16 +3007,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Gir National Park Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3037,7 +3037,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "India's first UNESCO World Heritage City, famous for Sabarmati Ashram, intricate stepwells like Adalaj, Sidi Saiyyed Mosque stone lattice screens, and street food.",
     "shortDescription": "UNESCO World Heritage city with historic pols, stepwells, and Sabarmati Ashram.",
-    "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3084,16 +3084,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Ahmedabad Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3114,7 +3114,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "The City of Dreams and financial capital of India on the Arabian Sea, home to Victorian Gothic architecture, Gateway of India, Marine Drive, Elephanta Caves, and Bollywood.",
     "shortDescription": "Vibrant metropolis with Victorian Gothic heritage, Gateway of India, and sea drives.",
-    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
+    "image": "assets/images/destinations/mumbai.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -3161,16 +3161,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Mumbai Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3191,7 +3191,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "UNESCO World Heritage rock-cut cave monuments dating from 2nd century BCE to 10th century CE, including the monolithic Kailash Temple carved top-down from a single basalt cliff.",
     "shortDescription": "Ancient rock-cut cave temples and the world's largest monolithic sculpture.",
-    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
+    "image": "assets/images/destinations/amber-fort.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -3238,16 +3238,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Ajanta & Ellora Caves Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3268,7 +3268,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "The cultural capital of Maharashtra and Oxford of the East, surrounded by historic Maratha hill forts like Sinhagad, Shaniwar Wada, and Aga Khan Palace.",
     "shortDescription": "Cultural hub with historic Maratha forts, trekking ridges, and heritage palaces.",
-    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
+    "image": "assets/images/destinations/mumbai.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3315,16 +3315,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Pune & Sahyadri Forts Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3345,7 +3345,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "A serene coastal island town with 16th-century sea fortifications, Naida caves, Portuguese churches, and clean Blue Flag certified Ghoghla Beach.",
     "shortDescription": "Portuguese island fortress with sea bastions, caves, and golden shores.",
-    "image": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200",
+    "image": "assets/images/destinations/fort-aguada.jpg",
     "gallery": [
       "assets/images/destinations/fort-aguada.jpg"
     ],
@@ -3391,16 +3391,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Diu Island & Fort Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3421,7 +3421,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The Athens of the East on the Vaigai River, centered around the colossal Meenakshi Amman Temple with 14 soaring gopurams decorated with thousands of painted mythological figures.",
     "shortDescription": "Ancient Dravidian temple city crowned by the monumental Meenakshi Temple.",
-    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3468,16 +3468,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Madurai Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3498,7 +3498,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The Queen of Hill Stations in the Nilgiri Mountains at 7,350 feet, famous for tea gardens, botanical gardens, Doddabetta Peak, and the UNESCO Nilgiri Mountain Railway.",
     "shortDescription": "Nilgiri mountain hill station, tea plantations, and steam heritage toy train.",
-    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
+    "image": "assets/images/destinations/munnar-tea.jpg",
     "gallery": [
       "assets/images/destinations/munnar-tea.jpg"
     ],
@@ -3545,16 +3545,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Ooty (Udhagamandalam) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3575,7 +3575,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The cultural gateway of South India, famous for Marina Beach, San Thome Cathedral, Carnatic music, and the UNESCO 7th-century Shore Temple and rock bas-reliefs in Mahabalipuram.",
     "shortDescription": "Classical arts capital with Marina Beach and UNESCO 7th-century Shore Temple.",
-    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
+    "image": "assets/images/destinations/kochi.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3622,16 +3622,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Chennai & Mahabalipuram Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3652,7 +3652,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The UNESCO World Heritage capital of the Vijayanagara Empire, set amidst an unreal surreal landscape of massive granite boulders, stone chariot temples, and riverside ruins along the Tungabhadra.",
     "shortDescription": "Surreal boulder landscape with UNESCO ruins of the 14th-century Vijayanagara Empire.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "assets/images/destinations/hampi.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -3699,16 +3699,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Hampi Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3729,7 +3729,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The heritage City of Palaces, famous for the illuminated Indo-Saracenic Mysore Palace, Chamundi Hills, Mysore Silk, sandalwood carving, and the grand 10-day Dasara festival.",
     "shortDescription": "City of Palaces, royal Dasara celebrations, Mysore silk, and sandalwood.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "assets/images/destinations/city-palace-udaipur.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -3776,16 +3776,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Mysuru (Mysore) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3806,7 +3806,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Known as the Scotland of India on the eastern slopes of the Western Ghats, blanketed in coffee estates, spice plantations, Abbey Falls, and Tibetan settlement in Bylakuppe.",
     "shortDescription": "Coffee plantation hills, cascading waterfalls, and Kodava martial heritage.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "assets/images/destinations/munnar-tea.jpg",
     "gallery": [
       "assets/images/destinations/eravikulam-national-park.jpg"
     ],
@@ -3853,16 +3853,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Coorg (Kodagu) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3883,7 +3883,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Perched atop the seven sacred hills of the Seshachalam range, Sri Venkateswara Swamy Temple is the world's most visited religious pilgrimage sanctuary.",
     "shortDescription": "World-renowned hill shrine of Lord Venkateswara amidst the sacred Seven Hills.",
-    "image": "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3929,16 +3929,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Tirupati & Tirumala Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -3959,7 +3959,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The City of Destiny along the Bay of Bengal, featuring Rishikonda Blue Flag Beach, submarine museum, and scenic Vistadome train through tunnels to Araku Valley coffee hills.",
     "shortDescription": "Coastal port city with submarine museum, Blue Flag beach, and Araku coffee hills.",
-    "image": "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
+    "image": "assets/images/destinations/fort-aguada.jpg",
     "gallery": [
       "assets/images/destinations/fort-aguada.jpg"
     ],
@@ -4006,16 +4006,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Visakhapatnam (Vizag) & Araku Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4036,7 +4036,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The City of Pearls, famous for the 1591 Charminar, Golconda Fort with acoustic architecture, Qutb Shahi Tombs, Chowmahalla Palace, and authentic Hyderabadi Dum Biryani.",
     "shortDescription": "City of Pearls with Charminar, acoustic Golconda Fort, and royal biryani.",
-    "image": "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    "image": "assets/images/destinations/mumbai.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -4083,16 +4083,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Hyderabad Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4113,7 +4113,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "French colonial coastal town featuring White Town's mustard-yellow villas, seaside promenade, French cafes, and the Matrimandir golden meditation dome in Auroville.",
     "shortDescription": "French colonial quarters, seaside promenade, and Auroville universal township.",
-    "image": "https://images.unsplash.com/photo-1589793463357-5fb813435467?q=80&w=1200",
+    "image": "assets/images/destinations/fort-aguada.jpg",
     "gallery": [
       "assets/images/destinations/fort-aguada.jpg"
     ],
@@ -4160,16 +4160,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Puducherry & Auroville Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4190,7 +4190,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Tear-drop shaped uninhabited coral atoll surrounded by a shallow crystal-clear turquoise lagoon, live coral reefs, sea turtles, and premier scuba diving.",
     "shortDescription": "Pristine coral atoll with turquoise lagoons, manta rays, and scuba reefs.",
-    "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1200",
+    "image": "assets/images/destinations/alleppey-backwaters.jpg",
     "gallery": [
       "assets/images/destinations/alleppey-backwaters.jpg"
     ],
@@ -4237,16 +4237,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Bangaram & Agatti Islands Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4267,7 +4267,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Celebrated for Radhanagar Beach (ranked among Asia's best beaches), turquoise waters, Elephant Beach coral reef snorkeling, and sea kayaking in mangrove creeks.",
     "shortDescription": "Asia's best Radhanagar white sand beach, scuba diving, and coral reefs.",
-    "image": "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1200",
+    "image": "assets/images/destinations/fort-aguada.jpg",
     "gallery": [
       "assets/images/destinations/fort-aguada.jpg"
     ],
@@ -4314,16 +4314,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Havelock Island (Swaraj Dweep) Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4344,7 +4344,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "The Cultural Capital of India, home to Victoria Memorial, Howrah Bridge, historic tramways, College Street book stalls, Kumartuli clay idol artists, and UNESCO Durga Puja.",
     "shortDescription": "Cultural capital with Victorian marble landmarks, yellow taxis, and street sweets.",
-    "image": "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=1200",
+    "image": "assets/images/destinations/kolkata.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -4391,16 +4391,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Kolkata Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4421,7 +4421,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "The Queen of the Hills overlooking Mount Kanchenjunga (8,586m), world-famous for Champagne of Teas estate plantations and the 1881 UNESCO Himalayan Toy Train.",
     "shortDescription": "Himalayan tea estates, views of Mount Kanchenjunga, and UNESCO steam toy train.",
-    "image": "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=1200",
+    "image": "assets/images/destinations/darjeeling.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -4468,16 +4468,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Darjeeling Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4498,7 +4498,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "The world's largest coastal mangrove forest and UNESCO delta, home to swimming Royal Bengal Tigers, saltwater crocodiles, and Gangetic river dolphins.",
     "shortDescription": "UNESCO mangrove delta and premier sanctuary of the wild Royal Bengal Tiger.",
-    "image": "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=1200",
+    "image": "assets/images/destinations/alleppey-backwaters.jpg",
     "gallery": [
       "assets/images/destinations/eravikulam-national-park.jpg"
     ],
@@ -4545,16 +4545,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Sundarbans National Park Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4575,7 +4575,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "The epicenter of Buddhism where Gautama Buddha attained supreme enlightenment under the sacred Bodhi Tree at Mahabodhi Temple, and the 5th-century ruins of Nalanda University.",
     "shortDescription": "The sacred Bodhi Tree of Buddha's enlightenment and ancient Nalanda University.",
-    "image": "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -4622,16 +4622,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Bodh Gaya & Nalanda Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4652,7 +4652,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "The sacred Jagannath Temple in Puri and the nearby UNESCO 13th-century Konark Sun Temple carved as a colossal stone chariot with 24 sundial wheels on the coast.",
     "shortDescription": "UNESCO Konark Sun Temple stone chariot and sacred Jagannath pilgrimage coast.",
-    "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200",
+    "image": "assets/images/destinations/city-palace-udaipur.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -4699,16 +4699,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Puri & Konark Sun Temple Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4729,7 +4729,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "The City of Waterfalls on the Chota Nagpur Plateau, famous for Hundru Falls, Jonha Falls, Tagore Hill, and indigenous tribal arts.",
     "shortDescription": "City of Waterfalls, mineral-rich plateau hills, and indigenous tribal heritage.",
-    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
+    "image": "assets/images/destinations/shillong.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -4775,16 +4775,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Ranchi & Hundru Falls Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4805,7 +4805,7 @@ export const DESTINATIONS_DATA = {
     "region": "Central",
     "description": "UNESCO World Heritage temple complex built between 950 and 1050 CE by the Chandela dynasty, renowned for exquisite sandstone sculptures depicting medieval life and celestial beauty.",
     "shortDescription": "UNESCO medieval temple complex with exquisite sandstone master sculptures.",
-    "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -4851,16 +4851,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Khajuraho Temples Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4881,7 +4881,7 @@ export const DESTINATIONS_DATA = {
     "region": "Central",
     "description": "One of India's premier tiger reserves with the highest density of Royal Bengal Tigers in the world, surrounding an ancient 2,000-year-old hilltop fort.",
     "shortDescription": "World's highest tiger-density sanctuary with ancient hilltop fortress ruins.",
-    "image": "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    "image": "assets/images/destinations/eravikulam-national-park.jpg",
     "gallery": [
       "assets/images/destinations/eravikulam-national-park.jpg"
     ],
@@ -4927,16 +4927,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Bandhavgarh National Park Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -4957,7 +4957,7 @@ export const DESTINATIONS_DATA = {
     "region": "Central",
     "description": "The tribal heartland of India featuring Chitrakote Falls (the 300-meter wide Niagara of India) on the Indravati River, subterranean limestone caves, and ancient Dokra brass artisans.",
     "shortDescription": "The Niagara of India, horseshoe waterfalls, and ancient Bastar tribal craft.",
-    "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -5003,16 +5003,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Bastar & Chitrakote Falls Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5033,7 +5033,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "UNESCO World Heritage sanctuary harboring two-thirds of the world's great one-horned rhinoceroses in elephant-grass marshes on the Brahmaputra floodplain.",
     "shortDescription": "UNESCO world refuge of the magnificent Great Indian One-Horned Rhinoceros.",
-    "image": "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    "image": "assets/images/destinations/munnar-tea.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -5080,16 +5080,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Kaziranga National Park Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5110,7 +5110,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "The land of rain and waterfalls, famous for the bio-engineered double decker living root bridges grown by the Khasi people from living Ficus elastica tree roots.",
     "shortDescription": "Bio-engineered living root bridges, plunge waterfalls, and limestone caverns.",
-    "image": "https://images.unsplash.com/photo-1589793463357-5fb813435467?q=80&w=1200",
+    "image": "assets/images/destinations/shillong.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -5156,16 +5156,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Cherrapunji & Living Root Bridges Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5184,9 +5184,9 @@ export const DESTINATIONS_DATA = {
     "stateSlug": "arunachal-pradesh",
     "type": "Hill Station",
     "region": "Northeast",
-    "description": "Home to the 17th-century Tawang Monastery—the largest Mahayana Buddhist monastery in India—set at 10,000 feet surrounded by the snowbound Sela Pass at 13,700 feet.",
+    "description": "Home to the 17th-century Tawang Monasteryâ€”the largest Mahayana Buddhist monastery in Indiaâ€”set at 10,000 feet surrounded by the snowbound Sela Pass at 13,700 feet.",
     "shortDescription": "India's largest Buddhist monastery, snowbound Sela Pass, and orchid valleys.",
-    "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200",
+    "image": "assets/images/destinations/key-monastery.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -5233,16 +5233,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Tawang & Sela Pass Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5263,7 +5263,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "The clean mountain capital of organic Sikkim, overlooking Kanchenjunga, gateway to glacial Tsomgo Lake (12,310 ft), Nathula Pass, and Rumtek Monastery.",
     "shortDescription": "Organic mountain capital, glacial lakes, and views of Mount Kanchenjunga.",
-    "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1200",
+    "image": "assets/images/destinations/darjeeling.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -5310,16 +5310,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Gangtok & Tsomgo Lake Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5340,7 +5340,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "The hillside capital of Nagaland, home to the World War II War Cemetery, the annual Hornbill Festival at Kisama, and the pristine wilderness of Dzukou Valley.",
     "shortDescription": "Home of the great Hornbill Festival and the emerald meadows of Dzukou Valley.",
-    "image": "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1200",
+    "image": "assets/images/destinations/shillong.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -5386,16 +5386,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Kohima & Dzukou Valley Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5416,7 +5416,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "Famous for Loktak Lake with circular floating islands (phumdis), Keibul Lamjao floating national park with Sangai deer, and the all-women Ima Keithel market.",
     "shortDescription": "Floating islands on Loktak Lake, Sangai deer sanctuary, and Ima Keithel market.",
-    "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200",
+    "image": "assets/images/destinations/shillong.jpg",
     "gallery": [
       "assets/images/destinations/alleppey-backwaters.jpg"
     ],
@@ -5462,16 +5462,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Imphal & Loktak Lake Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5492,7 +5492,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "The high-ridge capital overlooking cloud-filled valleys, vibrant Puan handloom textiles, Solomon's Temple, and scenic hikes on Reiek Mountain.",
     "shortDescription": "High-ridge capital overlooking cloud valleys with Cheraw bamboo dance traditions.",
-    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
+    "image": "assets/images/destinations/shillong.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -5538,16 +5538,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Aizawl & Reiek Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5568,7 +5568,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "Home to Ujjayanta Palace, the floating Neermahal Water Palace on Rudrasagar Lake, and the colossal 7th-century rock-cut Shaivite reliefs of Unakoti in the jungle.",
     "shortDescription": "Floating lake palaces, Ujjayanta Palace, and colossal Unakoti rock carvings.",
-    "image": "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -5614,16 +5614,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Agartala & Unakoti Heritage Stay",
         "type": "Heritage Hotel",
-        "price": "₹6,500/night",
+        "price": "â‚¹6,500/night",
         "desc": "Authentic regional architecture with modern comforts."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹16,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹16,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5644,7 +5644,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Bikaner is one of the premier destinations in Rajasthan, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Desert city of Junagarh Fort, Karni Mata temple, and Bikaneri bhujia.",
-    "image": "assets/images/destinations/amber-fort.jpg",
+    "image": "assets/images/destinations/patwon-ki-haveli.jpg",
     "gallery": [
       "assets/images/destinations/patwon-ki-haveli.jpg"
     ],
@@ -5690,16 +5690,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Bikaner Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5720,7 +5720,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Mount Abu is one of the premier destinations in Rajasthan, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Rajasthan's only hill station featuring the intricately carved Dilwara Jain Temples.",
-    "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1200",
+    "image": "assets/images/destinations/lake-pichola.jpg",
     "gallery": [
       "assets/images/destinations/lake-pichola.jpg"
     ],
@@ -5766,16 +5766,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Mount Abu Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5796,7 +5796,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Ranthambore National Park is one of the premier destinations in Rajasthan, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Famous tiger reserve where Royal Bengal Tigers roam amidst 10th-century fortress ruins.",
-    "image": "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    "image": "assets/images/destinations/eravikulam-national-park.jpg",
     "gallery": [
       "assets/images/destinations/eravikulam-national-park.jpg"
     ],
@@ -5842,16 +5842,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Ranthambore National Park Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5872,7 +5872,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Dalhousie & Khajjiar is one of the premier destinations in Himachal Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Colonial hill retreat and the saucer-shaped meadow of Khajjiar (Mini Switzerland).",
-    "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -5918,16 +5918,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Dalhousie & Khajjiar Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -5948,7 +5948,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Bir Billing is one of the premier destinations in Himachal Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "The paragliding capital of India with world-class take-off sites and Tibetan monasteries.",
-    "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200",
+    "image": "assets/images/destinations/key-monastery.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -5994,16 +5994,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Bir Billing Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6024,7 +6024,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Prayagraj (Triveni Sangam) is one of the premier destinations in Uttar Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "The sacred confluence of the Ganga, Yamuna, and mythical Saraswati, host of Kumbh Mela.",
-    "image": "https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1200",
+    "image": "assets/images/destinations/dashashwamedh-ghat.jpg",
     "gallery": [
       "assets/images/destinations/dashashwamedh-ghat.jpg"
     ],
@@ -6070,16 +6070,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Prayagraj (Triveni Sangam) Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6100,7 +6100,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Sarnath is one of the premier destinations in Uttar Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Sacred site where Gautama Buddha delivered his first sermon, with the monumental Dhamek Stupa.",
-    "image": "https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1200",
+    "image": "assets/images/destinations/taj-mahal.jpg",
     "gallery": [
       "assets/images/destinations/taj-mahal.jpg"
     ],
@@ -6146,16 +6146,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Sarnath Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6176,7 +6176,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Haridwar is one of the premier destinations in Uttarakhand, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Gateway to the Gods where the holy Ganga enters the plains at Har Ki Pauri.",
-    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
+    "image": "assets/images/destinations/dashashwamedh-ghat.jpg",
     "gallery": [
       "assets/images/destinations/dashashwamedh-ghat.jpg"
     ],
@@ -6222,16 +6222,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Haridwar Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6252,7 +6252,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Jim Corbett National Park is one of the premier destinations in Uttarakhand, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "India's oldest national park known for Royal Bengal Tigers, wild elephants, and river valleys.",
-    "image": "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/eravikulam-national-park.jpg"
     ],
@@ -6298,16 +6298,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Jim Corbett National Park Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6328,7 +6328,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Mussoorie is one of the premier destinations in Uttarakhand, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "The Queen of the Hills with Kempty Falls, Gun Hill cable car, and Mall Road promenade.",
-    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -6374,16 +6374,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Mussoorie Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6404,7 +6404,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Kedarnath & Badrinath is one of the premier destinations in Uttarakhand, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Ancient 8th-century stone temple dedicated to Lord Shiva set before the colossal Kedarnath peak.",
-    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
+    "image": "assets/images/destinations/hadimba-temple.jpg",
     "gallery": [
       "assets/images/destinations/hadimba-temple.jpg"
     ],
@@ -6450,16 +6450,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Kedarnath & Badrinath Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6480,7 +6480,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Patiala is one of the premier destinations in Punjab, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Royal city of the Patiala Gharana, Qila Mubarak fortress palace, and Sheesh Mahal.",
-    "image": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200",
+    "image": "assets/images/destinations/amritsar.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -6526,16 +6526,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Patiala Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6556,7 +6556,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Anandpur Sahib is one of the premier destinations in Punjab, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "The Holy City of Bliss where the Khalsa was founded, home to the monumental Virasat-e-Khalsa.",
-    "image": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200",
+    "image": "assets/images/destinations/city-palace-jaipur.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -6602,16 +6602,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Anandpur Sahib Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6632,7 +6632,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "Dwarka & Somnath is one of the premier destinations in Gujarat, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Sacred coastal pilgrimage sites featuring the first Jyotirlinga and Lord Krishna's ancient kingdom.",
-    "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200",
+    "image": "assets/images/destinations/amber-fort.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -6678,16 +6678,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Dwarka & Somnath Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6708,7 +6708,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "Statue of Unity (Kevadia) is one of the premier destinations in Gujarat, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "World's tallest statue (182 meters) dedicated to Sardar Vallabhbhai Patel on the Narmada River.",
-    "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -6754,16 +6754,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Statue of Unity (Kevadia) Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6784,7 +6784,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "Lonavala & Khandala is one of the premier destinations in Maharashtra, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Western Ghats monsoon retreat famous for Karla & Bhaja Buddhist caves and waterfalls.",
-    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
+    "image": "assets/images/destinations/city-palace-udaipur.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -6830,16 +6830,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Lonavala & Khandala Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6860,7 +6860,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "Nashik & Trimbakeshwar is one of the premier destinations in Maharashtra, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Wine Capital of India and sacred Godavari pilgrimage home to Trimbakeshwar Jyotirlinga.",
-    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
+    "image": "assets/images/destinations/city-palace-jaipur.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -6906,16 +6906,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Nashik & Trimbakeshwar Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -6936,7 +6936,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "Mahabaleshwar & Panchgani is one of the premier destinations in Maharashtra, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "High-plateau strawberry hill station with panoramic Sahyadri cliff viewpoints.",
-    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
+    "image": "assets/images/destinations/munnar-tea.jpg",
     "gallery": [
       "assets/images/destinations/munnar-tea.jpg"
     ],
@@ -6982,16 +6982,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Mahabaleshwar & Panchgani Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7012,7 +7012,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Kanyakumari is one of the premier destinations in Tamil Nadu, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "The southernmost tip of mainland India where the Arabian Sea, Bay of Bengal, and Indian Ocean meet.",
-    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
+    "image": "assets/images/destinations/fort-aguada.jpg",
     "gallery": [
       "assets/images/destinations/fort-aguada.jpg"
     ],
@@ -7058,16 +7058,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Kanyakumari Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7088,7 +7088,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Thanjavur & Great Living Chola Temples is one of the premier destinations in Tamil Nadu, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO 11th-century Brihadisvara Temple with an 80-tonne single granite block cupola.",
-    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
+    "image": "assets/images/destinations/city-palace-jaipur.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -7134,16 +7134,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Thanjavur & Great Living Chola Temples Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7164,7 +7164,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Rameswaram & Dhanushkodi is one of the premier destinations in Tamil Nadu, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Sacred island temple with world's longest pillared corridor, Pamban bridge, and ghost town Dhanushkodi.",
-    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
+    "image": "assets/images/destinations/fort-aguada.jpg",
     "gallery": [
       "assets/images/destinations/fort-aguada.jpg"
     ],
@@ -7210,16 +7210,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Rameswaram & Dhanushkodi Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7240,7 +7240,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Kodaikanal is one of the premier destinations in Tamil Nadu, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Princess of Hill Stations set around a star-shaped lake in the Palani Hills.",
-    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
+    "image": "assets/images/destinations/munnar-tea.jpg",
     "gallery": [
       "assets/images/destinations/munnar-tea.jpg"
     ],
@@ -7286,16 +7286,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Kodaikanal Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7316,7 +7316,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Gokarna & Om Beach is one of the premier destinations in Karnataka, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Sacred coastal temple town with natural Om-shaped beaches and cliffside hiking trails.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "assets/images/destinations/fort-aguada.jpg",
     "gallery": [
       "assets/images/destinations/fort-aguada.jpg"
     ],
@@ -7363,16 +7363,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Gokarna & Om Beach Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7393,7 +7393,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Chikmagalur & Mullayanagiri is one of the premier destinations in Karnataka, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "The birthplace of coffee in India and home to Karnataka's highest peak Mullayanagiri.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "assets/images/destinations/munnar-tea.jpg",
     "gallery": [
       "assets/images/destinations/munnar-tea.jpg"
     ],
@@ -7439,16 +7439,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Chikmagalur & Mullayanagiri Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7469,7 +7469,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Badami, Aihole & Pattadakal is one of the premier destinations in Karnataka, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "6th-century rock-cut cave temples and UNESCO cradle of Indian temple architecture.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "assets/images/destinations/amber-fort.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -7515,16 +7515,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Badami, Aihole & Pattadakal Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7545,7 +7545,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Gandikota & Belum Caves is one of the premier destinations in Andhra Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "The Grand Canyon of India carved by the Pennar River alongside underground Belum Caves.",
-    "image": "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
+    "image": "assets/images/destinations/amber-fort.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -7591,16 +7591,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Gandikota & Belum Caves Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7621,7 +7621,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Warangal & Ramappa Temple is one of the premier destinations in Telangana, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO World Heritage Ramappa Temple crafted with floating bricks and Kakatiya stone arches.",
-    "image": "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -7667,16 +7667,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Warangal & Ramappa Temple Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7697,7 +7697,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "Shantiniketan is one of the premier destinations in West Bengal, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO World Heritage university town founded by Nobel Laureate Rabindranath Tagore.",
-    "image": "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=1200",
+    "image": "assets/images/destinations/city-palace-jaipur.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -7743,16 +7743,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Shantiniketan Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7773,7 +7773,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "Rajgir & Pawapuri is one of the premier destinations in Bihar, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Ancient capital of the Magadha Empire, Vulture Peak, Peace Pagoda, and natural hot springs.",
-    "image": "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
+    "image": "assets/images/destinations/city-palace-jaipur.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -7819,16 +7819,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Rajgir & Pawapuri Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7849,7 +7849,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "Chilika Lake & Satapada is one of the premier destinations in Odisha, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Asia's largest brackish water lagoon, home to rare Irrawaddy dolphins and millions of winter birds.",
-    "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200",
+    "image": "assets/images/destinations/alleppey-backwaters.jpg",
     "gallery": [
       "assets/images/destinations/alleppey-backwaters.jpg"
     ],
@@ -7895,16 +7895,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Chilika Lake & Satapada Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -7925,7 +7925,7 @@ export const DESTINATIONS_DATA = {
     "region": "Central",
     "description": "Sanchi Buddhist Monuments is one of the premier destinations in Madhya Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO World Heritage 3rd-century BCE Great Stupa commissioned by Emperor Ashoka.",
-    "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200",
+    "image": "assets/images/destinations/amber-fort.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -7971,16 +7971,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Sanchi Buddhist Monuments Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -8001,7 +8001,7 @@ export const DESTINATIONS_DATA = {
     "region": "Central",
     "description": "Gwalior Fort & Palaces is one of the premier destinations in Madhya Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "The Pearl in the necklace of forts of India, with blue-tiled Man Mandir Palace.",
-    "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1200",
+    "image": "assets/images/destinations/amber-fort.jpg",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -8047,16 +8047,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Gwalior Fort & Palaces Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -8077,7 +8077,7 @@ export const DESTINATIONS_DATA = {
     "region": "Central",
     "description": "Ujjain (Mahakaleshwar) is one of the premier destinations in Madhya Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Ancient temple city on the Shipra River, home to Mahakaleshwar Jyotirlinga and Bhasma Aarti.",
-    "image": "https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1200",
+    "image": "assets/images/destinations/dashashwamedh-ghat.jpg",
     "gallery": [
       "assets/images/destinations/dashashwamedh-ghat.jpg"
     ],
@@ -8123,16 +8123,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Ujjain (Mahakaleshwar) Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -8153,7 +8153,7 @@ export const DESTINATIONS_DATA = {
     "region": "Central",
     "description": "Orchha Heritage Town is one of the premier destinations in Madhya Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Medieval Bundela capital frozen in time on the boulder-strewn banks of the Betwa River.",
-    "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1200",
+    "image": "assets/images/destinations/fallback-raahi.jpg",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -8199,16 +8199,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Orchha Heritage Town Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -8229,7 +8229,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "Majuli Island is one of the premier destinations in Assam, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "World's largest inhabited river island preserving 500-year-old Vaishnavite monastery traditions.",
-    "image": "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    "image": "assets/images/destinations/alleppey-backwaters.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -8275,16 +8275,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Majuli Island Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -8305,7 +8305,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "Dawki & Mawlynnong is one of the premier destinations in Meghalaya, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Transparent glass-waters of Umngot River and Asia's Cleanest Village in the Khasi Hills.",
-    "image": "https://images.unsplash.com/photo-1589793463357-5fb813435467?q=80&w=1200",
+    "image": "assets/images/destinations/key-monastery.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -8351,16 +8351,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Dawki & Mawlynnong Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -8381,7 +8381,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "Pelling & Kanchenjunga Vistas is one of the premier destinations in Sikkim, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Panoramic viewpoints looking directly at Mount Kanchenjunga and ancient Pemayangtse Monastery.",
-    "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1200",
+    "image": "assets/images/destinations/darjeeling.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -8427,16 +8427,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Pelling & Kanchenjunga Vistas Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {
@@ -8457,7 +8457,7 @@ export const DESTINATIONS_DATA = {
     "region": "Northeast",
     "description": "Ziro Valley is one of the premier destinations in Arunachal Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO cultural landscape of the Apatani tribe and the annual outdoor Ziro Festival of Music.",
-    "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200",
+    "image": "assets/images/destinations/shillong.jpg",
     "gallery": [
       "assets/images/destinations/key-monastery.jpg"
     ],
@@ -8503,16 +8503,16 @@ export const DESTINATIONS_DATA = {
       {
         "name": "Ziro Valley Boutique Stay",
         "type": "Boutique Hotel",
-        "price": "₹5,500/night",
+        "price": "â‚¹5,500/night",
         "desc": "Comfortable accommodations with regional hospitality."
       }
     ],
     "bestTimeToVisit": "October to March",
     "idealDuration": "2-3 Days",
     "estimatedBudget": {
-      "budget": "₹1,500/day",
-      "midRange": "₹4,500/day",
-      "luxury": "₹15,000/day"
+      "budget": "â‚¹1,500/day",
+      "midRange": "â‚¹4,500/day",
+      "luxury": "â‚¹15,000/day"
     },
     "nearbyDestinations": [],
     "travelInfo": {

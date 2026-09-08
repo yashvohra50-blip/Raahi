@@ -6,6 +6,7 @@ import { STATES_DATA } from './statesData.js';
 import { DESTINATIONS_DATA } from './destinationsData.js';
 import { EXPERIENCES_DATA } from './experiencesData.js';
 import { STAYS_DATA } from './staysData.js';
+import { getDestinationImage, DEFAULT_FALLBACK_IMAGE } from './destinationImages.js';
 
 export class DataRegistry {
   static getStates() {
@@ -95,6 +96,7 @@ export class DataRegistry {
       ...s,
       type: isUt ? 'Union Territory' : 'State',
       rawType: s.type,
+      heroImage: getDestinationImage(s.slug || s.id, s.heroImage || DEFAULT_FALLBACK_IMAGE),
       destinationsCount: s.destinationsCount || (DESTINATIONS_DATA ? Object.values(DESTINATIONS_DATA).filter(d => d.stateSlug === s.slug || d.stateId === s.id).length : 3)
     };
   }
@@ -102,12 +104,14 @@ export class DataRegistry {
   static _normalizeDestination(d) {
     const lat = typeof d.latitude === 'number' ? d.latitude : (d.coordinates ? d.coordinates.lat : 26.9855);
     const lng = typeof d.longitude === 'number' ? d.longitude : (d.coordinates ? d.coordinates.lng : 75.8513);
+    const verifiedImage = getDestinationImage(d.slug || d.id, d.image || d.heroImage || (d.gallery && d.gallery[0]) || DEFAULT_FALLBACK_IMAGE);
     return {
       ...d,
       latitude: lat,
       longitude: lng,
       coordinates: { lat, lng },
-      heroImage: d.image || d.heroImage || (d.gallery && d.gallery[0]) || 'assets/images/destinations/amber-fort.jpg',
+      image: verifiedImage,
+      heroImage: verifiedImage,
       overview: d.description || d.overview || d.shortDescription || 'An iconic historical landmark in India.',
       tagline: d.shortDescription || d.tagline || d.type,
       bestSeason: d.bestTimeToVisit || d.bestSeason || 'Oct to Mar'

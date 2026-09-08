@@ -1,0 +1,564 @@
+/* ==========================================================================
+   RAAHI // Featured Cities & Explore by Experience Styling
+   Netflix-style full-width hero carousel with ambient depth,
+   luxury typography, and magazine editorial polish.
+   ========================================================================== */
+
+/* 1. Section Container & Ambient Backdrop */
+.featured-cities-section {
+  position: relative;
+  padding: 80px 0 90px;
+  background: #070b09;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+}
+
+/* Ambient Blurred Backdrop of Active City */
+.featured-ambient-backdrop {
+  position: absolute;
+  inset: -40px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(65px) brightness(0.2) saturate(1.25);
+  opacity: 0.65;
+  transform: scale(1.1);
+  transition: background-image 0.8s ease, opacity 0.8s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.featured-ambient-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(7, 11, 9, 0.45) 0%, rgba(7, 11, 9, 0.96) 85%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.featured-cities-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(94%, 1320px);
+  margin: 0 auto;
+}
+
+/* 2. Header Row */
+.featured-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.featured-explore-all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--gold, #d5b56f);
+  padding: 10px 20px;
+  border: 1px solid rgba(213, 181, 111, 0.35);
+  border-radius: 100px;
+  background: rgba(213, 181, 111, 0.06);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.featured-explore-all-link:hover {
+  background: var(--gold, #d5b56f);
+  color: #070b09;
+  border-color: var(--gold, #d5b56f);
+  box-shadow: 0 0 20px rgba(213, 181, 111, 0.4);
+  transform: translateX(4px);
+}
+
+.featured-explore-all-link .arrow {
+  transition: transform 0.25s ease;
+}
+
+.featured-explore-all-link:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* 3. Cinematic Hero Carousel Stage */
+.featured-carousel-stage {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  outline: none;
+}
+
+/* Large Carousel Card Container */
+.featured-cards-viewport,
+.featured-city-card {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  min-height: 500px;
+  max-height: 650px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  background: #0d1410;
+  cursor: pointer;
+  transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.3s ease;
+}
+
+.featured-cards-viewport:hover,
+.featured-city-card:hover {
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 0 0 25px rgba(213, 181, 111, 0.15);
+}
+
+/* Cinematic Full-Bleed Image */
+.featured-card-bg-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.featured-card-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.0);
+  transition: transform 6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.featured-cards-viewport:hover .featured-card-bg,
+.featured-city-card:hover .featured-card-bg {
+  transform: scale(1.03);
+}
+
+/* Dark Gradient Overlays for High Text Contrast */
+.featured-gradient-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: 
+    linear-gradient(to right, rgba(7, 11, 9, 0.95) 0%, rgba(7, 11, 9, 0.85) 36%, rgba(7, 11, 9, 0.3) 70%, transparent 100%),
+    linear-gradient(to top, rgba(7, 11, 9, 0.92) 0%, rgba(7, 11, 9, 0.4) 30%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Text Over the Image */
+.featured-card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 50px 56px;
+  max-width: 680px;
+  pointer-events: auto;
+}
+
+/* State Eyebrow */
+.featured-state-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--gold, #d5b56f);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.featured-state-eyebrow .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold, #d5b56f);
+  box-shadow: 0 0 10px var(--gold, #d5b56f);
+}
+
+/* City Title */
+.featured-city-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  line-height: 1.05;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.015em;
+  margin: 0 0 14px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
+  text-transform: uppercase;
+}
+
+/* Editorial Description */
+.featured-city-desc {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 0 24px;
+  max-width: 580px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Metadata Badges Row */
+.featured-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.featured-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(13, 20, 16, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+  padding: 7px 16px;
+  border-radius: 100px;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+}
+
+.featured-meta-badge:hover {
+  border-color: var(--gold, #d5b56f);
+  color: #ffffff;
+  background: rgba(213, 181, 111, 0.12);
+}
+
+.featured-meta-badge.rating {
+  color: #fef08a;
+  border-color: rgba(234, 179, 8, 0.35);
+  background: rgba(234, 179, 8, 0.1);
+  font-weight: 600;
+}
+
+/* Explore CTA Button */
+.featured-cta-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold, #d5b56f);
+  color: #070b09;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 13px 28px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 0 25px rgba(213, 181, 111, 0.4);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.featured-cta-btn:hover {
+  background: #ffffff;
+  color: #070b09;
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.featured-cta-btn .arrow {
+  transition: transform 0.25s ease;
+  font-size: 1.05rem;
+}
+
+.featured-cta-btn:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* 4. Large Circular Previous & Next Buttons Overlapping Carousel Edges */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(7, 11, 9, 0.85);
+  border: 1px solid rgba(213, 181, 111, 0.4);
+  color: var(--gold, #d5b56f);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.carousel-nav-btn:hover {
+  background: var(--gold, #d5b56f);
+  color: #070b09;
+  border-color: var(--gold, #d5b56f);
+  box-shadow: 0 0 25px rgba(213, 181, 111, 0.6);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.carousel-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Overlapping edges */
+.carousel-nav-btn.prev {
+  left: -24px;
+}
+
+.carousel-nav-btn.next {
+  right: -24px;
+}
+
+/* 5. Pagination Indicator Dots Below */
+.carousel-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.carousel-dot {
+  height: 9px;
+  width: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+
+.carousel-dot.active {
+  width: 34px;
+  border-radius: 100px;
+  background: var(--gold, #d5b56f);
+  box-shadow: 0 0 16px rgba(213, 181, 111, 0.6);
+}
+
+/* ==========================================================================
+   6. Explore by Experience Section
+   ========================================================================== */
+.explore-experience-section {
+  position: relative;
+  padding: 90px 0 100px;
+  background: #080d0a;
+  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.experience-card {
+  position: relative;
+  height: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.experience-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold, #d5b56f);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(213, 181, 111, 0.2);
+}
+
+.experience-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.experience-card:hover .experience-card-bg {
+  transform: scale(1.08);
+}
+
+.experience-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(7, 11, 9, 0.95) 0%, rgba(7, 11, 9, 0.6) 50%, rgba(7, 11, 9, 0.2) 100%);
+  z-index: 1;
+}
+
+.experience-card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.experience-card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.experience-card-title {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.experience-card-subtitle {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 0.85rem;
+  color: var(--muted, #94a3b8);
+  margin: 0 0 10px;
+}
+
+.experience-card-count {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gold, #d5b56f);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* 7. Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .featured-cards-viewport,
+  .featured-city-card {
+    height: 500px;
+    min-height: 480px;
+  }
+
+  .carousel-nav-btn.prev {
+    left: 12px;
+  }
+
+  .carousel-nav-btn.next {
+    right: 12px;
+  }
+
+  .featured-card-content {
+    padding: 36px 40px;
+    max-width: 600px;
+  }
+
+  .featured-city-title {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-cities-section {
+    padding: 60px 0 70px;
+  }
+
+  .featured-cities-wrap {
+    width: 95%;
+  }
+
+  .featured-header-row {
+    margin-bottom: 24px;
+  }
+
+  .featured-cards-viewport,
+  .featured-city-card {
+    height: 540px;
+    border-radius: 16px;
+  }
+
+  .featured-gradient-layer {
+    background: 
+      linear-gradient(to top, rgba(7, 11, 9, 0.98) 0%, rgba(7, 11, 9, 0.88) 45%, rgba(7, 11, 9, 0.4) 75%, rgba(7, 11, 9, 0.2) 100%);
+  }
+
+  .featured-card-content {
+    padding: 24px 20px;
+    max-width: 100%;
+  }
+
+  .featured-city-title {
+    font-size: 2.2rem;
+  }
+
+  .featured-city-desc {
+    font-size: 0.92rem;
+    margin-bottom: 18px;
+  }
+
+  .featured-meta-row {
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .featured-meta-badge {
+    font-size: 0.72rem;
+    padding: 5px 10px;
+  }
+
+  .featured-cta-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.82rem;
+  }
+
+  .carousel-nav-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .carousel-nav-btn.prev {
+    left: 8px;
+  }
+
+  .carousel-nav-btn.next {
+    right: 8px;
+  }
+}
+
+/* Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  .featured-cards-viewport,
+  .featured-city-card,
+  .featured-card-bg,
+  .carousel-nav-btn,
+  .carousel-dot,
+  .featured-cta-btn,
+  .experience-card,
+  .experience-card-bg {
+    transition: none !important;
+  }
+}
