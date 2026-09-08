@@ -13,21 +13,23 @@ const firebaseConfig = {
   appId: "1:30439141474:web:294f728b48c81890a7213b"
 };
 
-if (typeof firebase !== "undefined" && !firebase.apps.length) {
-  try {
-    firebase.initializeApp(firebaseConfig);
-  } catch (e) {
-    console.warn('[RAAHI Auth] Firebase initializeApp warning:', e);
+function getAuth() {
+  if (typeof window.firebase !== "undefined" && window.firebase.apps && !window.firebase.apps.length) {
+    try {
+      window.firebase.initializeApp(firebaseConfig);
+    } catch (e) {
+      console.warn('[RAAHI Auth] Firebase initializeApp warning:', e);
+    }
   }
+  return (typeof window.firebase !== "undefined" && window.firebase.auth) ? window.firebase.auth() : null;
 }
 
-const auth = typeof firebase !== "undefined" && firebase.auth ? firebase.auth() : null;
-
 export function initFirebaseAuth() {
-  if (!auth) return;
+  const authInstance = getAuth();
+  if (!authInstance) return;
 
   // Process OAuth Redirect Results when returning from Google / GitHub login site
-  auth.getRedirectResult().then((result) => {
+  authInstance.getRedirectResult().then((result) => {
     if (result && result.user) {
       const user = result.user;
       console.log('[RAAHI Auth] Successfully redirected back from OAuth provider:', user.displayName || user.email);
@@ -40,7 +42,7 @@ export function initFirebaseAuth() {
   });
 
   // Auth Session Listener
-  auth.onAuthStateChanged((user) => {
+  authInstance.onAuthStateChanged((user) => {
     const btnText = document.getElementById("auth-btn-text");
     const btn = document.getElementById("auth-trigger-btn");
 
@@ -49,7 +51,10 @@ export function initFirebaseAuth() {
       if (btnText) btnText.textContent = `${displayName} [SIGN OUT]`;
       if (btn) {
         btn.style.borderColor = "rgba(16, 185, 129, 0.6)";
-        btn.onclick = () => auth.signOut();
+        btn.onclick = () => {
+          const instance = getAuth();
+          if (instance) instance.signOut();
+        };
       }
       const raahiUser = {
         email: user.email || 'operator@raahi.in',
