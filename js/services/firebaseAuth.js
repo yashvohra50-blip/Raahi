@@ -4,7 +4,7 @@
 
 // --- FIREBASE PRODUCTION CLIENT CONFIG ---
 const firebaseConfig = {
-  apiKey: atob("QUl6YVN5Q0M1NUtnLWlaOUJJYXNnYmF6RHp6Zjg2QzVuRkpudXNV"),
+  apiKey: "AIzaSyCC55Kg-iZ9BIasgbazDzzf86C5nFJnusU",
   authDomain: "raahi-50794.firebaseapp.com",
   projectId: "raahi-50794",
   storageBucket: "raahi-50794.firebasestorage.app",
