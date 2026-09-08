@@ -488,10 +488,14 @@ function setupStateRegionFilterListeners() {
   }
 }
 
+let currentDestCarouselIndex = 0;
+let currentFilteredDestinations = [];
+let destCarouselAutoTimer = null;
+let currentDestViewMode = 'carousel'; // 'carousel', 'rail', 'grid'
+
 function renderDestinationsGrid() {
   const grid = document.getElementById('all-destinations-grid');
   const countLabel = document.getElementById('destinations-count-label');
-  const loadMoreBtn = document.getElementById('load-more-destinations-btn');
   if (!grid) return;
 
   let list = DataRegistry.getAllDestinations();
@@ -534,49 +538,257 @@ function renderDestinationsGrid() {
     list.sort((a, b) => (b.cinematicAvailable ? 1 : 0) - (a.cinematicAvailable ? 1 : 0));
   }
 
+  currentFilteredDestinations = list;
   const totalFiltered = list.length;
+
   if (countLabel) {
-    countLabel.textContent = `Showing ${Math.min(currentDestFilter.page * currentDestFilter.pageSize, totalFiltered)} of ${totalFiltered} destinations`;
+    countLabel.textContent = `Showing ${currentDestViewMode === 'grid' ? Math.min(currentDestFilter.page * currentDestFilter.pageSize, totalFiltered) : totalFiltered} of ${totalFiltered} destinations`;
   }
 
-  const visibleList = list.slice(0, currentDestFilter.page * currentDestFilter.pageSize);
+  currentDestCarouselIndex = 0;
+  renderDestinationsContainer();
+}
 
-  grid.innerHTML = visibleList.map(dest => {
-    const isSaved = isPlaceSaved(dest.id || dest.slug);
-    const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
-    return `
-      <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-        <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
-        <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
-        <div class="state-card-content">
-          <span class="eyebrow" style="margin-bottom: 4px;">${dest.state} • ${dest.region.toUpperCase()}</span>
-          <h3 class="state-card-name" style="font-size: 1.9rem;">${dest.name}</h3>
-          <p class="state-card-tagline" style="font-size: 0.88rem;">${dest.tagline || dest.shortDesc || dest.overview.slice(0, 100) + '...'}</p>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
-            <span class="state-card-action">EXPLORE DESTINATION →</span>
+function renderDestinationsContainer() {
+  const grid = document.getElementById('all-destinations-grid');
+  const loadMoreBtn = document.getElementById('load-more-destinations-btn');
+  if (!grid) return;
+
+  if (destCarouselAutoTimer) {
+    clearInterval(destCarouselAutoTimer);
+    destCarouselAutoTimer = null;
+  }
+
+  if (currentDestViewMode === 'carousel') {
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+
+    grid.innerHTML = `
+      <div class="dest-carousel-banner-wrapper" style="position: relative; margin-top: 10px; width: 100%;">
+        <!-- Left Floating Prev Arrow -->
+        <button class="states-carousel-arrow prev" id="dest-carousel-prev" aria-label="Previous Slide" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); z-index: 10; width: 44px; height: 44px; border-radius: 50%; background: rgba(7, 11, 9, 0.85); border: 1px solid var(--line-strong); color: #fff; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(10px); transition: all 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+          ‹
+        </button>
+
+        <!-- Right Floating Next Arrow -->
+        <button class="states-carousel-arrow next" id="dest-carousel-next" aria-label="Next Slide" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); z-index: 10; width: 44px; height: 44px; border-radius: 50%; background: rgba(7, 11, 9, 0.85); border: 1px solid var(--line-strong); color: #fff; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(10px); transition: all 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+          ›
+        </button>
+
+        <!-- Main Slide Stage Container -->
+        <div id="dest-carousel-card-stage" style="min-height: 440px; border-radius: 16px; overflow: hidden; position: relative; border: 1px solid var(--line); box-shadow: 0 20px 40px rgba(0,0,0,0.5); transition: opacity 0.25s ease;">
+          <!-- Content rendered by updateDestCarouselStage() -->
+        </div>
+
+        <!-- Pagination Dots Bar -->
+        <div id="dest-carousel-dots-bar" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; flex-wrap: wrap;">
+          <!-- Dots rendered by JS -->
+        </div>
+      </div>
+    `;
+
+    setupDestCarouselEvents();
+    updateDestCarouselStage();
+    startDestCarouselAutoPlay();
+
+  } else if (currentDestViewMode === 'rail') {
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+
+    grid.innerHTML = `
+      <div class="dest-rail-slider-wrapper" style="position: relative; width: 100%;">
+        <div class="rail" id="dest-rail-slider" style="display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin;">
+          ${currentFilteredDestinations.map(dest => {
+            const isSaved = isPlaceSaved(dest.id || dest.slug);
+            const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+            return `
+              <div class="destination-card" style="flex: 0 0 320px; height: 460px; scroll-snap-align: start;" onclick="window.location.hash='#/destinations/${dest.slug}'">
+                <img src="${imgUrl}" alt="${dest.name}" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+                <div class="dest-copy">
+                  <small>${dest.state.toUpperCase()} • ${dest.region.toUpperCase()}</small>
+                  <h3>${dest.name}</h3>
+                  <p>${dest.tagline || dest.shortDesc || dest.overview.slice(0, 80) + '...'}</p>
+                </div>
+                <div class="enter-circle">→</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  } else {
+    // Grid View
+    const visibleList = currentFilteredDestinations.slice(0, currentDestFilter.page * currentDestFilter.pageSize);
+
+    grid.innerHTML = visibleList.map(dest => {
+      const isSaved = isPlaceSaved(dest.id || dest.slug);
+      const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+      return `
+        <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
+          <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+          <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
+          <div class="state-card-content">
+            <span class="eyebrow" style="margin-bottom: 4px;">${dest.state} • ${dest.region.toUpperCase()}</span>
+            <h3 class="state-card-name" style="font-size: 1.9rem;">${dest.name}</h3>
+            <p class="state-card-tagline" style="font-size: 0.88rem;">${dest.tagline || dest.shortDesc || dest.overview.slice(0, 100) + '...'}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+              <span class="state-card-action">EXPLORE DESTINATION →</span>
+              <button 
+                class="btn-save-journey ${isSaved ? 'saved' : ''}" 
+                style="padding: 6px 14px; font-size: 0.72rem;" 
+                data-save-place-id="${dest.id || dest.slug}" 
+                data-saved-text="♥ Saved" 
+                data-unsaved-text="♡ Save" 
+                onclick="event.stopPropagation(); window.raahiToggleSaveJourney('${dest.id || dest.slug}');">
+                ${isSaved ? '♥ Saved' : '♡ Save'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    if (loadMoreBtn) {
+      if (visibleList.length >= currentFilteredDestinations.length) {
+        loadMoreBtn.style.display = 'none';
+      } else {
+        loadMoreBtn.style.display = 'inline-flex';
+        loadMoreBtn.textContent = `LOAD MORE DESTINATIONS (${currentFilteredDestinations.length - visibleList.length} REMAINING) ↓`;
+      }
+    }
+  }
+}
+
+function updateDestCarouselStage() {
+  const stage = document.getElementById('dest-carousel-card-stage');
+  const dotsBar = document.getElementById('dest-carousel-dots-bar');
+  if (!stage || currentFilteredDestinations.length === 0) return;
+
+  if (currentDestCarouselIndex >= currentFilteredDestinations.length) {
+    currentDestCarouselIndex = 0;
+  }
+  if (currentDestCarouselIndex < 0) {
+    currentDestCarouselIndex = currentFilteredDestinations.length - 1;
+  }
+
+  const dest = currentFilteredDestinations[currentDestCarouselIndex];
+  const isSaved = isPlaceSaved(dest.id || dest.slug);
+  const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+  const durationText = dest.idealDuration || '2-3 Days';
+  const bestSeasonText = dest.bestSeason || dest.bestTimeToVisit || 'OCT — MAR';
+
+  stage.style.opacity = '0.3';
+
+  setTimeout(() => {
+    stage.innerHTML = `
+      <div class="dest-hero-carousel-card" style="position: relative; min-height: 440px; display: flex; align-items: flex-end; padding: 40px; background: #070b09; overflow: hidden; cursor: pointer;" onclick="window.location.hash='#/destinations/${dest.slug}'">
+        <img src="${imgUrl}" alt="${dest.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+        
+        <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,7,5,0.92) 0%, rgba(3,7,5,0.65) 50%, rgba(3,7,5,0.3) 100%), linear-gradient(0deg, rgba(3,7,5,0.95) 0%, transparent 60%); pointer-events: none;"></div>
+
+        <div style="position: relative; z-index: 3; max-width: 680px;">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase;">
+              ${dest.state.toUpperCase()} • ${dest.region.toUpperCase()} INDIA
+            </span>
+            <span style="font-size: 0.72rem; color: var(--muted);">&bull;</span>
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: #fff; letter-spacing: 0.1em; background: rgba(0,0,0,0.5); padding: 3px 10px; border-radius: 100px; border: 1px solid var(--line);">
+              MONUMENT ${currentDestCarouselIndex + 1} OF ${currentFilteredDestinations.length}
+            </span>
+          </div>
+
+          <h3 style="font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 600; text-transform: uppercase; color: var(--cream); margin: 0 0 10px 0; line-height: 1;">
+            ${dest.name}
+          </h3>
+
+          <p style="font-size: 0.98rem; color: var(--muted-bright); line-height: 1.6; margin-bottom: 20px; max-width: 580px;">
+            ${dest.tagline || dest.shortDesc || dest.overview.slice(0, 120) + '...'}
+          </p>
+
+          <!-- Badges Pill Row matching Photo 1 -->
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;">
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--cream);">
+              📍 ${dest.state}
+            </span>
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--gold);">
+              🏛️ ${dest.type}
+            </span>
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--cream);">
+              ⏱️ ${durationText}
+            </span>
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--cream);">
+              🌤️ Best: ${bestSeasonText}
+            </span>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <button class="btn gold" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; font-size: 0.82rem; box-shadow: 0 0 20px rgba(212,175,55,0.35);">
+              ▶ EXPLORE ${dest.name.toUpperCase()} →
+            </button>
             <button 
               class="btn-save-journey ${isSaved ? 'saved' : ''}" 
-              style="padding: 6px 14px; font-size: 0.72rem;" 
+              style="padding: 12px 20px; font-size: 0.78rem;" 
               data-save-place-id="${dest.id || dest.slug}" 
-              data-saved-text="♥ Saved" 
-              data-unsaved-text="♡ Save" 
+              data-saved-text="♥ Saved to Journey" 
+              data-unsaved-text="♡ Save to Journey" 
               onclick="event.stopPropagation(); window.raahiToggleSaveJourney('${dest.id || dest.slug}');">
-              ${isSaved ? '♥ Saved' : '♡ Save'}
+              ${isSaved ? '♥ Saved to Journey' : '♡ Save to Journey'}
             </button>
           </div>
         </div>
       </div>
     `;
-  }).join('');
+    stage.style.opacity = '1';
+  }, 120);
 
-  if (loadMoreBtn) {
-    if (visibleList.length >= totalFiltered) {
-      loadMoreBtn.style.display = 'none';
-    } else {
-      loadMoreBtn.style.display = 'inline-flex';
-      loadMoreBtn.textContent = `LOAD MORE DESTINATIONS (${totalFiltered - visibleList.length} REMAINING) ↓`;
-    }
+  // Update Dots
+  if (dotsBar) {
+    const maxDots = 20;
+    const total = Math.min(currentFilteredDestinations.length, maxDots);
+    dotsBar.innerHTML = currentFilteredDestinations.slice(0, total).map((d, idx) => `
+      <span class="dest-dot ${idx === currentDestCarouselIndex ? 'active' : ''}" 
+            data-index="${idx}" 
+            title="${d.name}"
+            style="display: inline-block; width: ${idx === currentDestCarouselIndex ? '28px' : '10px'}; height: 10px; border-radius: 100px; background: ${idx === currentDestCarouselIndex ? 'var(--gold)' : 'rgba(255,255,255,0.25)'}; cursor: pointer; transition: all 0.3s ease;"></span>
+    `).join('');
+
+    dotsBar.querySelectorAll('.dest-dot').forEach(dot => {
+      dot.onclick = (e) => {
+        e.stopPropagation();
+        currentDestCarouselIndex = parseInt(dot.dataset.index);
+        updateDestCarouselStage();
+      };
+    });
   }
+}
+
+function setupDestCarouselEvents() {
+  const prevBtn = document.getElementById('dest-carousel-prev');
+  const nextBtn = document.getElementById('dest-carousel-next');
+
+  if (prevBtn) {
+    prevBtn.onclick = (e) => {
+      e.stopPropagation();
+      currentDestCarouselIndex--;
+      updateDestCarouselStage();
+    };
+  }
+
+  if (nextBtn) {
+    nextBtn.onclick = (e) => {
+      e.stopPropagation();
+      currentDestCarouselIndex++;
+      updateDestCarouselStage();
+    };
+  }
+}
+
+function startDestCarouselAutoPlay() {
+  if (destCarouselAutoTimer) clearInterval(destCarouselAutoTimer);
+  destCarouselAutoTimer = setInterval(() => {
+    if (currentDestViewMode === 'carousel' && currentFilteredDestinations.length > 1) {
+      currentDestCarouselIndex++;
+      updateDestCarouselStage();
+    }
+  }, 5000);
 }
 
 function setupDestinationsFilterListeners() {
@@ -586,6 +798,20 @@ function setupDestinationsFilterListeners() {
   const seasonSelect = document.getElementById('dest-filter-season');
   const sortSelect = document.getElementById('dest-filter-sort');
   const loadMoreBtn = document.getElementById('load-more-destinations-btn');
+  const destViewToggle = document.getElementById('dest-view-mode-toggle');
+
+  if (destViewToggle) {
+    const viewChips = destViewToggle.querySelectorAll('.filter-chip');
+    viewChips.forEach(chip => {
+      chip.onclick = () => {
+        viewChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentDestViewMode = chip.dataset.view || 'carousel';
+        currentDestCarouselIndex = 0;
+        renderDestinationsContainer();
+      };
+    });
+  }
 
   if (regionSelect) {
     regionSelect.onchange = (e) => {
@@ -629,7 +855,7 @@ function setupDestinationsFilterListeners() {
   if (loadMoreBtn) {
     loadMoreBtn.onclick = () => {
       currentDestFilter.page += 1;
-      renderDestinationsGrid();
+      renderDestinationsContainer();
     };
   }
 }

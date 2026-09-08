@@ -249,12 +249,21 @@
                 <option value="name">Name (A — Z)</option>
                 <option value="rating">Top Rated</option>
               </select>
+          <!-- Destinations View Mode Toggles (Carousel Slider, Horizontal Rail, All Cards Grid) -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 28px;">
+            <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--muted-bright); letter-spacing: 0.12em; text-transform: uppercase;">
+              DESTINATIONS DISCOVERY VIEW MODE
+            </div>
+            <div class="dest-view-mode-toggle" id="dest-view-mode-toggle" style="display: flex; gap: 8px;">
+              <button class="filter-chip active" data-view="carousel" title="Compact Featured Carousel Banner (Photo 1 Style)">🎠 CAROUSEL SLIDER</button>
+              <button class="filter-chip" data-view="rail" title="Compact Horizontal Rail">📱 HORIZONTAL RAIL</button>
+              <button class="filter-chip" data-view="grid" title="Full Grid View">▦ ALL CARDS GRID</button>
             </div>
           </div>
 
-          <!-- Destinations Grid -->
+          <!-- Destinations Grid / Carousel Container -->
           <div class="states-grid" id="all-destinations-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
-            <!-- Rendered by JavaScript with Progressive Chunking -->
+            <!-- Rendered by JavaScript with Progressive Chunking & Carousel Modes -->
           </div>
 
           <!-- Progressive Load More Trigger -->
