@@ -46,16 +46,8 @@ export function initFirebaseAuth() {
 
   // Keep trigger button in sync with auth state
   auth.onAuthStateChanged((user) => {
-    const btn = document.getElementById("auth-trigger-btn");
-    const btnText = document.getElementById("auth-btn-text");
-
     if (user) {
       const name = (user.displayName || user.email.split("@")[0]).toUpperCase();
-      if (btnText) btnText.textContent = `${name} [SIGN OUT]`;
-      if (btn) {
-        btn.style.borderColor = "rgba(16, 185, 129, 0.6)";
-        btn.onclick = () => auth.signOut();
-      }
       const raahiUser = {
         email: user.email || 'operator@raahi.in',
         name: name,
@@ -68,14 +60,13 @@ export function initFirebaseAuth() {
       updateSecurityModalLogs(`> Firebase Production Session Active: ${name}`);
       window.closeAuthModal();
     } else {
-      if (btnText) btnText.textContent = "OPERATOR SIGN IN";
-      if (btn) {
-        btn.style.borderColor = "rgba(255, 255, 255, 0.08)";
-        btn.onclick = window.openAuthModal;
-      }
       localStorage.removeItem('raahi_user');
       updateSecurityModalUser(null);
       updateSecurityModalLogs('> Operator disconnected. Standby for auth clearance.');
+    }
+
+    if (typeof window.updateAuthNavButton === 'function') {
+      window.updateAuthNavButton();
     }
   });
 }
@@ -102,38 +93,79 @@ function displayAuthStatus(msg, isError = true) {
   }
 }
 
-// Google Sign-In with Redirect Fallback
+window.enterDashboard = function() {
+  window.location.hash = '#/home';
+};
+
+// Google Sign-In with Guarded Authentication Callback
 window.loginWithGoogle = async function(e) {
-  if (e && e.preventDefault) e.preventDefault();
-  
-  if (window.location.protocol === 'file:') {
-    displayAuthStatus("Cannot run OAuth from file://. Serve site via http://localhost:9090");
-    return;
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
   }
+
+  const errEl = document.getElementById("auth-error-msg");
+  if (errEl) {
+    errEl.style.display = "block";
+    errEl.style.color = "#10b981";
+    errEl.textContent = "Connecting to Google...";
+  }
+
   if (typeof firebase === 'undefined' || !firebase.auth) {
-    displayAuthStatus("Firebase SDK failed to load. Check script tags.");
+    if (errEl) {
+      errEl.style.color = "#ef4444";
+      errEl.textContent = "Firebase Auth SDK not initialized.";
+    }
     return;
   }
 
-  displayAuthStatus("Connecting to Google...", false);
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
 
   try {
-    const res = await firebase.auth().signInWithPopup(provider);
-    console.log("[Auth] Google Success:", res.user.email);
-    window.closeAuthModal();
-  } catch (err) {
-    console.error("[Auth] Google Error:", err);
-    if (err.code === "auth/popup-blocked") {
-      displayAuthStatus("Popup blocked by browser. Redirecting...", false);
+    // 1. Await popup result
+    const result = await firebase.auth().signInWithPopup(provider);
+    const user = result ? result.user : null;
+
+    if (!user) {
+      throw new Error("No user returned from Google.");
+    }
+
+    console.log("[Auth] Successfully authenticated:", user.email);
+
+    // 2. Only enter dashboard AFTER successful sign-in
+    if (typeof window.closeAuthModal === 'function') {
+      window.closeAuthModal();
+    }
+    
+    // Call project transition function:
+    if (typeof window.enterDashboard === 'function') {
+      window.enterDashboard();
+    } else if (typeof enterDashboard === 'function') {
+      enterDashboard();
+    }
+
+  } catch (error) {
+    console.error("[Auth] Login halted:", error);
+    if (error.code === "auth/popup-blocked") {
+      if (errEl) {
+        errEl.style.color = "#3b82f6";
+        errEl.textContent = "Popup blocked by browser. Redirecting...";
+      }
       firebase.auth().signInWithRedirect(provider);
-    } else if (err.code === "auth/unauthorized-domain" || err.code === "auth/operation-not-allowed") {
-      displayAuthStatus(`[${err.code}]: Domain pending activation in Firebase Console. Logging in locally...`, false);
+    } else if (error.code === "auth/unauthorized-domain" || error.code === "auth/operation-not-allowed") {
+      if (errEl) {
+        errEl.style.color = "#f59e0b";
+        errEl.textContent = `[${error.code}]: Firebase domain configuration pending. Authenticating locally...`;
+      }
       simulateFallbackLogin('Google');
     } else {
-      displayAuthStatus(`[${err.code}]: ${err.message}`);
+      if (errEl) {
+        errEl.style.color = "#ef4444";
+        errEl.textContent = error.message;
+      }
     }
+    return;
   }
 };
 

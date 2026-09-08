@@ -135,6 +135,60 @@
   color: var(--cream);
 }
 
+/* Dedicated Top Taskbar Logout Button & Responsive Management */
+.nav-logout-btn {
+  background: rgba(225, 29, 72, 0.14);
+  border: 1px solid rgba(244, 63, 94, 0.45);
+  color: #fecdd3;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-logout-btn:hover {
+  background: rgba(225, 29, 72, 0.32);
+  border-color: rgba(244, 63, 94, 0.9);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(244, 63, 94, 0.45);
+  transform: translateY(-1px);
+}
+
+.nav-user-btn {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  color: #a7f3d0 !important;
+}
+
+.mobile-logout-btn {
+  width: 100%;
+  padding: 14px;
+  background: rgba(225, 29, 72, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  border-radius: 10px;
+  color: #fecdd3;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s ease;
+}
+
+.mobile-logout-btn:hover {
+  background: rgba(225, 29, 72, 0.3);
+  color: #ffffff;
+}
+
 /* 2. Master Hero Section (Creative Masterpiece Redesign) */
 .hero {
   min-height: 100vh;

@@ -318,58 +318,84 @@ window.raahiSocialLogin = function(provider) {
 
 window.raahiLogout = function() {
   localStorage.removeItem('raahi_user');
-  updateAuthNavButton();
-  showToast('Logged out from RAAHI session.');
+
+  if (typeof firebase !== 'undefined' && firebase.auth) {
+    try {
+      const authInstance = firebase.auth();
+      if (authInstance && authInstance.currentUser) {
+        authInstance.signOut();
+      }
+    } catch (err) {
+      console.warn("[Auth] Firebase signOut warning:", err);
+    }
+  }
+
+  if (typeof window.updateAuthNavButton === 'function') {
+    window.updateAuthNavButton();
+  }
+  if (typeof window.updateSecurityModalUser === 'function') {
+    window.updateSecurityModalUser(null);
+  }
+
+  showToast('Logged out successfully from RAAHI.');
 };
 
-function updateAuthNavButton() {
+window.updateAuthNavButton = function() {
   const navContainer = document.getElementById('raahi-nav-auth-container');
+  const mobileContainer = document.getElementById('mobile-auth-status-container');
   const user = JSON.parse(localStorage.getItem('raahi_user') || 'null');
 
-  if (!navContainer) return;
+  if (navContainer) {
+    if (user) {
+      const displayName = user.name || 'OPERATOR';
+      navContainer.innerHTML = `
+        <div class="raahi-user-profile-menu" style="display: flex; align-items: center; gap: 8px;">
+          <button id="auth-trigger-btn" class="btn btn-outline nav-user-btn" onclick="window.raahiToggleUserDropdown(event)" style="display: inline-flex; align-items: center; gap: 8px; border-color: rgba(16, 185, 129, 0.6); color: #a7f3d0;" title="${displayName}">
+            <span class="telemetry-dot active"></span>
+            <span id="auth-btn-text">⚡ ${displayName.toUpperCase()}</span>
+          </button>
 
-  if (user) {
-    navContainer.innerHTML = `
-      <div class="raahi-user-profile-menu">
-        <button id="auth-trigger-btn" class="btn btn-outline" onclick="window.raahiToggleUserDropdown(event)" style="display: inline-flex; align-items: center; gap: 8px;" title="${user.name}">
-          <span class="telemetry-dot active"></span>
-          <span id="auth-btn-text">OPERATOR: ${user.name.toUpperCase()} [ONLINE]</span>
-        </button>
-        <div class="raahi-user-dropdown" id="raahi-user-dropdown">
-          <div class="user-dropdown-header">
-            <strong>${user.name}</strong>
-            <small>${user.email}</small>
+          <button class="nav-logout-btn" onclick="window.raahiLogout()" title="Sign Out from RAAHI Session">
+            <span class="logout-icon">⎋</span>
+            <span class="logout-text">LOGOUT</span>
+          </button>
+
+          <div class="raahi-user-dropdown" id="raahi-user-dropdown">
+            <div class="user-dropdown-header">
+              <strong>${displayName}</strong>
+              <small>${user.email || 'operator@raahi.in'}</small>
+            </div>
+            <a href="#journey-discovery" class="user-dropdown-item" onclick="window.raahiOpenJourneyDrawer()">♡ My Saved Journeys</a>
+            <a href="javascript:void(0)" class="user-dropdown-item" onclick="window.raahiOpenSecurityModal()">🛡️ Security Audit & Firebase Auth</a>
+            <button class="user-dropdown-item logout" onclick="window.raahiLogout()">✕ Sign Out / Logout</button>
           </div>
-          <a href="#journey-discovery" class="user-dropdown-item" onclick="window.raahiOpenJourneyDrawer()">♡ My Saved Journeys</a>
-          <a href="javascript:void(0)" class="user-dropdown-item" onclick="window.raahiOpenSecurityModal()">🛡️ Security Audit & Firebase Auth</a>
-          <button class="user-dropdown-item logout" onclick="window.raahiLogout()">✕ Sign Out</button>
         </div>
-      </div>
-    `;
-  } else {
-    navContainer.innerHTML = `
-      <button id="auth-trigger-btn" class="btn btn-outline" onclick="openAuthModal()" style="display: inline-flex; align-items: center; gap: 8px;">
-        <span class="telemetry-dot"></span>
-        <span id="auth-btn-text">OPERATOR SIGN IN</span>
-      </button>
-    `;
+      `;
+    } else {
+      navContainer.innerHTML = `
+        <button id="auth-trigger-btn" class="btn btn-outline" onclick="openAuthModal()" style="display: inline-flex; align-items: center; gap: 8px;">
+          <span class="telemetry-dot"></span>
+          <span id="auth-btn-text">OPERATOR SIGN IN</span>
+        </button>
+      `;
+    }
   }
-}
 
-window.raahiToggleUserDropdown = function(e) {
-  e.stopPropagation();
-  const dropdown = document.getElementById('raahi-user-dropdown');
-  if (dropdown) {
-    dropdown.classList.toggle('active');
+  if (mobileContainer) {
+    if (user) {
+      const shortName = (user.name || 'Operator').split(' ')[0];
+      mobileContainer.innerHTML = `
+        <button class="mobile-logout-btn" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll'); window.raahiLogout();">
+          ⎋ Sign Out / Logout (${shortName})
+        </button>
+      `;
+    } else {
+      mobileContainer.innerHTML = `
+        <a href="#/login" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');" style="color: var(--gold); font-weight: 700;">🔑 Sign In / My Account</a>
+      `;
+    }
   }
 };
-
-document.addEventListener('click', () => {
-  const dropdown = document.getElementById('raahi-user-dropdown');
-  if (dropdown && dropdown.classList.contains('active')) {
-    dropdown.classList.remove('active');
-  }
-});
 
 function showToast(msg) {
   let toast = document.getElementById('raahi-auth-toast');
