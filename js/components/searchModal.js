@@ -107,16 +107,27 @@ export function initSearchModal() {
     currentResults = searchIndex.search(q, 10);
     selectedIndex = currentResults.length > 0 ? 0 : -1;
 
+    const aiBtnHtml = `
+      <div style="padding: 10px 14px; margin-bottom: 12px; background: linear-gradient(90deg, rgba(212, 175, 55, 0.15) 0%, rgba(13, 20, 16, 0.8) 100%); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="window.raahiCloseSearchModal(); window.raahiAskAssistant('${q.replace(/'/g, "\\'")}');">
+        <div>
+          <span style="font-family: var(--font-display); font-size: 0.68rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;">✦ GOOGLE GEMINI AI KNOWLEDGE</span>
+          <div style="font-family: var(--font-display); font-size: 0.95rem; color: var(--cream); font-weight: 600;">Ask Google AI about "${q}"</div>
+        </div>
+        <span class="btn gold" style="padding: 6px 14px; font-size: 0.72rem;">⚡ ASK AI →</span>
+      </div>
+    `;
+
     if (currentResults.length === 0) {
       resultsContainer.innerHTML = `
+        ${aiBtnHtml}
         <div class="search-empty-state">
-          No destinations found matching "<strong>${q}</strong>". Try searching for "Rajasthan", "beaches", "forts", or "temples".
+          No offline index entries for "<strong>${q}</strong>". Click the button above to ask Google Gemini AI directly!
         </div>
       `;
       return;
     }
 
-    resultsContainer.innerHTML = currentResults.map((item, idx) => `
+    resultsContainer.innerHTML = aiBtnHtml + currentResults.map((item, idx) => `
       <div class="search-result-item ${idx === 0 ? 'selected' : ''}" data-idx="${idx}" data-route="${item.route}">
         <img src="${item.image}" alt="${item.title}" class="search-result-img" loading="lazy" />
         <div class="search-result-info">

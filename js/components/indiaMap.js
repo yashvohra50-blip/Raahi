@@ -180,6 +180,9 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
           <button id="open-external-gmaps-btn" class="btn gold" style="width: 100%; justify-content: center; font-size: 0.78rem; padding: 10px;">
             🌍 OPEN NATURAL 3D MAPS (TREES & CARS) ↗
           </button>
+          <button id="ask-ai-map-btn" class="btn" style="width: 100%; justify-content: center; font-size: 0.78rem; padding: 10px; border-color: var(--gold); color: var(--gold);" onclick="window.raahiAskAssistant('Tell me all details, secrets, and travel tips for ' + (document.getElementById('map-preview-title')?.textContent || 'this state'))">
+            ⚡ ASK GOOGLE AI ABOUT THIS LOCATION →
+          </button>
           <a href="#/states/${defaultState.slug}" class="btn light" id="map-preview-link" style="justify-content: center; width: 100%; text-align: center;">
             EXPLORE ${defaultState.name.toUpperCase()} CODEX →
           </a>

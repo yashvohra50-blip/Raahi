@@ -1165,7 +1165,7 @@ function renderStateView(stateSlug) {
 
       <!-- Practical Intelligence -->
       ${state.travelInfo ? `
-        <section style="padding: 40px 0 80px; border-top: 1px solid var(--line);">
+        <section style="padding: 40px 0 60px; border-top: 1px solid var(--line);">
           <span class="eyebrow">PRACTICAL INTELLIGENCE</span>
           <h2 class="heading-medium" style="text-transform: uppercase;">Travel Essentials</h2>
           <div class="travel-info-box">
@@ -1184,6 +1184,20 @@ function renderStateView(stateSlug) {
           </div>
         </section>
       ` : ''}
+
+      <!-- Live Google AI Knowledge Integration -->
+      <section style="padding: 40px 0 80px; border-top: 1px solid var(--line);">
+        <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(13, 20, 16, 0.95) 100%); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 16px; padding: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+          <div>
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase;">✦ GOOGLE GEMINI AI KNOWLEDGE ENGINE</span>
+            <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--cream); margin: 6px 0;">Have a question about ${state.name}?</h3>
+            <p style="color: var(--muted-bright); font-size: 0.92rem; margin: 0; max-width: 580px;">Ask about hidden gems, 3-day travel routes, regional cuisine, or historical facts about ${state.name} powered by live Google Knowledge.</p>
+          </div>
+          <button class="btn gold" onclick="window.raahiAskAssistant('Tell me all details, hidden gems, and travel tips for ${state.name}')" style="padding: 14px 28px; font-size: 0.85rem; box-shadow: 0 0 25px rgba(212,175,55,0.35);">
+            ⚡ ASK GOOGLE AI ABOUT ${state.name.toUpperCase()} →
+          </button>
+        </div>
+      </section>
 
       <div style="text-align: center; padding: 40px 0 60px; border-top: 1px solid var(--line); display: flex; gap: 16px; justify-content: center;">
         <button class="btn light" onclick="window.location.hash='#states'">
@@ -1580,7 +1594,21 @@ function renderDestinationView(destSlug) {
         </section>
       ` : ''}
 
-      <div style="display: flex; gap: 1rem; justify-content: center; padding: 40px 0 60px; border-top: 1px solid var(--line);">
+      <!-- Live Google AI Knowledge Integration -->
+      <section style="margin: 40px 0 60px;">
+        <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(13, 20, 16, 0.95) 100%); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 16px; padding: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+          <div>
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase;">✦ GOOGLE GEMINI AI KNOWLEDGE ENGINE</span>
+            <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--cream); margin: 6px 0;">Have a question about ${dest.name}?</h3>
+            <p style="color: var(--muted-bright); font-size: 0.92rem; margin: 0; max-width: 580px;">Ask about secret viewpoints, photography angles, ticket queue bypass, or local food recommendations for ${dest.name} powered by live Google Knowledge.</p>
+          </div>
+          <button class="btn gold" onclick="window.raahiAskAssistant('Tell me all details, hidden gems, photography angles, and local food for ${dest.name}')" style="padding: 14px 28px; font-size: 0.85rem; box-shadow: 0 0 25px rgba(212,175,55,0.35);">
+            ⚡ ASK GOOGLE AI ABOUT ${dest.name.toUpperCase()} →
+          </button>
+        </div>
+      </section>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; padding: 40px 0 60px; border-top: 1px solid var(--line); flex-wrap: wrap;">
         <button class="btn" onclick="window.location.hash='#/states/${dest.stateSlug}'">
           ← Back to ${dest.state}
         </button>
