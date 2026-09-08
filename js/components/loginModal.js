@@ -75,25 +75,30 @@ export function renderLoginPage(tab = 'login') {
 
   container.innerHTML = `
     <div class="auth-page-wrapper">
-      <!-- Dedicated Top Header Bar for Sign In Page -->
+      <!-- Dedicated Hero Header Bar for Landing Page -->
       <div class="auth-page-header">
-        <a href="#/home" class="auth-back-link">
-          <span class="arrow">←</span> BACK TO EXPLORE RAAHI
+        <a href="#/home" class="auth-back-link" style="display: flex; align-items: center; gap: 8px;">
+          <span class="auth-logo-mark" style="width: 12px; height: 12px; border-radius: 50%; background: var(--gold); display: inline-block;"></span>
+          <span style="font-weight: 800; letter-spacing: 0.15em;">RAAHI</span>
         </a>
-        <div class="auth-page-brand">
-          <span class="auth-logo-mark"></span>
-          <span class="auth-logo-text">RAAHI PASSPORT</span>
+        
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <a href="#/home" class="auth-nav-link" style="color: #cbd5e1; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: color 0.2s;">EXPLORE RAAHI</a>
+          <a href="#/home#interactive-map" class="auth-nav-link" style="color: #cbd5e1; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: color 0.2s;">INDIA MAP</a>
+          <a href="#/home#states" class="auth-nav-link" style="color: #cbd5e1; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: color 0.2s;">36 STATES & UTs</a>
+          <a href="#/fair" class="auth-nav-link" style="color: #cbd5e1; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: color 0.2s;">RAAHI FAIR</a>
+          <button onclick="window.raahiOpenSearchModal()" class="btn light" style="padding: 6px 14px; font-size: 0.75rem; font-weight: 700; border-radius: 99px; cursor: pointer;">🔍 SEARCH</button>
         </div>
       </div>
 
       <div class="auth-page-container">
-        <!-- Left Side: Ultra-Attractive Brand & Daily Life Quote Rotator -->
+        <!-- Left Side: Ultra-Attractive Brand, Hero Callouts & Daily Life Quote Rotator -->
         <div class="auth-brand-side">
           <div class="auth-brand-aura"></div>
           <div class="auth-brand-content">
             <div class="auth-brand-badge">
               <span class="badge-dot"></span>
-              <span>DAILY LIFE WISDOM & DISCOVERY</span>
+              <span>DAILY LIFE WISDOM & PAN-INDIA HERO</span>
             </div>
 
             <h2 class="auth-brand-headline">Discover India,<br>Empower Your Journey</h2>
@@ -114,6 +119,17 @@ export function renderLoginPage(tab = 'login') {
                 <span class="quote-line"></span>
                 <span id="auth-quote-author">${quote.author}</span>
               </div>
+            </div>
+
+            <!-- Hero Landing Actions -->
+            <div class="auth-hero-actions" style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+              <a href="#/home" class="btn gold" style="padding: 12px 24px; font-size: 0.82rem; font-weight: 800; border-radius: 99px; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+                <span>🚀 ENTER EXPLORE RAAHI</span>
+                <span class="arrow">→</span>
+              </a>
+              <button onclick="window.raahiOpenSearchModal()" class="btn light" style="padding: 12px 20px; font-size: 0.82rem; font-weight: 700; border-radius: 99px; letter-spacing: 0.05em; cursor: pointer;">
+                🔍 SEARCH ALL 36 STATES
+              </button>
             </div>
           </div>
         </div>

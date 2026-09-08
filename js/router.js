@@ -225,7 +225,7 @@ let currentDestFilter = {
 };
 
 function handleRoute() {
-  const hash = window.location.hash || '#/home';
+  const hash = window.location.hash || '#/login';
   const homeView = document.getElementById('view-home');
   const stateView = document.getElementById('view-state');
   const cityView = document.getElementById('view-city');
