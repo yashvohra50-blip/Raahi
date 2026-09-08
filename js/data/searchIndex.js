@@ -72,6 +72,64 @@ class SearchEngine {
         keywords: [exp.name, exp.tagline, exp.category, exp.icon].join(' ').toLowerCase()
       });
     });
+
+    // 4. Index Raahi Fair Price Intelligence
+    const fairItems = [
+      {
+        id: 'fair-auto-transport',
+        title: 'Auto Rickshaw & Taxi Fair Fare Calculator',
+        subtitle: 'Official Municipal RTO Gazette Rates • 14+ Indian Cities',
+        category: 'Fair Prices',
+        type: 'Utility',
+        route: '#/fair?category=transport',
+        image: 'assets/images/destinations/hawa-mahal.jpg',
+        keywords: 'auto rickshaw fare meter price taxi cab rto transport cost rates night surcharge jaipur delhi mumbai bengaluru kolkata varanasi raahi fair'
+      },
+      {
+        id: 'fair-shikara-rates',
+        title: 'Dal Lake Shikara Official Union Rates',
+        subtitle: 'JKTDC & Dal Lake Boatmen Union Verified Tariffs • Srinagar',
+        category: 'Fair Prices',
+        type: 'Tariff',
+        route: '#/fair?city=srinagar&category=activities',
+        image: 'assets/images/destinations/dal-lake.jpg',
+        keywords: 'shikara boat ride dal lake srinagar kashmir j&k hourly rates union tariff water taxi fair price'
+      },
+      {
+        id: 'fair-monuments-tariffs',
+        title: 'ASI Heritage Monuments Ticket Rates',
+        subtitle: 'Archaeological Survey of India Official Published Tariffs',
+        category: 'Fair Prices',
+        type: 'Tariff',
+        route: '#/fair?category=monuments',
+        image: 'assets/images/destinations/taj-mahal.jpg',
+        keywords: 'asi ticket monument entrance entry fees taj mahal amber fort qutub minar red fort composite ticket fair price'
+      },
+      {
+        id: 'fair-pashmina-shopping',
+        title: 'Kashmiri Pashmina & GI Craft Price Benchmarks',
+        subtitle: 'Handicrafts Dept & GI Registry Standards • Srinagar & Jaipur',
+        category: 'Fair Prices',
+        type: 'Benchmark',
+        route: '#/fair?category=shopping',
+        image: 'assets/images/destinations/dal-lake.jpg',
+        keywords: 'pashmina shawl kashmir sanganeri cotton handblock banarasi silk blue pottery carpet shopping fair price cost'
+      },
+      {
+        id: 'fair-guide-tariffs',
+        title: 'Government Authorized Tourist Guides Rates',
+        subtitle: 'Ministry of Tourism Approved Day Rates & Half-day Tariffs',
+        category: 'Fair Prices',
+        type: 'Tariff',
+        route: '#/fair?category=services',
+        image: 'assets/images/destinations/hawa-mahal.jpg',
+        keywords: 'tour guide official approved ministry tourism charges fees per day half day porter rates fair price'
+      }
+    ];
+
+    fairItems.forEach(item => {
+      this.items.push(item);
+    });
   }
 
   search(query, limit = 10) {

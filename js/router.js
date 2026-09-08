@@ -86,6 +86,8 @@ export const VERIFIED_IMAGE_MAP = {
   'chandigarh': 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?q=80&w=1200'
 };
 
+import { RaahiFair } from './components/raahiFair.js';
+
 window.raahiAddToJourney = (id) => addToJourney(id);
 window.arvoraAddToJourney = window.raahiAddToJourney;
 window.raahiToggleSaveJourney = (id) => toggleSaveJourney(id);
@@ -230,6 +232,7 @@ function handleRoute() {
   const destView = document.getElementById('view-destination');
   const cinematicView = document.getElementById('view-cinematic');
   const journeyView = document.getElementById('view-journey');
+  const fairView = document.getElementById('view-fair');
   const mainNav = document.querySelector('.nav');
   const mainFooter = document.querySelector('.footer');
   const assistantTrigger = document.getElementById('raahi-assistant-trigger');
@@ -248,7 +251,7 @@ function handleRoute() {
     } catch (e) {}
   }
 
-  [homeView, stateView, cityView, destView, cinematicView, journeyView].forEach(v => {
+  [homeView, stateView, cityView, destView, cinematicView, journeyView, fairView].forEach(v => {
     if (v) v.style.display = 'none';
   });
 
@@ -299,6 +302,20 @@ function handleRoute() {
         if (stateView) stateView.style.display = 'block';
         renderStateView(cityId);
       }
+    } else if (hash.startsWith('#/fair') || hash.startsWith('#fair')) {
+      if (fairView) fairView.style.display = 'block';
+      updateSEOMetadata('RAAHI FAIR — Know the Price Before You Pay // Official Rates & Fair Calculator', 'Verified transport fares, municipal auto meters, ASI tickets, and artisanal price transparency across India.');
+      
+      const queryIndex = hash.indexOf('?');
+      const params = {};
+      if (queryIndex !== -1) {
+        const queryStr = hash.substring(queryIndex + 1);
+        const searchParams = new URLSearchParams(queryStr);
+        for (const [key, value] of searchParams.entries()) {
+          params[key] = value;
+        }
+      }
+      RaahiFair.renderFullPage('view-fair', params);
     } else if (hash === '#/journey') {
       if (journeyView) journeyView.style.display = 'block';
       renderJourneyBuilderView();
@@ -339,7 +356,17 @@ function renderHomeView() {
   renderDestinationsGrid();
   setupDestinationsFilterListeners();
 
-  // 4. Render Stays Section
+  // 4. Mount Raahi Fair Price Discovery Card
+  const fairMount = document.getElementById('home-fair-card-mount');
+  if (fairMount && !fairMount.hasChildNodes()) {
+    RaahiFair.renderDiscoveryCard('home-fair-card-mount', {
+      title: "Know the Fair Price Before You Pay",
+      subtitle: "Official municipal auto rickshaw meters, ASI heritage entry tariffs, boat unions, and certified artisan craft benchmarks. Zero guesswork.",
+      city: "jaipur"
+    });
+  }
+
+  // 5. Render Stays Section
   renderStaysSection();
 }
 
@@ -1508,6 +1535,9 @@ function renderDestinationView(destSlug) {
           `).join('')}
         </div>
       </section>
+
+      <!-- 5b. Local Fair Price Intelligence (Raahi Fair) -->
+      ${RaahiFair.renderDestinationFairBlock(dest.slug || dest.id)}
 
       <!-- 6. History & Heritage -->
       ${dest.history ? `

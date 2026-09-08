@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/state-page.css">
   <link rel="stylesheet" href="css/destination-page.css">
   <link rel="stylesheet" href="css/cinematic.css">
+  <link rel="stylesheet" href="css/raahi-fair.css">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
 </head>
@@ -37,6 +38,7 @@
 
     <nav class="navlinks">
       <a href="#/home" class="active">Explore</a>
+      <a href="#/fair">Fair Prices</a>
       <a href="#interactive-map">Map</a>
       <a href="#states">All States (36)</a>
       <a href="#all-destinations">Destinations (111)</a>
@@ -75,6 +77,7 @@
 
     <nav class="mobile-nav-links">
       <a href="#/home" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Explore Home</a>
+      <a href="#/fair" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">⚖️ Fair Prices & Rates</a>
       <a href="#interactive-map" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Interactive India Map</a>
       <a href="#states" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">28 States & 8 UTs</a>
       <a href="#all-destinations" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">111+ Destinations</a>
@@ -349,6 +352,11 @@
         </div>
       </section>
 
+      <!-- Raahi Fair Price Discovery Banner -->
+      <section class="wrap" id="home-fair-price-discovery" style="padding: 20px 0 20px;">
+        <div id="home-fair-card-mount"></div>
+      </section>
+
       <!-- Stays & Heritage Accommodations -->
       <section class="wrap" id="stays" style="padding: 100px 0;">
         <div class="section-head">
@@ -381,6 +389,9 @@
 
     <!-- 6. Custom Journey Builder View Container (#/journey) -->
     <div id="view-journey" style="display: none;"></div>
+
+    <!-- 7. Raahi Fair Price Intelligence Container (#/fair) -->
+    <div id="view-fair" style="display: none;"></div>
   </main>
 
   <!-- Contextual Intelligent Travel Assistant ("Ask RAAHI") -->
