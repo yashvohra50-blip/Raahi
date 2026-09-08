@@ -7,18 +7,19 @@
   position: fixed;
   z-index: 150;
   left: 0; right: 0; top: 0;
-  padding: 22px 5vw;
+  padding: 16px 3vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   transition: var(--transition-smooth);
 }
 
 .nav.scrolled {
-  background: rgba(7, 11, 9, 0.85);
+  background: rgba(7, 11, 9, 0.92);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--line);
-  padding-block: 14px;
+  padding-block: 12px;
 }
 
 .logo {
@@ -31,6 +32,7 @@
   text-transform: uppercase;
   color: var(--cream);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .mark {
@@ -45,13 +47,14 @@
 .navlinks {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 18px;
   font-family: var(--font-display);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
+  flex-wrap: nowrap;
 }
 
 .navlinks a:hover, .navlinks a.active {
@@ -538,9 +541,12 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .navlinks { display: none; }
   .menu-toggle { display: block; font-size: 1.6rem; cursor: pointer; }
+}
+
+@media (max-width: 768px) {
   .states-grid { grid-template-columns: 1fr; }
   .rail { grid-auto-columns: 85vw; }
   .footer-top { grid-template-columns: 1fr; }
