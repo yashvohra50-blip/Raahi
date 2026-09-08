@@ -5,6 +5,7 @@
 import { initRouter, navigateTo } from './router.js';
 import { initAssistant } from './assistant.js';
 import { initSearchModal } from './components/searchModal.js';
+import { initAuthModal } from './components/loginModal.js';
 import { updateJourneyBadgeCount, isPlaceSaved, updateAllSaveButtons } from './journeyBuilder.js';
 import { DataRegistry, RAAHI_DATA } from './data/dataRegistry.js';
 import { experiencesData } from './data/experiencesData.js';
@@ -32,7 +33,7 @@ function initDiscoveryFilters() {
 
     grid.innerHTML = list.map(item => `
       <div class="discovery-card" onclick="window.location.hash='#/destinations/${item.destSlug || item.id}'">
-        <img src="${item.img || item.heroImage || 'assets/images/destinations/amber-fort.jpg'}" alt="${item.name || item.title}" class="discovery-card-img" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
+        <img src="${item.img || item.heroImage || 'assets/images/destinations/amber-fort.jpg'}" alt="${item.name || item.title}" class="discovery-card-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
         <div class="discovery-card-tag">${item.categoryTag || item.tag || 'CURATED EXPEDITION'}</div>
         <div class="discovery-card-content">
           <span class="eyebrow" style="margin-bottom: 4px;">${item.loc || item.state || 'India'}</span>
@@ -66,6 +67,7 @@ function bootstrapApp() {
   // 1. Initialize Core Router, Search & Assistant
   initRouter();
   initSearchModal();
+  initAuthModal();
   initDiscoveryFilters();
   initAssistant();
   updateJourneyBadgeCount();

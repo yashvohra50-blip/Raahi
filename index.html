@@ -43,10 +43,15 @@
       <a href="#journey-discovery">Journeys</a>
       <a href="#/journey">Build Route</a>
       <a href="#stays">Stays</a>
+<<<<<<< HEAD
       <button class="raahi-fair-nav-pill" id="raahi-fair-nav-btn" onclick="window.raahiOpenFairModal();" aria-label="Open Raahi Fair Price Intelligence" title="Know the price before you pay">
         <span class="pill-icon">⚖</span>
         <span class="pill-text">RAAHI FAIR</span>
       </button>
+=======
+      <a href="javascript:void(0)" onclick="window.raahiOpenAuthModal('login')" style="color: var(--gold); font-weight: 700;">🔑 Sign In</a>
+      <a href="#about">About</a>
+>>>>>>> origin/main
     </nav>
 
     <div style="display: flex; align-items: center; gap: 12px;">
@@ -59,6 +64,13 @@
       <button onclick="window.raahiOpenJourneyDrawer()" class="plan-btn" style="border-color: var(--gold); color: var(--gold); display: inline-flex; align-items: center; gap: 6px; cursor: pointer; background: transparent;" title="Open My Journey">
         ♡ My Journey (<span class="journey-count-badge">0</span>)
       </button>
+
+      <div id="raahi-nav-auth-container">
+        <button onclick="window.raahiOpenAuthModal('login')" class="btn gold" style="padding: 8px 18px; font-size: 0.78rem; font-weight: 700; border-radius: 99px; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+          🔑 SIGN IN
+        </button>
+      </div>
+
       <button class="menu-toggle" id="menu-toggle-btn" aria-label="Open Navigation Menu">☰</button>
     </div>
   </header>
@@ -77,6 +89,7 @@
     </button>
 
     <nav class="mobile-nav-links">
+<<<<<<< HEAD
       <a href="#/home" onclick="window.raahiCloseMobileMenu();">Explore</a>
       <a href="#interactive-map" onclick="window.raahiCloseMobileMenu();">Map</a>
       <a href="#all-destinations" onclick="window.raahiCloseMobileMenu();">Destinations</a>
@@ -88,6 +101,19 @@
       </a>
       <a href="javascript:void(0)" onclick="window.raahiCloseMobileMenu(); window.raahiOpenJourneyDrawer();">♡ My Journey (<span class="journey-count-badge">0</span>)</a>
       <a href="#about" onclick="window.raahiCloseMobileMenu();">About</a>
+=======
+      <a href="#/home" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Explore Home</a>
+      <a href="#/fair" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">⚖️ Fair Prices & Rates</a>
+      <a href="#interactive-map" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Interactive India Map</a>
+      <a href="#states" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">28 States & 8 UTs</a>
+      <a href="#all-destinations" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">111+ Destinations</a>
+      <a href="#journey-discovery" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Curated Journeys</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll'); window.raahiOpenJourneyDrawer();">♡ My Journey (<span class="journey-count-badge">0</span>)</a>
+      <a href="#/journey" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Build Route</a>
+      <a href="#stays" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Heritage Stays</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll'); window.raahiOpenAuthModal('login');" style="color: var(--gold); font-weight: 700;">🔑 Sign In / My Account</a>
+      <a href="#about" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">About RAAHI</a>
+>>>>>>> origin/main
     </nav>
     <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--muted-dim); letter-spacing: 0.1em; margin-top: 30px;">
       RAAHI PAN-INDIA TOURISM PLATFORM © 2026
@@ -521,11 +547,18 @@
     <!-- Rendered dynamically by renderJourneyDrawer() -->
   </div>
 
+<<<<<<< HEAD
   <!-- Raahi Fair Price Intelligence Modal & Overlay -->
   <div class="raahi-fair-overlay" id="raahi-fair-overlay" onclick="window.raahiCloseFairModal()"></div>
   <div class="raahi-fair-modal" id="raahi-fair-modal" role="dialog" aria-modal="true" aria-label="Raahi Fair Price Intelligence">
     <!-- Rendered dynamically by RaahiFair.renderModal() -->
   </div>
+=======
+  <!-- Floating Sign In Quick Trigger -->
+  <button onclick="window.raahiOpenAuthModal('login')" class="raahi-floating-login-btn" title="Sign In to RAAHI">
+    <span>🔑</span> SIGN IN
+  </button>
+>>>>>>> origin/main
 
   <!-- Master Application Scripts -->
   <script type="module" src="js/app.js"></script>
