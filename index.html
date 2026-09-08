@@ -108,9 +108,9 @@
   <main>
     <!-- 1. Master Home View -->
     <div id="view-home">
-      <!-- Master Hero Section (Human Web Developer Masterpiece) -->
+      <!-- Master Hero Section (Human Creative Redesign) -->
       <section class="hero">
-        <div class="hero-bg"></div>
+        <div class="hero-bg" id="hero-dynamic-bg"></div>
         
         <div class="hero-content">
           <span class="eyebrow">NATIONAL TOURISM PLATFORM // 28 STATES & 8 UNION TERRITORIES</span>
@@ -121,6 +121,7 @@
           <p class="hero-subtitle">
             Discover 111+ curated destinations across all 36 Indian states and union territories. Explore royal citadels, high-altitude passes, sacred ghats, and living artisan quarters.
           </p>
+          
           <div class="hero-actions">
             <button onclick="window.raahiOpenSearchModal()" class="btn gold hero-btn-primary" title="Search all 36 States & Destinations">
               <span>🔍 SEARCH ALL 36 STATES & DESTINATIONS</span>
@@ -132,6 +133,38 @@
             <a href="#states" class="btn hero-btn-tertiary">
               <span>EXPLORE 36 STATES & UTS</span>
               <span class="arrow">→</span>
+            </a>
+          </div>
+
+          <!-- Human-Designed Destination Feature Strip -->
+          <div class="hero-dest-strip">
+            <a href="#/destinations/amber-fort" class="dest-strip-card" data-bg="assets/images/destinations/amber-fort.jpg">
+              <span class="dest-icon">🏰</span>
+              <div class="dest-info">
+                <span class="dest-name">Amber Citadel</span>
+                <span class="dest-loc">Jaipur, Rajasthan</span>
+              </div>
+            </a>
+            <a href="#/destinations/alleppey-backwaters" class="dest-strip-card" data-bg="assets/images/destinations/alleppey-backwaters.jpg">
+              <span class="dest-icon">🌴</span>
+              <div class="dest-info">
+                <span class="dest-name">Alleppey Canals</span>
+                <span class="dest-loc">Alappuzha, Kerala</span>
+              </div>
+            </a>
+            <a href="#/destinations/taj-mahal" class="dest-strip-card" data-bg="assets/images/destinations/taj-mahal.jpg">
+              <span class="dest-icon">🕌</span>
+              <div class="dest-info">
+                <span class="dest-name">Taj Mahal</span>
+                <span class="dest-loc">Agra, Uttar Pradesh</span>
+              </div>
+            </a>
+            <a href="#/destinations/solang-valley" class="dest-strip-card" data-bg="assets/images/destinations/solang-valley.jpg">
+              <span class="dest-icon">🏔️</span>
+              <div class="dest-info">
+                <span class="dest-name">Solang Pass</span>
+                <span class="dest-loc">Manali, Himachal</span>
+              </div>
             </a>
           </div>
         </div>
