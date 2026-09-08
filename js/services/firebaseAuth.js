@@ -98,75 +98,18 @@ window.enterDashboard = function() {
   window.location.hash = '#/home';
 };
 
-// Google Sign-In with Guarded Authentication Callback
 window.loginWithGoogle = async function(e) {
-  if (e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
-  const errEl = document.getElementById("auth-error-msg");
-  if (errEl) {
-    errEl.style.display = "block";
-    errEl.style.color = "#10b981";
-    errEl.textContent = "Connecting to Google...";
-  }
-
-  if (typeof firebase === 'undefined' || !firebase.auth) {
-    if (errEl) {
-      errEl.style.color = "#ef4444";
-      errEl.textContent = "Firebase Auth SDK not initialized.";
-    }
-    return;
-  }
-
+  if (e && e.preventDefault) e.preventDefault();
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
-
   try {
-    // 1. Await popup result
-    const result = await firebase.auth().signInWithPopup(provider);
-    const user = result ? result.user : null;
-
-    if (!user) {
-      throw new Error("No user returned from Google.");
-    }
-
-    console.log("[Auth] Successfully authenticated:", user.email);
-
-    // 2. Only enter dashboard AFTER successful sign-in
-    if (typeof window.closeAuthModal === 'function') {
-      window.closeAuthModal();
-    }
-    
-    // Call project transition function:
-    if (typeof window.enterDashboard === 'function') {
-      window.enterDashboard();
-    } else if (typeof enterDashboard === 'function') {
-      enterDashboard();
-    }
-
-  } catch (error) {
-    console.error("[Auth] Login halted:", error);
-    if (error.code === "auth/popup-blocked") {
-      if (errEl) {
-        errEl.style.color = "#3b82f6";
-        errEl.textContent = "Popup blocked by browser. Redirecting...";
-      }
-      firebase.auth().signInWithRedirect(provider);
-    } else if (error.code === "auth/unauthorized-domain" || error.code === "auth/operation-not-allowed") {
-      if (errEl) {
-        errEl.style.color = "#f59e0b";
-        errEl.textContent = `[${error.code}]: Firebase domain configuration pending. Authenticating locally...`;
-      }
-      simulateFallbackLogin('Google');
-    } else {
-      if (errEl) {
-        errEl.style.color = "#ef4444";
-        errEl.textContent = error.message;
-      }
-    }
-    return;
+    const res = await firebase.auth().signInWithPopup(provider);
+    console.log("Logged in successfully:", res.user.email);
+    if (typeof closeAuthModal === 'function') closeAuthModal();
+    if (typeof enterDashboard === 'function') enterDashboard();
+  } catch (err) {
+    console.error("Auth error:", err);
+    alert("Login error: " + err.message);
   }
 };
 
