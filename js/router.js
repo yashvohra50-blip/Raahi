@@ -1005,22 +1005,29 @@ function setupDestinationsFilterListeners() {
   }
 }
 
+function renderVerifiedStayCard(stay) {
+  const safeImg = sanitizeImageUrl(stay.image, stay.category);
+  return `
+    <div class="stay-card" data-stay-category="${stay.category || 'palaces'}">
+      <img src="${safeImg}" alt="${stay.name}" loading="lazy" onerror="this.onerror=null; this.src='https://commons.wikimedia.org/wiki/Special:FilePath/The_Imperial_New_Delhi.jpg?width=800';" />
+      <div class="stay-card-info">
+        <h4>${stay.name}</h4>
+        <p>${stay.location || stay.desc || ''}</p>
+        <span>${stay.price || stay.priceRange || '₹18,500/night'}</span>
+      </div>
+    </div>
+  `;
+}
+
 function renderStaysSection() {
   const container = document.getElementById('stays-editorial-grid');
   if (!container) return;
 
-  container.innerHTML = staysData.map(stay => `
-    <div class="editorial-card" onclick="window.location.hash='#/destinations/${stay.destSlug}'" style="cursor: pointer;">
-      <span class="editorial-tag">${stay.type} // ${stay.state}</span>
-      <h3>${stay.name}</h3>
-      <p>${stay.desc}</p>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-family: var(--font-display); font-size: 0.78rem;">
-        <span style="color: var(--gold);">${stay.priceRange}</span>
-        <span style="color: var(--muted); text-decoration: underline;">View Destination →</span>
-      </div>
-    </div>
-  `).join('');
+  const staysToRender = (typeof VERIFIED_STAYS !== 'undefined' && VERIFIED_STAYS.length > 0) ? VERIFIED_STAYS : staysData;
+
+  container.innerHTML = staysToRender.map(stay => renderVerifiedStayCard(stay)).join('');
 }
+
 
 /**
  * Render Dedicated State / Union Territory View
