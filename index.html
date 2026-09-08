@@ -6,10 +6,10 @@
   <title>RAAHI — Pan-India Tourism & Discovery Platform | 28 States, 8 UTs, 111+ Destinations</title>
   <meta name="description" content="Discover destinations, stories, and travel intelligence across all 28 States and 8 Union Territories in India. An editorial and cinematic journey with interactive maps and 3D spatial expeditions.">
   
-  <!-- Google Fonts: Space Grotesk & DM Sans -->
+  <!-- Google Fonts: Playfair Display, Cormorant Garamond, Plus Jakarta Sans & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Leaflet GIS Map Engine CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -118,13 +118,13 @@
           <!-- Left Column: Editorial Narrative & Action Buttons -->
           <div class="hero-content">
             <div class="hero-editorial-badge">
-              <span class="badge-accent">№ 01</span>
-              <span class="badge-separator">|</span>
-              <span class="badge-text">AN EDITORIAL COMPENDIUM OF THE INDIAN SUBCONTINENT</span>
+              <span class="badge-edition">VOL. 2026</span>
+              <span class="badge-dot">•</span>
+              <span class="badge-text">THE HERITAGE EXPEDITION COMPENDIUM</span>
             </div>
 
             <h1 class="hero-title">
-              DON'T JUST VISIT.<br>
+              <span class="serif-italic-sub">Don’t Just Visit.</span><br>
               <span class="gold-editorial-text">EXPERIENCE INDIA.</span>
             </h1>
 
@@ -134,7 +134,6 @@
 
             <div class="hero-actions">
               <button onclick="window.raahiOpenSearchModal()" class="btn gold hero-btn-primary" title="Search all 36 States & Destinations">
-                <span class="btn-glow-pulse"></span>
                 <span>🔍 SEARCH ALL 36 STATES & DESTINATIONS</span>
               </button>
               <a href="#interactive-map" class="btn light hero-btn-secondary">
@@ -148,49 +147,34 @@
             </div>
           </div>
 
-          <!-- Right Column: Tactile Editorial Destination Showcase Card -->
+          <!-- Right Column: Archival Photography Card Stack -->
           <div class="hero-showcase-deck">
             <div class="showcase-card main-card">
               <div class="card-image-wrap">
-                <img src="assets/images/destinations/amber-fort.jpg" alt="Amber Fort, Jaipur" class="card-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800';" />
+                <img src="assets/images/destinations/amber-fort.jpg" alt="Amber Citadel, Jaipur" class="card-img" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800';" />
                 <div class="card-overlay-gradient"></div>
-                <div class="card-location-tag">
-                  <span class="pin-icon">📍</span>
-                  <span>JAIPUR, RAJASTHAN</span>
-                </div>
+                <div class="card-stamp-badge">EST. 1592 • RAJASTHAN</div>
               </div>
               <div class="card-content-wrap">
-                <div class="card-eyebrow">FEATURED HERITAGE CITADEL</div>
+                <div class="card-eyebrow">ROYAL HERITAGE CITADEL</div>
                 <h3 class="card-title">Amber Citadel & Sheesh Mahal</h3>
-                <div class="card-meta-row">
-                  <span class="meta-item">⏱️ 3-4 Hours</span>
-                  <span class="meta-item">🏛️ ASI Heritage</span>
-                  <span class="meta-item">📍 26.9855° N</span>
+                <div class="card-location-row">
+                  <span class="loc-pin">📍</span>
+                  <span class="loc-text">Jaipur, Rajasthan • 26.9855° N, 75.8513° E</span>
                 </div>
               </div>
             </div>
 
-            <!-- Floating Micro Accent Card -->
+            <!-- Archival Micro Frame Badge -->
             <div class="showcase-card mini-card">
-              <div class="mini-card-badge">✦ LIVE NATIONAL ARCHIVE</div>
-              <div class="mini-card-stats">
-                <div class="m-stat">
-                  <span class="m-num">36</span>
-                  <span class="m-lbl">Divisions</span>
-                </div>
-                <div class="m-stat">
-                  <span class="m-num">111+</span>
-                  <span class="m-lbl">Places</span>
-                </div>
-              </div>
+              <div class="mini-card-badge">36 DIVISIONS • 111+ PLACES</div>
+              <div class="mini-card-label">100% Verified Regional Intelligence</div>
             </div>
           </div>
         </div>
 
         <div class="hero-meta-sidebar">
-          <span class="sidebar-coord">28.6139° N, 77.2090° E</span>
-          <span class="sidebar-divider"></span>
-          <span class="sidebar-text">RAAHI ARCHIVE // 2026 EDITION</span>
+          <span class="sidebar-text">THE NATIONAL TOURISM ARCHIVE</span>
         </div>
 
         <div class="hero-scroll-indicator" onclick="document.getElementById('interactive-map')?.scrollIntoView({behavior: 'smooth'})" title="Scroll to explore archive">
