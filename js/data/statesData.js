@@ -381,7 +381,7 @@ export const STATES_DATA = {
     capital: "Chandigarh",
     eyebrow: "THE CITY BEAUTIFUL • MODERNIST ARCHITECTURE",
     tagline: "Le Corbusier's urban masterpiece, whimsical rock sculptures, and serene lakes.",
-    heroImage: "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1200",
+    heroImage: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?q=80&w=1200",
     accentColor: "#14b8a6",
     story: "Designed by master architect Le Corbusier as independent India's first planned city, Chandigarh is celebrated for its grid layout, open parks, Capitol Complex UNESCO monuments, and Nek Chand's Rock Garden.",
     quickStats: {
@@ -665,7 +665,7 @@ export const STATES_DATA = {
     capital: "Bengaluru",
     eyebrow: "VIJAYANAGARA RUINS • COFFEE FORESTS",
     tagline: "UNESCO boulder ruins of Hampi, Mysore royal palaces, and Western Ghats wildlife.",
-    heroImage: "https://images.unsplash.com/photo-1600100397608-f010e423b961?q=80&w=1200",
+    heroImage: "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
     accentColor: "#8b5cf6",
     story: "Karnataka is a diverse state where the ancient and the hyper-modern thrive together. From the monumental boulder-hewn ruins of Hampi and Hoysala temples to the coffee hills of Coorg and tech capital Bengaluru.",
     quickStats: {
@@ -1057,7 +1057,7 @@ export const STATES_DATA = {
     capital: "Bhopal",
     eyebrow: "THE HEART OF INDIA • TIGER SANCTUARIES",
     tagline: "Khajuraho temples, Sanchi Buddhist stupas, Kanha tigers, and Gwalior fortresses.",
-    heroImage: "https://images.unsplash.com/photo-1600100397608-f010e423b961?q=80&w=1200",
+    heroImage: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200",
     accentColor: "#f59e0b",
     story: "Madhya Pradesh is the geographic and historical heart of India. It boasts UNESCO sites including Khajuraho temples, Sanchi stupas, and Bhimbetka prehistoric shelters alongside premier tiger reserves.",
     quickStats: {
