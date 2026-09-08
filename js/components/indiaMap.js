@@ -1,7 +1,8 @@
 /**
  * RAAHI // Interactive Leaflet & SVG India Map Component
  * Displays all 28 States, 8 UTs, and key destinations with Leaflet GIS engine,
- * interactive pin markers, live search/geocoding, and spatial telemetry.
+ * high-resolution satellite aerial imagery (house & building level detail),
+ * layer switcher, interactive pin markers, live search/geocoding, and spatial telemetry.
  */
 
 import { STATES_DATA } from '../data/statesData.js';
@@ -49,6 +50,7 @@ const STATE_COORDINATES = {
 
 let raahiMapInstance = null;
 let activeMarker = null;
+let activeTileLayers = {};
 
 export function renderIndiaMap(containerId = 'india-map-mount') {
   const mount = document.getElementById(containerId);
@@ -57,14 +59,21 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
   const defaultState = STATES_DATA['rajasthan'];
 
   mount.innerHTML = `
-    <!-- Spatial Search Console -->
-    <div class="raahi-search-console" style="margin-bottom: 20px; display: flex; gap: 12px; position: relative;">
-      <div class="search-input-wrapper" style="flex: 1; position: relative;">
+    <!-- Spatial Search & Map Style Console -->
+    <div class="raahi-search-console" style="margin-bottom: 20px; display: flex; gap: 12px; position: relative; flex-wrap: wrap;">
+      <div class="search-input-wrapper" style="flex: 1; min-width: 280px; position: relative;">
         <input type="text" id="raahi-map-query-input" class="raahi-map-input" 
           placeholder="Scan any Indian state, city, or destination (e.g., Jaipur, Dehradun, Varanasi, Hampi, Kerala, Ladakh)..." 
           autocomplete="off" style="width: 100%; padding: 14px 18px; background: rgba(13, 20, 16, 0.9); border: 1px solid var(--line); border-radius: 8px; color: #fff; font-family: var(--font-body); font-size: 0.9rem;" />
         <div id="raahi-map-autocomplete" class="autocomplete-dropdown" style="position: absolute; top: 100%; left: 0; right: 0; background: #0d1410; border: 1px solid var(--line); border-top: none; border-radius: 0 0 8px 8px; z-index: 1000; max-height: 250px; overflow-y: auto; display: none;"></div>
       </div>
+
+      <select id="raahi-tile-layer-select" class="raahi-select" style="padding: 12px 16px; background: rgba(13, 20, 16, 0.9); border: 1px solid var(--gold); border-radius: 8px; color: var(--gold); font-family: var(--font-display); font-size: 0.82rem; cursor: pointer;">
+        <option value="satellite" selected>🛰️ SATELLITE (HOUSES & AERIAL DETAIL)</option>
+        <option value="osm">🗺️ OPENSTREETMAP (STREET VIEW)</option>
+        <option value="voyager">🏙️ CARTO VOYAGER (BUILDINGS & STREETS)</option>
+      </select>
+
       <button id="raahi-map-search-btn" class="btn gold" style="padding: 12px 24px;">
         🔍 RESOLVE MAP
       </button>
@@ -77,19 +86,19 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
     <div class="spatial-telemetry-bar" style="display: flex; justify-content: space-between; align-items: center; background: rgba(13, 20, 16, 0.7); padding: 10px 18px; border: 1px solid var(--line); border-bottom: none; border-radius: 8px 8px 0 0; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.08em;">
       <span style="color: var(--muted-bright); display: inline-flex; align-items: center; gap: 6px;">
         <span style="width: 8px; height: 8px; background: var(--emerald, #10b981); border-radius: 50%; box-shadow: 0 0 8px var(--emerald, #10b981);"></span> 
-        LIVE SPATIAL VECTOR MAP // LEAFLET GIS ENGINE
+        LIVE SPATIAL VECTOR MAP // HIGH-RESOLUTION SATELLITE & HOUSES ENGINE
       </span>
       <span id="raahi-map-status" style="color: var(--emerald, #10b981);">VECTOR LOCKED // RAJASTHAN</span>
     </div>
 
-    <div class="map-container" style="display: grid; grid-template-columns: 1fr 340px; gap: 24px; min-height: 520px; margin-top: 0;">
+    <div class="map-container" style="display: grid; grid-template-columns: 1fr 340px; gap: 24px; min-height: 540px; margin-top: 0;">
       <!-- Left: Leaflet Interactive Map Viewport -->
-      <div id="leaflet-map-view" style="width: 100%; height: 520px; border-radius: 0 0 0 12px; border: 1px solid var(--line); overflow: hidden; background: #080d0a; position: relative;">
+      <div id="leaflet-map-view" style="width: 100%; height: 540px; border-radius: 0 0 0 12px; border: 1px solid var(--line); overflow: hidden; background: #080d0a; position: relative;">
         <div id="raahi-leaflet-map" style="width: 100%; height: 100%;"></div>
       </div>
 
       <!-- Alternative: SVG Vector Map (Hidden by default, toggleable) -->
-      <div id="svg-map-view" class="india-svg-wrapper" style="display: none; width: 100%; height: 520px; border-radius: 0 0 0 12px; border: 1px solid var(--line); background: #080d0a; padding: 20px;">
+      <div id="svg-map-view" class="india-svg-wrapper" style="display: none; width: 100%; height: 540px; border-radius: 0 0 0 12px; border: 1px solid var(--line); background: #080d0a; padding: 20px;">
         <svg class="india-svg-map" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
           <g id="states-group">
             <path class="state-path" data-slug="ladakh" d="M260,30 L320,50 L340,90 L300,110 L250,90 Z" />
@@ -177,19 +186,55 @@ function initRaahiLeafletMap() {
     raahiMapInstance = null;
   }
 
-  // Centered on India (22.5937° N, 78.9629° E)
+  // Centered on India (22.5937° N, 78.9629° E) with maxZoom 19 for house & building-level zoom
   raahiMapInstance = L.map('raahi-leaflet-map', {
     center: [22.5937, 78.9629],
     zoom: 5,
+    maxZoom: 19,
     zoomControl: true,
-    scrollWheelZoom: false
+    scrollWheelZoom: true
   });
 
-  // OpenStreetMap Tile Layer
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  // Tile Layers Definitions
+  const esriSatellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP',
+    maxZoom: 19
+  });
+
+  const esriLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19
+  });
+
+  const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors | RAAHI Spatial Map',
-    maxZoom: 18
-  }).addTo(raahiMapInstance);
+    maxZoom: 19
+  });
+
+  const cartoVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+    maxZoom: 19
+  });
+
+  activeTileLayers = {
+    satellite: [esriSatellite, esriLabels],
+    osm: [osmLayer],
+    voyager: [cartoVoyager]
+  };
+
+  // Default to High-Res Satellite + Labels so houses and buildings are clearly visible when zooming in
+  esriSatellite.addTo(raahiMapInstance);
+  esriLabels.addTo(raahiMapInstance);
+
+  // Add Leaflet Native Layer Control on Top Right
+  const baseMaps = {
+    "🛰️ Satellite (Houses & Aerial Detail)": esriSatellite,
+    "🗺️ OpenStreetMap Standard": osmLayer,
+    "🏙️ CartoDB Voyager (Street Detail)": cartoVoyager
+  };
+  const overlayMaps = {
+    "🏷️ Street & City Labels": esriLabels
+  };
+  L.control.layers(baseMaps, overlayMaps, { position: 'topright' }).addTo(raahiMapInstance);
 
   // Add Glowing Pins for All 36 Indian States/UTs
   Object.keys(STATES_DATA).forEach(slug => {
@@ -207,10 +252,10 @@ function initRaahiLeafletMap() {
     const marker = L.marker([coords.lat, coords.lng], { icon: customIcon }).addTo(raahiMapInstance);
     
     marker.bindPopup(`
-      <div style="padding: 4px; color: #000;">
-        <strong style="font-size: 0.95rem; text-transform: uppercase;">${state.name}</strong><br>
-        <span style="font-size: 0.75rem; color: #555;">Capital: ${state.capital} (${state.region} India)</span><br>
-        <a href="#/states/${slug}" style="display: inline-block; margin-top: 6px; font-size: 0.75rem; color: #d4af37; font-weight: 700;">EXPLORE CODEX →</a>
+      <div style="padding: 6px; color: #000; font-family: sans-serif;">
+        <strong style="font-size: 0.95rem; text-transform: uppercase; color: #111;">${state.name}</strong><br>
+        <span style="font-size: 0.78rem; color: #444;">Capital: <b>${state.capital}</b> (${state.region} India)</span><br>
+        <a href="#/states/${slug}" style="display: inline-block; margin-top: 8px; font-size: 0.78rem; color: #b89628; font-weight: 700; text-decoration: none;">EXPLORE STATE CODEX →</a>
       </div>
     `);
 
@@ -219,7 +264,7 @@ function initRaahiLeafletMap() {
     });
   });
 
-  // Default selection: Rajasthan
+  // Default selection marker: Rajasthan
   const defaultCoords = STATE_COORDINATES['rajasthan'];
   if (defaultCoords) {
     activeMarker = L.marker([defaultCoords.lat, defaultCoords.lng], {
@@ -232,10 +277,35 @@ function initRaahiLeafletMap() {
     }).addTo(raahiMapInstance);
   }
 
+  // Handle Layer Select Dropdown
+  const selectEl = document.getElementById('raahi-tile-layer-select');
+  if (selectEl) {
+    selectEl.addEventListener('change', (e) => {
+      const mode = e.target.value;
+      switchTileLayer(mode);
+    });
+  }
+
   // Force Leaflet to re-calculate container dimensions
   setTimeout(() => {
     if (raahiMapInstance) raahiMapInstance.invalidateSize();
   }, 300);
+}
+
+function switchTileLayer(mode) {
+  if (!raahiMapInstance) return;
+
+  // Remove all existing layers
+  Object.values(activeTileLayers).flat().forEach(layer => {
+    if (raahiMapInstance.hasLayer(layer)) {
+      raahiMapInstance.removeLayer(layer);
+    }
+  });
+
+  // Add target layers
+  if (activeTileLayers[mode]) {
+    activeTileLayers[mode].forEach(layer => layer.addTo(raahiMapInstance));
+  }
 }
 
 function selectStateOnMap(slug, lat, lng, name) {
@@ -243,7 +313,7 @@ function selectStateOnMap(slug, lat, lng, name) {
   if (!state) return;
 
   if (raahiMapInstance) {
-    raahiMapInstance.flyTo([lat, lng], 7, { duration: 1.5 });
+    raahiMapInstance.flyTo([lat, lng], 13, { duration: 1.5 });
 
     if (activeMarker) {
       activeMarker.setLatLng([lat, lng]);
@@ -362,7 +432,7 @@ function setupMapSearchHandlers(mount) {
           const lng = parseFloat(item.lon ?? item.lng);
 
           if (raahiMapInstance) {
-            raahiMapInstance.flyTo([lat, lng], 11, { duration: 1.5 });
+            raahiMapInstance.flyTo([lat, lng], 15, { duration: 1.5 });
             if (activeMarker) activeMarker.setLatLng([lat, lng]);
           }
 
