@@ -2,30 +2,30 @@
    RAAHI // Core Components: Nav, Hero, State Cards, Rails, Footer
    ========================================================================== */
 
-/* 1. Sticky Navigation Bar */
+/* 1. Sticky Navigation Bar Space Management */
 .nav {
   position: fixed;
   z-index: 150;
   left: 0; right: 0; top: 0;
-  padding: 16px 4vw;
+  padding: 10px 2.5vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  background: rgba(5, 9, 7, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+  gap: 12px;
+  background: rgba(5, 9, 7, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav.scrolled {
-  background: rgba(4, 8, 6, 0.94);
+  background: rgba(4, 8, 6, 0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-  padding-block: 12px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+  padding-block: 8px;
 }
 
 .logo {
@@ -64,14 +64,21 @@
 .navlinks {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 14px;
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(247, 245, 240, 0.7);
+  color: rgba(247, 245, 240, 0.75);
   flex-wrap: nowrap;
+}
+
+@media (max-width: 1200px) {
+  .navlinks a[href="#stays"],
+  .navlinks a[href="#about"] {
+    display: none;
+  }
 }
 
 .navlinks a {
@@ -104,11 +111,11 @@
 .plan-btn {
   border: 1px solid rgba(212, 175, 55, 0.4);
   border-radius: 100px;
-  padding: 8px 18px;
+  padding: 6px 14px;
   font-family: var(--font-display);
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--gold);
   transition: all 0.25s ease;
@@ -128,7 +135,7 @@
   color: var(--cream);
 }
 
-/* 2. Master Hero Section (Human Web Developer Masterpiece) */
+/* 2. Master Hero Section (Creative Masterpiece Redesign) */
 .hero {
   min-height: 100vh;
   min-height: 100svh;
@@ -136,7 +143,7 @@
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  padding: 140px 5vw 10vh;
+  padding: 130px 5vw 10vh;
   background: #050806;
 }
 
@@ -152,6 +159,25 @@
   z-index: 1;
 }
 
+.hero-aura-glow {
+  position: absolute;
+  top: 15%;
+  left: 5%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, rgba(6, 182, 212, 0.06) 50%, transparent 80%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 1;
+  animation: heroAuraPulse 12s infinite alternate ease-in-out;
+}
+
+@keyframes heroAuraPulse {
+  0% { transform: scale(0.9) translate(0, 0); }
+  100% { transform: scale(1.15) translate(30px, 20px); }
+}
+
 @keyframes heroKenBurns {
   from { transform: scale(1); }
   to { transform: scale(1.08); }
@@ -160,7 +186,31 @@
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 900px;
+  max-width: 920px;
+}
+
+.hero-eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  padding: 6px 14px;
+  border-radius: 99px;
+  margin-bottom: 1.25rem;
+}
+
+.hero-eyebrow-badge .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
 }
 
 .hero h1 {
@@ -174,8 +224,39 @@
   color: var(--cream-bright);
 }
 
-.hero h1 span {
+.hero-title-highlight {
   color: var(--gold);
+  background: linear-gradient(135deg, #f7f5f0 0%, #d4af37 60%, #b8860b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-highlights-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.hero-highlight-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #e2e8f0;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.hero-highlight-chip:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-2px);
 }
 
 .hero p.hero-subtitle {
