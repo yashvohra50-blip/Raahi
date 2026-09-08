@@ -148,16 +148,24 @@
             </p>
           </div>
 
-          <!-- Region Filter Tabs -->
-          <div class="filter-chips-container" id="states-region-chips" style="margin-bottom: 36px;">
-            <button class="filter-chip active" data-region="all">ALL REGIONS (36)</button>
-            <button class="filter-chip" data-region="north">NORTH (7)</button>
-            <button class="filter-chip" data-region="south">SOUTH (5)</button>
-            <button class="filter-chip" data-region="west">WEST (3)</button>
-            <button class="filter-chip" data-region="east">EAST (4)</button>
-            <button class="filter-chip" data-region="central">CENTRAL (2)</button>
-            <button class="filter-chip" data-region="northeast">NORTHEAST (8)</button>
-            <button class="filter-chip" data-region="ut">UNION TERRITORIES (8)</button>
+          <!-- Region Filter & View Mode Controls -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 28px;">
+            <div class="filter-chips-container" id="states-region-chips" style="margin-bottom: 0;">
+              <button class="filter-chip active" data-region="all">ALL REGIONS (36)</button>
+              <button class="filter-chip" data-region="north">NORTH (7)</button>
+              <button class="filter-chip" data-region="south">SOUTH (5)</button>
+              <button class="filter-chip" data-region="west">WEST (3)</button>
+              <button class="filter-chip" data-region="east">EAST (4)</button>
+              <button class="filter-chip" data-region="central">CENTRAL (2)</button>
+              <button class="filter-chip" data-region="northeast">NORTHEAST (8)</button>
+              <button class="filter-chip" data-region="ut">UNION TERRITORIES (8)</button>
+            </div>
+
+            <div class="states-view-mode-toggle" id="states-view-mode-toggle" style="display: flex; gap: 8px;">
+              <button class="filter-chip active" data-view="carousel" title="Compact Featured Carousel Banner (Photo 1 Style)">🎠 CAROUSEL SLIDER</button>
+              <button class="filter-chip" data-view="rail" title="Compact Horizontal Rail">📱 HORIZONTAL RAIL</button>
+              <button class="filter-chip" data-view="grid" title="Full Grid View">▦ ALL CARDS GRID</button>
+            </div>
           </div>
 
           <!-- Dynamic State Cards Grid (Populated by js/router.js) -->
