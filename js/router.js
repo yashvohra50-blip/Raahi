@@ -31,14 +31,14 @@ export const VERIFIED_IMAGE_MAP = {
   'jantar-mantar': 'assets/images/destinations/jantar-mantar.jpg',
   'jal-mahal': 'assets/images/destinations/jal-mahal.jpg',
   'panna-meena': 'assets/images/destinations/panna-meena.jpg',
-  'jaisalmer': 'assets/images/destinations/jaisalmer-fort.jpg',
-  'jaisalmer-fort': 'assets/images/destinations/jaisalmer-fort.jpg',
+  'jaisalmer': 'https://images.unsplash.com/photo-1572445271230-a78b5944a659?q=80&w=1200',
+  'jaisalmer-fort': 'https://images.unsplash.com/photo-1572445271230-a78b5944a659?q=80&w=1200',
   'patwon-ki-haveli': 'assets/images/destinations/patwon-ki-haveli.jpg',
   'bada-bagh': 'assets/images/destinations/bada-bagh.jpg',
   'mehrangarh-fort': 'assets/images/destinations/mehrangarh-fort.jpg',
-  'jodhpur': 'assets/images/destinations/mehrangarh-fort.jpg',
+  'jodhpur': 'https://images.unsplash.com/photo-1589793463357-5fb813435467?q=80&w=1200',
   'city-palace-udaipur': 'assets/images/destinations/city-palace-udaipur.jpg',
-  'udaipur': 'assets/images/destinations/city-palace-udaipur.jpg',
+  'udaipur': 'https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?q=80&w=1200',
   'lake-pichola': 'assets/images/destinations/lake-pichola.jpg',
   'taj-mahal': 'assets/images/destinations/taj-mahal.jpg',
   'agra-fort': 'assets/images/destinations/agra-fort.jpg',
@@ -60,29 +60,30 @@ export const VERIFIED_IMAGE_MAP = {
   'spiti-key-monastery': 'assets/images/destinations/key-monastery.jpg',
   'golden-temple': 'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200',
   'amritsar': 'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200',
-  'qutub-minar': 'https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1200',
-  'delhi': 'https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1200',
+  'qutub-minar': 'https://images.unsplash.com/photo-1667849357650-c698822629b3?q=80&w=1200',
+  'delhi': 'https://images.unsplash.com/photo-1592639296346-560c37a0f711?q=80&w=1200',
   'gateway-of-india': 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200',
   'mumbai': 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200',
-  'hampi': 'https://images.unsplash.com/photo-1600100397608-f010e423b961?q=80&w=1200',
-  'konark-sun-temple': 'https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1200',
+  'hampi': 'https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200',
+  'konark-sun-temple': 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200',
   'darjeeling': 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1200',
-  'mysore-palace': 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200',
+  'mysore-palace': 'https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200',
   'rann-of-kutch': 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200',
-  'khajuraho': 'https://images.unsplash.com/photo-1600100397608-f010e423b961?q=80&w=1200',
+  'khajuraho': 'https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200',
   'meenakshi-temple': 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200',
   'ladakh': 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200',
   'pangong-tso': 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200',
-  'kaziranga': 'https://images.unsplash.com/photo-1575550959106-5a7defe28b56?q=80&w=1200',
-  'sundarbans': 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200',
-  'cherrapunji': 'https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=1200',
-  'tawang': 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200',
+  'kaziranga': 'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=1200',
+  'sundarbans': 'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=1200',
+  'cherrapunji': 'https://images.unsplash.com/photo-1589793463357-5fb813435467?q=80&w=1200',
+  'tawang': 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200',
   'dal-lake': 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=1200',
   'srinagar': 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=1200',
   'rishikesh': 'https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200',
   'kedarnath': 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200',
-  'charminar': 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200',
-  'chittorgarh-fort': 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?q=80&w=1200'
+  'charminar': 'https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200',
+  'chittorgarh-fort': 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?q=80&w=1200',
+  'chandigarh': 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?q=80&w=1200'
 };
 
 window.raahiAddToJourney = (id) => addToJourney(id);
@@ -408,7 +409,7 @@ function renderStatesContainer() {
             const destCount = s.destinationsCount || (s.featuredDestinations ? s.featuredDestinations.length : 3);
             return `
               <div class="state-card" style="flex: 0 0 320px; height: 440px; scroll-snap-align: start;" data-state="${s.slug}" onclick="window.location.hash='#/states/${s.slug}'">
-                <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+                <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
                 <div class="state-dest-count">${destCount} DESTINATIONS</div>
                 <div class="state-card-content">
                   <span class="eyebrow" style="margin-bottom: 4px;">${s.type.toUpperCase()} • ${s.region.toUpperCase()}</span>
@@ -430,7 +431,7 @@ function renderStatesContainer() {
           const destCount = s.destinationsCount || (s.featuredDestinations ? s.featuredDestinations.length : 3);
           return `
             <div class="state-card" data-state="${s.slug}" onclick="window.location.hash='#/states/${s.slug}'">
-              <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+              <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
               <div class="state-dest-count">${destCount} DESTINATIONS • ${s.type === 'Union Territory' ? 'UT' : s.region.toUpperCase()}</div>
               <div class="state-card-content">
                 <span class="eyebrow" style="margin-bottom: 6px;">${s.eyebrow || s.type.toUpperCase()}</span>
@@ -468,7 +469,7 @@ function updateStatesCarouselStage() {
   setTimeout(() => {
     stage.innerHTML = `
       <div class="states-hero-carousel-card" style="position: relative; min-height: 440px; display: flex; align-items: flex-end; padding: 40px; background: #070b09; overflow: hidden; cursor: pointer;" onclick="window.location.hash='#/states/${s.slug}'">
-        <img src="${s.heroImage}" alt="${s.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+        <img src="${s.heroImage}" alt="${s.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
         
         <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,7,5,0.92) 0%, rgba(3,7,5,0.65) 50%, rgba(3,7,5,0.3) 100%), linear-gradient(0deg, rgba(3,7,5,0.95) 0%, transparent 60%); pointer-events: none;"></div>
 
@@ -712,7 +713,7 @@ function renderDestinationsContainer() {
             const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 80) + '...' : '');
             return `
               <div class="destination-card" style="flex: 0 0 320px; height: 460px; scroll-snap-align: start;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-                <img src="${imgUrl}" alt="${dest.name}" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+                <img src="${imgUrl}" alt="${dest.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
                 <div class="dest-copy">
                   <small>${dest.state.toUpperCase()} • ${dest.region.toUpperCase()}</small>
                   <h3>${dest.name}</h3>
@@ -739,7 +740,7 @@ function renderDestinationsContainer() {
       const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 100) + '...' : '');
       return `
         <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-          <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+          <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
           <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
           <div class="state-card-content">
             <span class="eyebrow" style="margin-bottom: 4px;">${dest.state} • ${dest.region.toUpperCase()}</span>
@@ -797,7 +798,7 @@ function updateDestCarouselStage() {
   setTimeout(() => {
     stage.innerHTML = `
       <div class="dest-hero-carousel-card" style="position: relative; min-height: 440px; display: flex; align-items: flex-end; padding: 40px; background: #070b09; overflow: hidden; cursor: pointer;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-        <img src="${imgUrl}" alt="${dest.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+        <img src="${imgUrl}" alt="${dest.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
         
         <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,7,5,0.92) 0%, rgba(3,7,5,0.65) 50%, rgba(3,7,5,0.3) 100%), linear-gradient(0deg, rgba(3,7,5,0.95) 0%, transparent 60%); pointer-events: none;"></div>
 
@@ -1082,7 +1083,7 @@ function renderStateView(stateSlug) {
             const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
             return `
               <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-                <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+                <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
                 <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
                 <div class="state-card-content">
                   <span class="eyebrow" style="margin-bottom: 4px;">${state.name} • ${dest.bestSeason || 'BEST: OCT-MAR'}</span>

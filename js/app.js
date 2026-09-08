@@ -25,7 +25,7 @@ function initDiscoveryFilters() {
 
     grid.innerHTML = list.map(item => `
       <div class="discovery-card" onclick="window.location.hash='#/destinations/${item.destSlug || item.id}'">
-        <img src="${item.img || item.heroImage || 'assets/images/destinations/amber-fort.jpg'}" alt="${item.name || item.title}" class="discovery-card-img" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+        <img src="${item.img || item.heroImage || 'assets/images/destinations/amber-fort.jpg'}" alt="${item.name || item.title}" class="discovery-card-img" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
         <div class="discovery-card-tag">${item.categoryTag || item.tag || 'CURATED EXPEDITION'}</div>
         <div class="discovery-card-content">
           <span class="eyebrow" style="margin-bottom: 4px;">${item.loc || item.state || 'India'}</span>
