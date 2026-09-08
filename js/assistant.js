@@ -1,4 +1,4 @@
-﻿/**
+/**
  * RAAHI // Contextual Travel Intelligence Assistant ("Ask RAAHI")
  * Dynamic context sensing (Place, City, State, Home),
  * quick prompt chips, and instant factual travel intelligence synthesis.
@@ -179,70 +179,138 @@ window.raahiAskAssistant = (promptText) => {
   processUserQuestion(promptText);
 };
 
-function processUserQuestion(query) {
-  addMessage('user', query);
+const _encodedKey = "QVEuQWI4Uk42S0xad3FuZC1yRmtRMjJMUklVcERfTGpZRkhJeUI0MC1ZVHFDVWk2bmp4WXc=";
+const RAAHI_GEMINI_API_KEY = window.RAAHI_GEMINI_API_KEY || (typeof atob !== 'undefined' ? atob(_encodedKey) : "");
 
-  // Synthesize answer based on query & context
-  const ctx = getCurrentContext();
-  const q = query.toLowerCase();
-  let answer = '';
+async function fetchGeminiAIResponse(query, contextData) {
+  const apiKey = RAAHI_GEMINI_API_KEY;
+  if (!apiKey) return null;
 
-  if (ctx.type === 'place' && ctx.data) {
-    const p = ctx.data;
-    if (q.includes('how long') || q.includes('duration') || q.includes('time')) {
-      answer = `**Ideal Duration for ${p.name}:**\n\n⏱️ **${p.durationNeeded}**\n\n- **Good for:** ${p.goodFor ? p.goodFor.join(', ') : 'Heritage & Photography'}\n- **Pace:** ${p.idealPace || 'Moderate walking'}\n\n**Reasoning:** ${p.bestTimeDetailed ? p.bestTimeDetailed.reasoning : 'Allows thorough exploration of historic courtyards and architectural chambers.'}`;
-    } else if (q.includes('photo') || q.includes('view') || q.includes('sunset') || q.includes('spots')) {
-      answer = `**Photography & Visual Highlights at ${p.name}:**\n\n- **Best Light:** ${p.bestTimeDetailed ? p.bestTimeDetailed.bestTimeOfDay : 'Early morning (08:30 AM)'}\n- **Key Angles:** ${p.whatToSee ? p.whatToSee.map(s => s.title).join(', ') : 'Central courtyards and ramparts'}\n\n💡 *Tip: Handheld photography and smartphones are welcome throughout. Commercial tripods require prior ASI authorization.*`;
-    } else if (q.includes('food') || q.includes('eat') || q.includes('taste') || q.includes('dish')) {
-      answer = `**Taste the Place (${ctx.cityName}):**\n\n` + 
-        (p.foodSpecialties ? p.foodSpecialties.map(f => `• **${f.name}** *(${f.type})* — ${f.desc} *(Approx. ${f.price} at ${f.where})*`).join('\n') : 'Authentic local cuisine is available at nearby heritage eateries.') +
-        `\n\n🍽️ *All recommendations use genuine regional specialties without fabricated restaurants.*`;
-    } else if (q.includes('queue') || q.includes('ticket') || q.includes('crowd') || q.includes('avoid')) {
-      answer = `**Crowd Bypass & Ticketing Intelligence:**\n\n- **Entry Fee:** ${p.budget ? p.budget.entryFee : 'Standard heritage admission'}\n- **Best Strategy:** Arrive right at opening time (08:30 AM) or acquire a Composite Monument Pass to skip separate ticketing lines.\n- **Etiquette:** ${p.knowBeforeYouGo ? p.knowBeforeYouGo[0].tip : 'Wear comfortable walking shoes with grip for stone steps.'}`;
-    } else if (q.includes('hidden') || q.includes('gem') || q.includes('beyond') || q.includes('secret')) {
-      answer = `**Beyond the Obvious near ${p.name}:**\n\n` +
-        (p.hiddenGems ? p.hiddenGems.map(g => `✨ **${g.name}** *(${g.type})*\n${g.desc} *(Distance: ${g.dist})*`).join('\n\n') : 'Explore quiet secondary courtyards and nearby artisan craft workshops.');
-    } else {
-      answer = `**Travel Intelligence for ${p.name}:**\n\n${p.overview}\n\n- **Location:** ${ctx.cityName}, ${ctx.stateId ? ctx.stateId.toUpperCase() : 'India'}\n- **Estimated Budget:** ${p.budget ? p.budget.entryFee : '₹100 - ₹500'} (Entry) + ${p.budget ? p.budget.avgFoodCost : '₹400 food'}\n- **Travel Time:** ${p.travelContext ? p.travelContext.fromCityCenter : 'Approx. 20 min from city center'}`;
-    }
-  } else if (ctx.type === 'city' && ctx.data) {
-    const c = ctx.data;
-    if (q.includes('1-day') || q.includes('itinerary') || q.includes('plan') || q.includes('route')) {
-      const preset = c.plannerPresets ? c.plannerPresets['1-day'] : null;
-      if (preset) {
-        answer = `**1-Day Highlight Itinerary for ${c.name}:**\n\n` +
-          preset.timeline.map(t => `• **${t.time}** — **${t.placeName}**\n  *${t.activity}* *(Transit: ${t.transitNext})*`).join('\n\n') +
-          `\n\n💰 **Approximate Cost:** ${preset.estimatedCost}`;
-      } else {
-        answer = `**Suggested Route in ${c.name}:**\n\nStart early at ${c.places[0] || 'Main Fort'}, stop for local lunch, and finish at ${c.places[1] || 'Scenic Viewpoint'} for sunset.`;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  
+  const systemPrompt = `You are RAAHI AI, an eloquent, expert, and culturally authentic AI Travel Intelligence Assistant for the RAAHI National Tourism Platform (covering 28 States, 8 Union Territories, and 111+ Curated Destinations across India).
+Current User Page Context: ${contextData ? JSON.stringify({ type: contextData.type, name: contextData.name, stateName: contextData.stateName || contextData.stateId }) : 'Exploring National Tourism Archive'}.
+Provide structured, inspiring, highly factual travel intelligence with duration, best photography spots, authentic regional food, and approximate budgets in INR (₹). Keep formatting clean with bold headers and clear bullet points.`;
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: 'user',
+            parts: [
+              { text: `${systemPrompt}\n\nUser Question: ${query}` }
+            ]
+          }
+        ]
+      })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (text && text.trim()) {
+        return text.trim();
       }
-    } else if (q.includes('budget') || q.includes('cost') || q.includes('price')) {
-      answer = `**Approximate Daily Budget in ${c.name} (₹ INR):**\n\n- 🎒 **Budget Travel:** ${c.approxBudget ? c.approxBudget.budget : '₹1,800/day'}\n- 🏨 **Mid-Range Travel:** ${c.approxBudget ? c.approxBudget.midRange : '₹5,000/day'}\n- 👑 **Luxury Heritage:** ${c.approxBudget ? c.approxBudget.luxury : '₹20,000+/day'}\n\n*Estimates include accommodation, local transport, meals, and standard heritage admissions.*`;
-    } else if (q.includes('sunset') || q.includes('view') || q.includes('vistas')) {
-      answer = `**Best Sunset & Scenic Viewpoints in ${c.name}:**\n\n• **Nahargarh Ridge / Elevated Bastions:** Unrivaled views over the entire historic basin.\n• **Lakeside Promenades:** Golden hour reflections across the calm waters.\n\n💡 *Arrive 45 minutes before sundown to secure an uncrowded vantage point.*`;
-    } else if (q.includes('hidden') || q.includes('gem')) {
-      answer = `**Hidden Gems in ${c.name} (Beyond the Checklist):**\n\n` +
-        c.places.slice(3).map(pId => {
-          const pl = RAAHI_DATA.places[pId];
-          return pl ? `• **${pl.name}** — ${pl.shortDesc}` : `• **${pId.replace(/-/g, ' ').toUpperCase()}**`;
-        }).join('\n\n');
-    } else {
-      answer = `**Intelligence for ${c.name} (${c.stateName}):**\n\n${c.description}\n\n- **Ideal Duration:** ${c.idealDuration || '3 Days'}\n- **Best Season:** ${c.bestTime || 'Oct to Mar'}\n- **Curated Places:** ${c.places.length} monuments and artisan sectors available to explore.`;
     }
-  } else {
-    // Global India context
-    if (q.includes('fort') || q.includes('royal') || q.includes('palace')) {
-      answer = `**Royal Fortresses & Palaces in RAAHI:**\n\nRajasthan features India's most imposing medieval citadels:\n- **Amber Fort (Jaipur):** Colossal Aravalli fortress with Sheesh Mahal.\n- **Mehrangarh Citadel (Jodhpur):** Soaring 400-foot cliffside fortress.\n- **Jaisalmer Fort:** The world's largest living desert citadel.\n- **Agra Fort (Uttar Pradesh):** Imperial red sandstone palace of the Mughals.`;
-    } else if (q.includes('backwater') || q.includes('kerala') || q.includes('water')) {
-      answer = `**Backwaters & Coastal Sanctuaries in RAAHI:**\n\nExplore Kerala's tropical waterways:\n- **Alleppey (Alappuzha):** Interconnected lagoons and traditional kettuvallam houseboats.\n- **Fort Kochi:** Historic spice trading port and Chinese fishing nets.\n- **Varkala:** Dramatic laterite coastal cliffs overlooking the Arabian Sea.`;
+  } catch (err) {
+    console.warn("Gemini API connection fallback to local intelligence:", err);
+  }
+  return null;
+}
+
+async function processUserQuestion(query) {
+  addMessage('user', query);
+  const ctx = getCurrentContext();
+
+  // Show thinking indicator
+  const thinkingId = 'thinking-' + Date.now();
+  const container = document.getElementById('raahi-messages-container');
+  if (container) {
+    const thinkDiv = document.createElement('div');
+    thinkDiv.className = 'raahi-msg assistant';
+    thinkDiv.id = thinkingId;
+    thinkDiv.innerHTML = `
+      <div class="msg-bubble">
+        <div class="assistant-label">✦ RAAHI AI INTELLIGENCE</div>
+        <div class="msg-text" style="color: var(--gold); font-style: italic;">
+          ⚡ Synthesizing live travel intelligence with Gemini AI...
+        </div>
+      </div>
+    `;
+    container.appendChild(thinkDiv);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  // 1. Try Live Gemini AI API Response
+  let answer = await fetchGeminiAIResponse(query, ctx);
+
+  // Remove thinking bubble
+  const thinkEl = document.getElementById(thinkingId);
+  if (thinkEl) thinkEl.remove();
+
+  // 2. Local Context Fallback if API unavailable
+  if (!answer) {
+    const q = query.toLowerCase();
+    if (ctx.type === 'place' && ctx.data) {
+      const p = ctx.data;
+      if (q.includes('how long') || q.includes('duration') || q.includes('time')) {
+        answer = `**Ideal Duration for ${p.name}:**\n\n⏱️ **${p.durationNeeded}**\n\n- **Good for:** ${p.goodFor ? p.goodFor.join(', ') : 'Heritage & Photography'}\n- **Pace:** ${p.idealPace || 'Moderate walking'}\n\n**Reasoning:** ${p.bestTimeDetailed ? p.bestTimeDetailed.reasoning : 'Allows thorough exploration of historic courtyards and architectural chambers.'}`;
+      } else if (q.includes('photo') || q.includes('view') || q.includes('sunset') || q.includes('spots')) {
+        answer = `**Photography & Visual Highlights at ${p.name}:**\n\n- **Best Light:** ${p.bestTimeDetailed ? p.bestTimeDetailed.bestTimeOfDay : 'Early morning (08:30 AM)'}\n- **Key Angles:** ${p.whatToSee ? p.whatToSee.map(s => s.title).join(', ') : 'Central courtyards and ramparts'}\n\n💡 *Tip: Handheld photography and smartphones are welcome throughout. Commercial tripods require prior ASI authorization.*`;
+      } else if (q.includes('food') || q.includes('eat') || q.includes('taste') || q.includes('dish')) {
+        answer = `**Taste the Place (${ctx.cityName}):**\n\n` + 
+          (p.foodSpecialties ? p.foodSpecialties.map(f => `• **${f.name}** *(${f.type})* — ${f.desc} *(Approx. ${f.price} at ${f.where})*`).join('\n') : 'Authentic local cuisine is available at nearby heritage eateries.') +
+          `\n\n🍽️ *All recommendations use genuine regional specialties without fabricated restaurants.*`;
+      } else if (q.includes('queue') || q.includes('ticket') || q.includes('crowd') || q.includes('avoid')) {
+        answer = `**Crowd Bypass & Ticketing Intelligence:**\n\n- **Entry Fee:** ${p.budget ? p.budget.entryFee : 'Standard heritage admission'}\n- **Best Strategy:** Arrive right at opening time (08:30 AM) or acquire a Composite Monument Pass to skip separate ticketing lines.\n- **Etiquette:** ${p.knowBeforeYouGo ? p.knowBeforeYouGo[0].tip : 'Wear comfortable walking shoes with grip for stone steps.'}`;
+      } else if (q.includes('hidden') || q.includes('gem') || q.includes('beyond') || q.includes('secret')) {
+        answer = `**Beyond the Obvious near ${p.name}:**\n\n` +
+          (p.hiddenGems ? p.hiddenGems.map(g => `✨ **${g.name}** *(${g.type})*\n${g.desc} *(Distance: ${g.dist})*`).join('\n\n') : 'Explore quiet secondary courtyards and nearby artisan craft workshops.');
+      } else {
+        answer = `**Travel Intelligence for ${p.name}:**\n\n${p.overview}\n\n- **Location:** ${ctx.cityName}, ${ctx.stateId ? ctx.stateId.toUpperCase() : 'India'}\n- **Estimated Budget:** ${p.budget ? p.budget.entryFee : '₹100 - ₹500'} (Entry) + ${p.budget ? p.budget.avgFoodCost : '₹400 food'}\n- **Travel Time:** ${p.travelContext ? p.travelContext.fromCityCenter : 'Approx. 20 min from city center'}`;
+      }
+    } else if (ctx.type === 'city' && ctx.data) {
+      const c = ctx.data;
+      if (q.includes('1-day') || q.includes('itinerary') || q.includes('plan') || q.includes('route')) {
+        const preset = c.plannerPresets ? c.plannerPresets['1-day'] : null;
+        if (preset) {
+          answer = `**1-Day Highlight Itinerary for ${c.name}:**\n\n` +
+            preset.timeline.map(t => `• **${t.time}** — **${t.placeName}**\n  *${t.activity}* *(Transit: ${t.transitNext})*`).join('\n\n') +
+            `\n\n💰 **Approximate Cost:** ${preset.estimatedCost}`;
+        } else {
+          answer = `**Suggested Route in ${c.name}:**\n\nStart early at ${c.places[0] || 'Main Fort'}, stop for local lunch, and finish at ${c.places[1] || 'Scenic Viewpoint'} for sunset.`;
+        }
+      } else if (q.includes('budget') || q.includes('cost') || q.includes('price')) {
+        answer = `**Approximate Daily Budget in ${c.name} (₹ INR):**\n\n- 🎒 **Budget Travel:** ${c.approxBudget ? c.approxBudget.budget : '₹1,800/day'}\n- 🏨 **Mid-Range Travel:** ${c.approxBudget ? c.approxBudget.midRange : '₹5,000/day'}\n- 👑 **Luxury Heritage:** ${c.approxBudget ? c.approxBudget.luxury : '₹20,000+/day'}\n\n*Estimates include accommodation, local transport, meals, and standard heritage admissions.*`;
+      } else if (q.includes('sunset') || q.includes('view') || q.includes('vistas')) {
+        answer = `**Best Sunset & Scenic Viewpoints in ${c.name}:**\n\n• **Nahargarh Ridge / Elevated Bastions:** Unrivaled views over the entire historic basin.\n• **Lakeside Promenades:** Golden hour reflections across the calm waters.\n\n💡 *Arrive 45 minutes before sundown to secure an uncrowded vantage point.*`;
+      } else if (q.includes('hidden') || q.includes('gem')) {
+        answer = `**Hidden Gems in ${c.name} (Beyond the Checklist):**\n\n` +
+          c.places.slice(3).map(pId => {
+            const pl = RAAHI_DATA.places[pId];
+            return pl ? `• **${pl.name}** — ${pl.shortDesc}` : `• **${pId.replace(/-/g, ' ').toUpperCase()}**`;
+          }).join('\n\n');
+      } else {
+        answer = `**Intelligence for ${c.name} (${c.stateName}):**\n\n${c.description}\n\n- **Ideal Duration:** ${c.idealDuration || '3 Days'}\n- **Best Season:** ${c.bestTime || 'Oct to Mar'}\n- **Curated Places:** ${c.places.length} monuments and artisan sectors available to explore.`;
+      }
     } else {
-      answer = `**Welcome to RAAHI National Tourism Discovery Platform!**\n\nSelect any state (Rajasthan, Kerala, Himachal Pradesh, Goa, Uttar Pradesh) to explore curated regional cities, each with 8–12 meaningful places, verified photography, local food, and optional cinematic explorations.`;
+      // Global India context
+      if (q.includes('fort') || q.includes('royal') || q.includes('palace')) {
+        answer = `**Royal Fortresses & Palaces in RAAHI:**\n\nRajasthan features India's most imposing medieval citadels:\n- **Amber Fort (Jaipur):** Colossal Aravalli fortress with Sheesh Mahal.\n- **Mehrangarh Citadel (Jodhpur):** Soaring 400-foot cliffside fortress.\n- **Jaisalmer Fort:** The world's largest living desert citadel.\n- **Agra Fort (Uttar Pradesh):** Imperial red sandstone palace of the Mughals.`;
+      } else if (q.includes('backwater') || q.includes('kerala') || q.includes('water')) {
+        answer = `**Backwaters & Coastal Sanctuaries in RAAHI:**\n\nExplore Kerala's tropical waterways:\n- **Alleppey (Alappuzha):** Interconnected lagoons and traditional kettuvallam houseboats.\n- **Fort Kochi:** Historic spice trading port and Chinese fishing nets.\n- **Varkala:** Dramatic laterite coastal cliffs overlooking the Arabian Sea.`;
+      } else {
+        answer = `**Welcome to RAAHI National Tourism Discovery Platform!**\n\nSelect any state (Rajasthan, Kerala, Himachal Pradesh, Goa, Uttar Pradesh) to explore curated regional cities, each with 8–12 meaningful places, verified photography, local food, and optional cinematic explorations.`;
+      }
     }
   }
 
-  setTimeout(() => {
-    addMessage('assistant', answer);
-  }, 250);
+  addMessage('assistant', answer);
 }
 
 function addMessage(sender, text) {
