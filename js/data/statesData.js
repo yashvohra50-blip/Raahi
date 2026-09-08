@@ -138,7 +138,7 @@ export const STATES_DATA = {
     capital: "Dehradun (Winter), Gairsain (Summer)",
     eyebrow: "LAND OF THE GODS • GLACIAL SPRINGS",
     tagline: "Himalayan pilgrimages, alpine meadows, yoga capitals and tiger reserves.",
-    heroImage: "assets/images/destinations/hadimba-temple.jpg",
+    heroImage: "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
     accentColor: "#06b6d4",
     story: "Known as Devbhoomi, Uttarakhand is a celestial terrain where sacred rivers emerge from high-altitude glaciers. From the peaceful yoga ashrams of Rishikesh and the holy shrines of the Char Dham to the alpine bugyals of Auli and the dense tiger corridors of Corbett.",
     quickStats: {
@@ -179,7 +179,7 @@ export const STATES_DATA = {
     capital: "Chandigarh",
     eyebrow: "GOLDEN SANCTUARY • FERTILE FIELDS",
     tagline: "Spiritual golden domes, boundless hospitality, and agricultural abundance.",
-    heroImage: "assets/images/destinations/city-palace-jaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200",
     accentColor: "#f59e0b",
     story: "Punjab, the land of five rivers, is world-renowned for its profound spirituality, joyful spirit, and lavish hospitality. The Golden Temple in Amritsar stands as an architectural and spiritual marvel open to all humankind.",
     quickStats: {
@@ -220,7 +220,7 @@ export const STATES_DATA = {
     capital: "Chandigarh",
     eyebrow: "ANCIENT EPIC CRADLE • MODERN HUBS",
     tagline: "Historic battlegrounds, Mahabharata legends, and cutting-edge urban hubs.",
-    heroImage: "assets/images/destinations/city-palace-jaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
     accentColor: "#10b981",
     story: "Haryana bridges ancient heritage and modern India. Home to Kurukshetra where the Bhagavad Gita was delivered, as well as the heritage crafts capital of Surajkund, and the global tech hub of Gurugram.",
     quickStats: {
@@ -260,7 +260,7 @@ export const STATES_DATA = {
     capital: "New Delhi",
     eyebrow: "NATIONAL CAPITAL • SEVEN HISTORIC CITIES",
     tagline: "Monumental Mughal red stone, British colonial avenues, and epic street food.",
-    heroImage: "assets/images/destinations/taj-mahal.jpg",
+    heroImage: "https://images.unsplash.com/photo-1592639296346-560c37a0f711?q=80&w=1200",
     accentColor: "#ef4444",
     story: "Delhi is the grand capital of India, where millennia of history blend seamlessly into vibrant modern life. From the soaring minarets of Qutub Minar and Humayun's Tomb to Chandni Chowk and Lutyens' Delhi.",
     quickStats: {
@@ -301,7 +301,7 @@ export const STATES_DATA = {
     capital: "Srinagar (Summer), Jammu (Winter)",
     eyebrow: "PARADISE VALLEYS • SHIKARA REFLECTIONS",
     tagline: "Floating houseboats on Dal Lake, alpine meadows, and pine-clad snow slopes.",
-    heroImage: "assets/images/destinations/key-monastery.jpg",
+    heroImage: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=1200",
     accentColor: "#0ea5e9",
     story: "Often hailed as Paradise on Earth, Jammu & Kashmir enchants with its iconic cedar-wood houseboats floating on Dal Lake, saffron fields of Pampore, snow-clad slopes of Gulmarg, and the sacred mountain shrine of Vaishno Devi in the Shivalik foothills.",
     quickStats: {
@@ -341,7 +341,7 @@ export const STATES_DATA = {
     capital: "Leh",
     eyebrow: "LAND OF HIGH PASSES • MOONSCAPES",
     tagline: "Trans-Himalayan desert, cobalt high-altitude lakes, and ancient Buddhist gompas.",
-    heroImage: "assets/images/destinations/key-monastery.jpg",
+    heroImage: "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200",
     accentColor: "#6366f1",
     story: "Ladakh is a high-altitude desert wonderland situated between the Karakoram and Great Himalayan ranges. Known for its dramatically carved gorges, crystal-clear sapphire lakes like Pangong Tso, and cliffside monasteries.",
     quickStats: {
@@ -381,7 +381,7 @@ export const STATES_DATA = {
     capital: "Chandigarh",
     eyebrow: "THE CITY BEAUTIFUL • MODERNIST ARCHITECTURE",
     tagline: "Le Corbusier's urban masterpiece, whimsical rock sculptures, and serene lakes.",
-    heroImage: "assets/images/destinations/city-palace-jaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1200",
     accentColor: "#14b8a6",
     story: "Designed by master architect Le Corbusier as independent India's first planned city, Chandigarh is celebrated for its grid layout, open parks, Capitol Complex UNESCO monuments, and Nek Chand's Rock Garden.",
     quickStats: {
@@ -463,7 +463,7 @@ export const STATES_DATA = {
     capital: "Gandhinagar",
     eyebrow: "WHITE SALT DESERT • ASIATIC LION SANCTUARIES",
     tagline: "Rann of Kutch salt flats, stepwells, Asiatic lions, and textile artistry.",
-    heroImage: "assets/images/destinations/amber-fort.jpg",
+    heroImage: "https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200",
     accentColor: "#f97316",
     story: "Gujarat is a dynamic state of extreme landscapes and deep historical heritage. From the endless glowing white expanse of the Great Rann of Kutch and wild Asiatic lions in Gir Forest to the subterranean architecture of Rani ki Vav.",
     quickStats: {
@@ -503,7 +503,7 @@ export const STATES_DATA = {
     capital: "Mumbai",
     eyebrow: "WESTERN GHATS FORTS • AJANTA-ELLORA CAVES",
     tagline: "Financial capitals, rock-cut cave temples, Maratha hill forts, and Konkan coasts.",
-    heroImage: "assets/images/destinations/city-palace-udaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
     accentColor: "#e11d48",
     story: "Maharashtra is a powerhouse of commerce, cinema, and ancient rock-cut art. From the glittering skyline of Mumbai to the breathtaking 2,000-year-old Buddhist and Hindu rock-cut marvels of Ajanta & Ellora.",
     quickStats: {
@@ -543,7 +543,7 @@ export const STATES_DATA = {
     capital: "Daman",
     eyebrow: "COASTAL FORTS • TRIBAL FORESTS",
     tagline: "Portuguese island fortresses, serene Arabian Sea beaches, and tribal culture.",
-    heroImage: "assets/images/destinations/fort-aguada.jpg",
+    heroImage: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200",
     accentColor: "#0284c7",
     story: "Consolidated into a single Union Territory, this coastal destination brings together the historic sea-fortresses of Diu, the palm-lined beaches of Daman, and the lush forested valleys of Dadra & Nagar Haveli.",
     quickStats: {
@@ -625,7 +625,7 @@ export const STATES_DATA = {
     capital: "Chennai",
     eyebrow: "DRAVIDIAN TEMPLE GEMS • LIVING CLASSICAL ROOTS",
     tagline: "Soaring gopuram temple towers, Carnatic melodies, Chettinad mansions, and silk.",
-    heroImage: "assets/images/destinations/city-palace-jaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     accentColor: "#f59e0b",
     story: "Tamil Nadu represents one of the oldest living classical civilizations on earth. It is celebrated for monumental Dravidian stone temple complexes like Brihadisvara in Thanjavur and Meenakshi Amman in Madurai, palatial mansions of Chettinad, and the Nilgiri hills.",
     quickStats: {
@@ -665,7 +665,7 @@ export const STATES_DATA = {
     capital: "Bengaluru",
     eyebrow: "VIJAYANAGARA RUINS • COFFEE FORESTS",
     tagline: "UNESCO boulder ruins of Hampi, Mysore royal palaces, and Western Ghats wildlife.",
-    heroImage: "assets/images/destinations/city-palace-udaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1600100397608-f010e423b961?q=80&w=1200",
     accentColor: "#8b5cf6",
     story: "Karnataka is a diverse state where the ancient and the hyper-modern thrive together. From the monumental boulder-hewn ruins of Hampi and Hoysala temples to the coffee hills of Coorg and tech capital Bengaluru.",
     quickStats: {
@@ -705,7 +705,7 @@ export const STATES_DATA = {
     capital: "Amaravati",
     eyebrow: "SACRED HILL SHRINES • COASTAL DELTAS",
     tagline: "Tirupati Balaji spiritual sanctuary, Eastern Ghats valleys, and spicy culinary heritage.",
-    heroImage: "assets/images/destinations/city-palace-jaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
     accentColor: "#ea580c",
     story: "Andhra Pradesh combines ancient Buddhist heritage, sacred hill shrines, and a 974 km coastline. From the world-famous hill temple of Tirumala Tirupati and the coffee hills of Araku Valley to the rock-cut caves of Undavalli.",
     quickStats: {
@@ -745,7 +745,7 @@ export const STATES_DATA = {
     capital: "Hyderabad",
     eyebrow: "PEARL CITADELS • DECCAN ARCHITECTURE",
     tagline: "Historic Golconda ramparts, Charminar bazaars, Kakatiya stone temples, and royal biryani.",
-    heroImage: "assets/images/destinations/city-palace-udaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
     accentColor: "#ec4899",
     story: "Telangana is a land of rich Deccan history where Qutb Shahi and Asaf Jahi dynasties blended with indigenous Telugu culture. Known for Charminar and Golconda Fort in Hyderabad and UNESCO-listed Ramappa Temple.",
     quickStats: {
@@ -785,7 +785,7 @@ export const STATES_DATA = {
     capital: "Puducherry",
     eyebrow: "FRENCH COLONIAL QUARTERS • EXPERIMENTAL COMMUNE",
     tagline: "Mustard-yellow colonial villas, tranquil seafront promenades, and Auroville.",
-    heroImage: "assets/images/destinations/fort-aguada.jpg",
+    heroImage: "https://images.unsplash.com/photo-1589793463357-5fb813435467?q=80&w=1200",
     accentColor: "#f43f5e",
     story: "Puducherry preserves French colonial charm with bougainvillea-draped mustard villas in White Town, vibrant Tamil quarters with traditional thinnai verandas, and the universal township of Auroville.",
     quickStats: {
@@ -825,7 +825,7 @@ export const STATES_DATA = {
     capital: "Kavaratti",
     eyebrow: "CORAL ATOLLS • TURQUOISE LAGOONS",
     tagline: "Pristine coral reefs, secluded coconut atolls, and transparent waters.",
-    heroImage: "assets/images/destinations/alleppey-backwaters.jpg",
+    heroImage: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1200",
     accentColor: "#06b6d4",
     story: "Lakshadweep is an archipelago of 36 coral islands in the Arabian Sea. Renowned for untouched marine biodiversity, turquoise lagoons, vibrant live reefs, and calm islands like Bangaram and Agatti.",
     quickStats: {
@@ -863,7 +863,7 @@ export const STATES_DATA = {
     capital: "Port Blair",
     eyebrow: "EMERALD ISLANDS • TROPICAL FORESTS",
     tagline: "Cellular Jail national memorial, Radhanagar white sand beaches, and coral biospheres.",
-    heroImage: "assets/images/destinations/fort-aguada.jpg",
+    heroImage: "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1200",
     accentColor: "#0284c7",
     story: "The Andaman & Nicobar archipelago encompasses over 500 islands nestled between the Bay of Bengal and Andaman Sea. Famous for the historic Cellular Jail and world-celebrated Radhanagar Beach.",
     quickStats: {
@@ -903,7 +903,7 @@ export const STATES_DATA = {
     capital: "Kolkata",
     eyebrow: "CULTURAL RENAISSANCE • SUNDARBANS TIGERS",
     tagline: "Victorian colonial elegance, Darjeeling tea hills, Royal Bengal Tigers, and Durga Puja.",
-    heroImage: "assets/images/destinations/city-palace-udaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=1200",
     accentColor: "#f59e0b",
     story: "West Bengal spans from the towering snow peaks of Kanchenjunga in Darjeeling to the mangrove deltas of the Sundarbans. Home to Kolkata, revered for literary giants, artistic cinema, and legendary sweets.",
     quickStats: {
@@ -942,7 +942,7 @@ export const STATES_DATA = {
     capital: "Patna",
     eyebrow: "BUDDHIST ENLIGHTENMENT • NALANDA ROOTS",
     tagline: "The Bodhi Tree where Buddha found enlightenment, ancient universities, and Madhubani art.",
-    heroImage: "assets/images/destinations/city-palace-jaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
     accentColor: "#eab308",
     story: "Bihar is the sacred birthplace of Buddhism and Jainism. Here under the Bodhi Tree in Bodh Gaya, Gautama Buddha attained enlightenment. Home to ancient Nalanda University.",
     quickStats: {
@@ -980,7 +980,7 @@ export const STATES_DATA = {
     capital: "Bhubaneswar",
     eyebrow: "SUN TEMPLE CHARIOTS • SACRED RATH YATRA",
     tagline: "Konark Sun Temple stone wheels, Puri Jagannath sanctuary, and Chilika lagoon.",
-    heroImage: "assets/images/destinations/city-palace-udaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200",
     accentColor: "#f97316",
     story: "Odisha is a coastal realm of magnificent Kalinga temple architecture, sacred pilgrimage traditions, and pristine ecological sanctuaries like the Sun Temple at Konark and Chilika Lake.",
     quickStats: {
@@ -1019,7 +1019,7 @@ export const STATES_DATA = {
     capital: "Ranchi",
     eyebrow: "WATERFALL HILLS • TRIBAL WOODLANDS",
     tagline: "Rushing waterfalls, sacred Parasnath peaks, and ancient tribal Sohrai murals.",
-    heroImage: "assets/images/destinations/hadimba-temple.jpg",
+    heroImage: "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
     accentColor: "#84cc16",
     story: "Jharkhand is blessed with rolling hills, cascading waterfalls, mineral-rich plateaus, and vibrant indigenous tribal cultures like Sohrai wall paintings and sacred Shikharji peak.",
     quickStats: {
@@ -1057,7 +1057,7 @@ export const STATES_DATA = {
     capital: "Bhopal",
     eyebrow: "THE HEART OF INDIA • TIGER SANCTUARIES",
     tagline: "Khajuraho temples, Sanchi Buddhist stupas, Kanha tigers, and Gwalior fortresses.",
-    heroImage: "assets/images/destinations/amber-fort.jpg",
+    heroImage: "https://images.unsplash.com/photo-1600100397608-f010e423b961?q=80&w=1200",
     accentColor: "#f59e0b",
     story: "Madhya Pradesh is the geographic and historical heart of India. It boasts UNESCO sites including Khajuraho temples, Sanchi stupas, and Bhimbetka prehistoric shelters alongside premier tiger reserves.",
     quickStats: {
@@ -1096,7 +1096,7 @@ export const STATES_DATA = {
     capital: "Raipur",
     eyebrow: "TRIBAL BASTAR • NIAGARA OF INDIA",
     tagline: "Chitrakote horseshoe waterfalls, ancient Bastar bell metal, and sal forests.",
-    heroImage: "assets/images/destinations/hadimba-temple.jpg",
+    heroImage: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200",
     accentColor: "#84cc16",
     story: "Chhattisgarh is an enchanting heartland of dense sal forests, ancient tribal kingdoms, and majestic waterfalls like Chitrakote Falls and lost-wax Dokra brass casting.",
     quickStats: {
@@ -1136,7 +1136,7 @@ export const STATES_DATA = {
     capital: "Dispur (Guwahati)",
     eyebrow: "BRAHMAPUTRA REALM • ONE-HORNED RHINOS",
     tagline: "Kaziranga rhino sanctuaries, Majuli river island, golden Muga silk, and tea valleys.",
-    heroImage: "assets/images/destinations/key-monastery.jpg",
+    heroImage: "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
     accentColor: "#10b981",
     story: "Assam is the majestic gateway to Northeast India, dominated by the mighty Brahmaputra River. It is home to Kaziranga National Park, world's largest river island Majuli, and rolling tea gardens.",
     quickStats: {
@@ -1175,7 +1175,7 @@ export const STATES_DATA = {
     capital: "Shillong",
     eyebrow: "ABODE OF CLOUDS • LIVING ROOT BRIDGES",
     tagline: "Bio-engineered living root bridges, crystal Umngot river, and roaring waterfalls.",
-    heroImage: "assets/images/destinations/key-monastery.jpg",
+    heroImage: "https://images.unsplash.com/photo-1589793463357-5fb813435467?q=80&w=1200",
     accentColor: "#06b6d4",
     story: "Meghalaya is a highland paradise of subtropical forests and dramatic cliffs. Celebrated for bio-engineered living root bridges in Cherrapunji, transparent Umngot River in Dawki, and deep limestone caves.",
     quickStats: {
@@ -1213,7 +1213,7 @@ export const STATES_DATA = {
     capital: "Itanagar",
     eyebrow: "LAND OF DAWN-LIT MOUNTAINS • TAWANG MONASTERY",
     tagline: "Tawang Buddhist citadel, Sela Pass snow lakes, tribal biodiversity, and orchid valleys.",
-    heroImage: "assets/images/destinations/key-monastery.jpg",
+    heroImage: "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200",
     accentColor: "#6366f1",
     story: "Arunachal Pradesh is India's easternmost frontier where the sun first rises. Features 17th-century Tawang Monastery, frozen alpine lakes at Sela Pass, and 26 indigenous major tribes.",
     quickStats: {
@@ -1251,7 +1251,7 @@ export const STATES_DATA = {
     capital: "Gangtok",
     eyebrow: "KANGCHENJUNGA SANCTUARY • ORGANIC HIGHLANDS",
     tagline: "Sacred glacial lakes, Rumtek monastery, rhododendron valleys, and 100% organic farms.",
-    heroImage: "assets/images/destinations/key-monastery.jpg",
+    heroImage: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1200",
     accentColor: "#0ea5e9",
     story: "Sikkim is a peaceful Himalayan state nestled in the shadow of Mount Kangchenjunga (8,586m). As India's first 100% organic state, it offers pristine sanctuaries like Tsomgo Lake and Rumtek Monastery.",
     quickStats: {
@@ -1289,7 +1289,7 @@ export const STATES_DATA = {
     capital: "Kohima",
     eyebrow: "HORNBILL FESTIVAL • NAGA WARRIOR TRADITIONS",
     tagline: "Emerald Dzukou Valley, 16 distinct Naga tribes, and the great Hornbill Festival.",
-    heroImage: "assets/images/destinations/key-monastery.jpg",
+    heroImage: "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1200",
     accentColor: "#ef4444",
     story: "Nagaland is celebrated for the Hornbill Festival in Kisama—the Festival of Festivals—the wilderness of Dzukou Valley, and 16 major indigenous tribes each with distinct shawls and traditions.",
     quickStats: {
@@ -1327,7 +1327,7 @@ export const STATES_DATA = {
     capital: "Imphal",
     eyebrow: "JEWEL OF INDIA • FLOATING LOKTAK LAKE",
     tagline: "Floating phumdis on Loktak Lake, Sangai deer sanctuary, and classical Raas Leela dance.",
-    heroImage: "assets/images/destinations/alleppey-backwaters.jpg",
+    heroImage: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200",
     accentColor: "#8b5cf6",
     story: "Manipur is celebrated for Loktak Lake—the largest freshwater lake in Northeast India featuring unique floating islands (phumdis) and Keibul Lamjao, the world's only floating national park home to the Sangai deer.",
     quickStats: {
@@ -1365,7 +1365,7 @@ export const STATES_DATA = {
     capital: "Aizawl",
     eyebrow: "LAND OF ROLLING HILLS • BAMBOO DANCE",
     tagline: "Lush mountain ridges, Cheraw bamboo dance, Solomon's Temple, and pristine forests.",
-    heroImage: "assets/images/destinations/hadimba-temple.jpg",
+    heroImage: "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
     accentColor: "#14b8a6",
     story: "Mizoram is a peaceful high-ridge state with 21 hill ranges. Known for warm community harmony, cliffside capital Aizawl overlooking cloud valleys, and the rhythmic Cheraw bamboo dance.",
     quickStats: {
@@ -1403,7 +1403,7 @@ export const STATES_DATA = {
     capital: "Agartala",
     eyebrow: "WATER PALACES • UNAKOTI ROCK SCULPTURES",
     tagline: "Neermahal lake palace, colossal rock-cut Shaivite reliefs of Unakoti, and bamboo art.",
-    heroImage: "assets/images/destinations/city-palace-udaipur.jpg",
+    heroImage: "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=1200",
     accentColor: "#f59e0b",
     story: "Tripura is a historic kingdom rich in royal architecture. Highlights include Neermahal (the only water palace in East India on Rudrasagar Lake) and the colossal ancient rock faces of Unakoti.",
     quickStats: {

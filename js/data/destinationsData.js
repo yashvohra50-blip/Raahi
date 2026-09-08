@@ -2503,7 +2503,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Set around the emerald eye-shaped Naini Lake in the Kumaon foothills at 6,837 feet, offering yacht boating, the Naina Devi Temple, and panoramic snow views from Snow View Point.",
     "shortDescription": "Emerald lake hill town with sailboat rides and Himalayan viewpoints.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -2655,7 +2655,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The spiritual heart of Sikhism, home to the resplendent Sri Harmandir Sahib (Golden Temple) surrounded by the Amrit Sarovar, Jallianwala Bagh memorial, and Wagah Border.",
     "shortDescription": "The Golden Temple, world's largest free community kitchen, and Wagah Border.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -2732,7 +2732,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Designed by Le Corbusier as independent India's first planned city, featuring the Capitol Complex UNESCO monuments, Nek Chand's Rock Garden, and Sukhna Lake promenade.",
     "shortDescription": "Le Corbusier's planned modernist city, Nek Chand Rock Garden, and Sukhna Lake.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -2808,7 +2808,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The sacred battleground of the epic Mahabharata and birthplace of the Bhagavad Gita, featuring Brahma Sarovar water tank, Jyotisar, and the Sheikh Chilli Tomb.",
     "shortDescription": "Sacred land of the Bhagavad Gita and monumental Brahma Sarovar lake.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3037,7 +3037,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "India's first UNESCO World Heritage City, famous for Sabarmati Ashram, intricate stepwells like Adalaj, Sidi Saiyyed Mosque stone lattice screens, and street food.",
     "shortDescription": "UNESCO World Heritage city with historic pols, stepwells, and Sabarmati Ashram.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3268,7 +3268,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "The cultural capital of Maharashtra and Oxford of the East, surrounded by historic Maratha hill forts like Sinhagad, Shaniwar Wada, and Aga Khan Palace.",
     "shortDescription": "Cultural hub with historic Maratha forts, trekking ridges, and heritage palaces.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3421,7 +3421,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The Athens of the East on the Vaigai River, centered around the colossal Meenakshi Amman Temple with 14 soaring gopurams decorated with thousands of painted mythological figures.",
     "shortDescription": "Ancient Dravidian temple city crowned by the monumental Meenakshi Temple.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3575,7 +3575,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The cultural gateway of South India, famous for Marina Beach, San Thome Cathedral, Carnatic music, and the UNESCO 7th-century Shore Temple and rock bas-reliefs in Mahabalipuram.",
     "shortDescription": "Classical arts capital with Marina Beach and UNESCO 7th-century Shore Temple.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3883,7 +3883,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Perched atop the seven sacred hills of the Seshachalam range, Sri Venkateswara Swamy Temple is the world's most visited religious pilgrimage sanctuary.",
     "shortDescription": "World-renowned hill shrine of Lord Venkateswara amidst the sacred Seven Hills.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -4575,7 +4575,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "The epicenter of Buddhism where Gautama Buddha attained supreme enlightenment under the sacred Bodhi Tree at Mahabodhi Temple, and the 5th-century ruins of Nalanda University.",
     "shortDescription": "The sacred Bodhi Tree of Buddha's enlightenment and ancient Nalanda University.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -6480,7 +6480,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Patiala is one of the premier destinations in Punjab, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Royal city of the Patiala Gharana, Qila Mubarak fortress palace, and Sheesh Mahal.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -6556,7 +6556,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Anandpur Sahib is one of the premier destinations in Punjab, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "The Holy City of Bliss where the Khalsa was founded, home to the monumental Virasat-e-Khalsa.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -6860,7 +6860,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "Nashik & Trimbakeshwar is one of the premier destinations in Maharashtra, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Wine Capital of India and sacred Godavari pilgrimage home to Trimbakeshwar Jyotirlinga.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -7088,7 +7088,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Thanjavur & Great Living Chola Temples is one of the premier destinations in Tamil Nadu, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO 11th-century Brihadisvara Temple with an 80-tonne single granite block cupola.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -7697,7 +7697,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "Shantiniketan is one of the premier destinations in West Bengal, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO World Heritage university town founded by Nobel Laureate Rabindranath Tagore.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -7773,7 +7773,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "Rajgir & Pawapuri is one of the premier destinations in Bihar, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Ancient capital of the Magadha Empire, Vulture Peak, Peace Pagoda, and natural hot springs.",
-    "image": "assets/images/destinations/city-palace-jaipur.jpg",
+    "image": "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
