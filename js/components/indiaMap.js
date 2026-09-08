@@ -1,7 +1,8 @@
 /**
  * RAAHI // Interactive Leaflet & SVG India Map Component
  * Displays all 28 States, 8 UTs, and key destinations with Leaflet GIS engine,
- * Google Maps Ultra-High Definition Satellite & Hybrid Aerial Imagery (House & Building Level Detail),
+ * Google Maps Ultra-High Definition Satellite & Hybrid Aerial Imagery,
+ * Google 3D Natural Street View & Aerial Embed (photorealistic roads, trees, cars, houses),
  * zero-blank-tile maxNativeZoom safety guards, layer switcher, interactive pin markers,
  * live search/geocoding, and spatial telemetry.
  */
@@ -52,6 +53,7 @@ const STATE_COORDINATES = {
 let raahiMapInstance = null;
 let activeMarker = null;
 let activeTileLayers = {};
+let currentSelectedCoords = { lat: 26.9124, lng: 75.7873 };
 
 export function renderIndiaMap(containerId = 'india-map-mount') {
   const mount = document.getElementById(containerId);
@@ -80,6 +82,11 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
       <button id="raahi-map-search-btn" class="btn gold" style="padding: 12px 24px;">
         🔍 RESOLVE MAP
       </button>
+
+      <button id="raahi-streetview-btn" class="btn" style="padding: 12px 20px; border-color: var(--emerald, #10b981); color: var(--emerald, #10b981);">
+        📷 3D REAL STREET VIEW (TREES & CARS)
+      </button>
+
       <button id="raahi-map-toggle-view" class="btn light" style="padding: 12px 20px;">
         🗺️ SVG/GIS TOGGLE
       </button>
@@ -89,7 +96,7 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
     <div class="spatial-telemetry-bar" style="display: flex; justify-content: space-between; align-items: center; background: rgba(13, 20, 16, 0.7); padding: 10px 18px; border: 1px solid var(--line); border-bottom: none; border-radius: 8px 8px 0 0; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.08em;">
       <span style="color: var(--muted-bright); display: inline-flex; align-items: center; gap: 6px;">
         <span style="width: 8px; height: 8px; background: var(--emerald, #10b981); border-radius: 50%; box-shadow: 0 0 8px var(--emerald, #10b981);"></span> 
-        LIVE SPATIAL VECTOR MAP // ULTRA-HIGH RESOLUTION GOOGLE SATELLITE & HOUSES ENGINE
+        LIVE SPATIAL VECTOR MAP // GOOGLE 3D NATURAL STREETS, TREES & CARS ENGINE
       </span>
       <span id="raahi-map-status" style="color: var(--emerald, #10b981);">VECTOR LOCKED // RAJASTHAN</span>
     </div>
@@ -100,7 +107,15 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
         <div id="raahi-leaflet-map" style="width: 100%; height: 100%;"></div>
       </div>
 
-      <!-- Alternative: SVG Vector Map (Hidden by default, toggleable) -->
+      <!-- Alternative 1: Google Natural 3D Street View Embed Container (Hidden by default, toggleable) -->
+      <div id="streetview-map-view" style="display: none; width: 100%; height: 540px; border-radius: 0 0 0 12px; border: 1px solid var(--line); background: #080d0a; position: relative;">
+        <iframe id="raahi-streetview-iframe" style="width: 100%; height: 100%; border: none;" src="about:blank" allowfullscreen loading="lazy"></iframe>
+        <div style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.85); padding: 8px 14px; border-radius: 6px; border: 1px solid var(--gold); font-family: var(--font-display); font-size: 0.72rem; color: var(--gold); z-index: 10;">
+          📷 3D NATURAL STREET VIEW ENGINE (REAL ROADS, TREES & CARS)
+        </div>
+      </div>
+
+      <!-- Alternative 2: SVG Vector Map (Hidden by default, toggleable) -->
       <div id="svg-map-view" class="india-svg-wrapper" style="display: none; width: 100%; height: 540px; border-radius: 0 0 0 12px; border: 1px solid var(--line); background: #080d0a; padding: 20px;">
         <svg class="india-svg-map" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
           <g id="states-group">
@@ -161,9 +176,14 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
           </div>
         </div>
 
-        <a href="#/states/${defaultState.slug}" class="btn light" id="map-preview-link" style="justify-content: center; width: 100%; text-align: center;">
-          EXPLORE ${defaultState.name.toUpperCase()} CODEX →
-        </a>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button id="open-external-gmaps-btn" class="btn gold" style="width: 100%; justify-content: center; font-size: 0.78rem; padding: 10px;">
+            🌍 OPEN NATURAL 3D MAPS (TREES & CARS) ↗
+          </button>
+          <a href="#/states/${defaultState.slug}" class="btn light" id="map-preview-link" style="justify-content: center; width: 100%; text-align: center;">
+            EXPLORE ${defaultState.name.toUpperCase()} CODEX →
+          </a>
+        </div>
       </div>
     </div>
   `;
@@ -333,8 +353,10 @@ function selectStateOnMap(slug, lat, lng, name) {
   const state = STATES_DATA[slug];
   if (!state) return;
 
+  currentSelectedCoords = { lat, lng };
+
   if (raahiMapInstance) {
-    raahiMapInstance.flyTo([lat, lng], 14, { duration: 1.5 });
+    raahiMapInstance.flyTo([lat, lng], 15, { duration: 1.5 });
 
     if (activeMarker) {
       activeMarker.setLatLng([lat, lng]);
@@ -367,13 +389,32 @@ function selectStateOnMap(slug, lat, lng, name) {
     previewLink.href = `#/states/${state.slug}`;
     previewLink.textContent = `EXPLORE ${state.name.toUpperCase()} CODEX →`;
   }
+
+  updateStreetViewIframe(lat, lng, state.name);
+}
+
+function updateStreetViewIframe(lat, lng, queryName) {
+  const iframe = document.getElementById('raahi-streetview-iframe');
+  if (iframe) {
+    // Embeds Google Maps 3D Natural Satellite & Street view showing trees, cars, houses, and roads
+    iframe.src = `https://maps.google.com/maps?q=${lat},${lng}&t=k&z=19&ie=UTF8&iwloc=&output=embed`;
+  }
 }
 
 function setupMapSearchHandlers(mount) {
   const input = mount.querySelector('#raahi-map-query-input');
   const searchBtn = mount.querySelector('#raahi-map-search-btn');
+  const externalBtn = mount.querySelector('#open-external-gmaps-btn');
   const autocomplete = mount.querySelector('#raahi-map-autocomplete');
   if (!input || !searchBtn) return;
+
+  if (externalBtn) {
+    externalBtn.addEventListener('click', () => {
+      const query = input.value.trim() || 'India';
+      const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}&basemap=satellite`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
+  }
 
   // Autocomplete Suggestions
   const SUGGESTIONS = Object.values(STATES_DATA).map(s => ({
@@ -442,7 +483,7 @@ function setupMapSearchHandlers(mount) {
       return;
     }
 
-    // Geocoding via OpenStreetMap Nominatim API for general Indian locations/cities
+    // Geocoding via OpenStreetMap Nominatim API for general Indian locations/cities/houses
     try {
       const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', India')}&limit=1`);
       if (res.ok) {
@@ -452,8 +493,10 @@ function setupMapSearchHandlers(mount) {
           const lat = parseFloat(item.lat);
           const lng = parseFloat(item.lon ?? item.lng);
 
+          currentSelectedCoords = { lat, lng };
+
           if (raahiMapInstance) {
-            raahiMapInstance.flyTo([lat, lng], 17, { duration: 1.5 });
+            raahiMapInstance.flyTo([lat, lng], 18, { duration: 1.5 });
             if (activeMarker) activeMarker.setLatLng([lat, lng]);
           }
 
@@ -464,6 +507,8 @@ function setupMapSearchHandlers(mount) {
           const previewStory = document.getElementById('map-preview-story');
           if (previewTitle) previewTitle.textContent = query.toUpperCase();
           if (previewStory) previewStory.textContent = item.display_name;
+
+          updateStreetViewIframe(lat, lng, query);
         }
       }
     } catch(err) {
@@ -479,25 +524,57 @@ function setupMapSearchHandlers(mount) {
 
 function setupViewToggle(mount) {
   const toggleBtn = mount.querySelector('#raahi-map-toggle-view');
+  const streetviewBtn = mount.querySelector('#raahi-streetview-btn');
   const leafletView = mount.querySelector('#leaflet-map-view');
+  const streetviewView = mount.querySelector('#streetview-map-view');
   const svgView = mount.querySelector('#svg-map-view');
-  if (!toggleBtn || !leafletView || !svgView) return;
 
-  let isLeaflet = true;
+  if (!leafletView || !streetviewView || !svgView) return;
 
-  toggleBtn.addEventListener('click', () => {
-    isLeaflet = !isLeaflet;
-    if (isLeaflet) {
-      leafletView.style.display = 'block';
-      svgView.style.display = 'none';
-      toggleBtn.textContent = '🗺️ SVG VECTOR VIEW';
-      setTimeout(() => {
-        if (raahiMapInstance) raahiMapInstance.invalidateSize();
-      }, 100);
-    } else {
-      leafletView.style.display = 'none';
-      svgView.style.display = 'block';
-      toggleBtn.textContent = '🌐 LEAFLET GIS VIEW';
-    }
-  });
+  let currentView = 'leaflet'; // 'leaflet', 'streetview', 'svg'
+
+  if (streetviewBtn) {
+    streetviewBtn.addEventListener('click', () => {
+      if (currentView !== 'streetview') {
+        currentView = 'streetview';
+        leafletView.style.display = 'none';
+        svgView.style.display = 'none';
+        streetviewView.style.display = 'block';
+        streetviewBtn.style.background = 'var(--emerald, #10b981)';
+        streetviewBtn.style.color = '#000';
+        updateStreetViewIframe(currentSelectedCoords.lat, currentSelectedCoords.lng, 'Target');
+      } else {
+        currentView = 'leaflet';
+        streetviewView.style.display = 'none';
+        svgView.style.display = 'none';
+        leafletView.style.display = 'block';
+        streetviewBtn.style.background = 'transparent';
+        streetviewBtn.style.color = 'var(--emerald, #10b981)';
+        setTimeout(() => {
+          if (raahiMapInstance) raahiMapInstance.invalidateSize();
+        }, 100);
+      }
+    });
+  }
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      if (currentView !== 'svg') {
+        currentView = 'svg';
+        leafletView.style.display = 'none';
+        streetviewView.style.display = 'none';
+        svgView.style.display = 'block';
+        toggleBtn.textContent = '🌐 LEAFLET GIS VIEW';
+      } else {
+        currentView = 'leaflet';
+        streetviewView.style.display = 'none';
+        svgView.style.display = 'none';
+        leafletView.style.display = 'block';
+        toggleBtn.textContent = '🗺️ SVG VECTOR VIEW';
+        setTimeout(() => {
+          if (raahiMapInstance) raahiMapInstance.invalidateSize();
+        }, 100);
+      }
+    });
+  }
 }
