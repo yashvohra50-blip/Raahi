@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    RAAHI // Destination Experience Page Styles
    ========================================================================== */
 
@@ -489,8 +489,8 @@
   position: fixed;
   bottom: 28px;
   right: 28px;
-  z-index: 120;
-  background: rgba(7, 11, 9, 0.88);
+  z-index: 99990;
+  background: rgba(7, 11, 9, 0.92);
   border: 1px solid var(--gold);
   color: var(--gold);
   padding: 12px 22px;
@@ -501,15 +501,26 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   backdrop-filter: blur(16px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.2);
-  cursor: pointer;
-  transition: var(--transition-fast);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.25);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
   display: flex;
   align-items: center;
   gap: 10px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.raahi-assistant-trigger:hover {
+.raahi-assistant-trigger.is-dragging {
+  cursor: grabbing !important;
+  transition: none !important;
+  transform: scale(1.06) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 40px rgba(212, 175, 55, 0.5) !important;
+}
+
+.raahi-assistant-trigger:hover:not(.is-dragging) {
   background: var(--gold);
   color: #070b09;
   transform: translateY(-3px) scale(1.03);
@@ -519,9 +530,10 @@
 .raahi-assistant-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  z-index: 250;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 99991;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -540,14 +552,9 @@
   background: #080d0b;
   border-left: 1px solid var(--line-strong);
   box-shadow: -20px 0 60px rgba(0, 0, 0, 0.95);
-  z-index: 300;
+  z-index: 99992;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transform: translateX(100%);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
 .raahi-assistant-drawer.active {
   transform: translateX(0);
 }

@@ -11,6 +11,7 @@ let isDrawerOpen = false;
 export function initAssistant() {
   const triggerBtn = document.getElementById('raahi-assistant-trigger');
   const drawer = document.getElementById('raahi-assistant-drawer');
+  const drawerHeader = document.getElementById('raahi-assistant-header');
   const overlay = document.getElementById('raahi-assistant-overlay');
   const closeBtn = document.getElementById('raahi-assistant-close');
   const sendBtn = document.getElementById('raahi-assistant-send');
@@ -23,6 +24,11 @@ export function initAssistant() {
   // Make trigger button draggable around the screen
   if (triggerBtn) {
     makeDraggable(triggerBtn);
+  }
+
+  // Make AI Assistant Window/Drawer draggable by its header
+  if (drawer && drawerHeader) {
+    makeDrawerDraggable(drawer, drawerHeader);
   }
 
   // Toggle drawer on click
@@ -145,7 +151,6 @@ function makeDraggable(el) {
         top: rect.top
       }));
 
-      // Maintain was-dragged flag briefly so click listener ignores release
       setTimeout(() => {
         el.removeAttribute('data-was-dragged');
       }, 200);
@@ -153,6 +158,64 @@ function makeDraggable(el) {
   };
 
   el.addEventListener('pointerdown', onPointerDown);
+}
+
+function makeDrawerDraggable(drawer, header) {
+  if (!drawer || !header) return;
+  header.style.touchAction = 'none';
+
+  let startX = 0, startY = 0;
+  let initialLeft = 0, initialTop = 0;
+  let isDragging = false;
+
+  const onPointerDown = (e) => {
+    if (e.target.closest('#raahi-assistant-close')) return;
+    if (e.button !== undefined && e.button !== 0) return;
+
+    isDragging = true;
+    const rect = drawer.getBoundingClientRect();
+    startX = e.clientX;
+    startY = e.clientY;
+    initialLeft = rect.left;
+    initialTop = rect.top;
+
+    drawer.style.right = 'auto';
+    drawer.style.bottom = 'auto';
+    drawer.style.left = `${initialLeft}px`;
+    drawer.style.top = `${initialTop}px`;
+
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+  };
+
+  const onPointerMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const deltaX = e.clientX - startX;
+    const deltaY = e.clientY - startY;
+
+    const newLeft = initialLeft + deltaX;
+    const newTop = initialTop + deltaY;
+
+    const maxLeft = Math.max(10, window.innerWidth - drawer.offsetWidth - 10);
+    const maxTop = Math.max(10, window.innerHeight - drawer.offsetHeight - 10);
+
+    const clampLeft = Math.min(Math.max(10, newLeft), maxLeft);
+    const clampTop = Math.min(Math.max(10, newTop), maxTop);
+
+    drawer.style.left = `${clampLeft}px`;
+    drawer.style.top = `${clampTop}px`;
+  };
+
+  const onPointerUp = () => {
+    isDragging = false;
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    window.removeEventListener('pointercancel', onPointerUp);
+  };
+
+  header.addEventListener('pointerdown', onPointerDown);
 }
 
 export function toggleAssistant(open) {
@@ -300,11 +363,12 @@ window.raahiAskAssistant = (promptText) => {
   processUserQuestion(promptText);
 };
 
-const _encodedKey = "QVEuQWI4Uk42S0xad3FuZC1yRmtRMjJMUklVcERfTGpZRkhJeUI0MC1ZVHFDVWk2bmp4WXc=";
-const RAAHI_GEMINI_API_KEY = window.RAAHI_GEMINI_API_KEY || (typeof atob !== 'undefined' ? atob(_encodedKey) : "");
+function getGeminiApiKey() {
+  return window.RAAHI_GEMINI_API_KEY || "";
+}
 
 async function fetchGeminiAIResponse(query, contextData) {
-  const apiKey = RAAHI_GEMINI_API_KEY;
+  const apiKey = getGeminiApiKey();
   if (!apiKey) return null;
 
   const models = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-2.0-flash'];
