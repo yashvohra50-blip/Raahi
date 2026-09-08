@@ -5,7 +5,6 @@
 import { STATES_DATA } from './statesData.js';
 import { DESTINATIONS_DATA } from './destinationsData.js';
 import { EXPERIENCES_DATA } from './experiencesData.js';
-import { getDestinationImage, DEFAULT_FALLBACK_IMAGE } from './destinationImages.js';
 
 class SearchEngine {
   constructor() {
@@ -23,7 +22,7 @@ class SearchEngine {
         category: 'State & UT',
         type: state.type,
         route: '#/states/' + state.slug,
-        image: getDestinationImage(state.slug, state.heroImage || DEFAULT_FALLBACK_IMAGE),
+        image: state.heroImage,
         keywords: [state.name, state.slug, state.capital, state.region, state.tagline, ...(state.culture ? [state.culture.crafts, state.culture.festivals] : [])].join(' ').toLowerCase()
       });
     });
@@ -32,7 +31,6 @@ class SearchEngine {
     Object.values(DESTINATIONS_DATA).forEach(dest => {
       const attractionsText = dest.attractions ? dest.attractions.map(a => a.name).join(' ') : '';
       const tagsText = dest.tags ? dest.tags.join(' ') : '';
-      const destImg = getDestinationImage(dest.slug || dest.id, dest.image || dest.heroImage || DEFAULT_FALLBACK_IMAGE);
       this.items.push({
         id: dest.id,
         title: dest.name,
@@ -40,22 +38,21 @@ class SearchEngine {
         category: 'Destination',
         type: dest.type,
         route: '#/destinations/' + dest.slug,
-        image: destImg,
+        image: dest.image,
         keywords: [dest.name, dest.slug, dest.state, dest.type, dest.region, tagsText, attractionsText, dest.shortDescription].join(' ').toLowerCase()
       });
 
       // Index individual attractions
       if (dest.attractions) {
         dest.attractions.forEach(att => {
-          const attSlug = att.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
           this.items.push({
-            id: dest.id + '-' + attSlug,
+            id: dest.id + '-' + att.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
             title: att.name,
             subtitle: 'Attraction in ' + dest.name + ', ' + dest.state,
             category: 'Attraction',
             type: att.type,
             route: '#/destinations/' + dest.slug,
-            image: getDestinationImage(attSlug, destImg),
+            image: dest.image,
             keywords: [att.name, att.type, att.desc, dest.name, dest.state].join(' ').toLowerCase()
           });
         });
@@ -71,7 +68,7 @@ class SearchEngine {
         category: 'Experience',
         type: exp.category,
         route: '#journey-discovery',
-        image: exp.heroImage || DEFAULT_FALLBACK_IMAGE,
+        image: exp.heroImage,
         keywords: [exp.name, exp.tagline, exp.category, exp.icon].join(' ').toLowerCase()
       });
     });

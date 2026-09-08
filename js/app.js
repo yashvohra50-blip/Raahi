@@ -8,9 +8,6 @@ import { initSearchModal } from './components/searchModal.js';
 import { updateJourneyBadgeCount, isPlaceSaved, updateAllSaveButtons } from './journeyBuilder.js';
 import { DataRegistry, RAAHI_DATA } from './data/dataRegistry.js';
 import { experiencesData } from './data/experiencesData.js';
-import { initFeaturedCitiesCarousel } from './components/featuredCitiesCarousel.js';
-import { initExploreByExperience } from './components/exploreByExperience.js';
-import { getDestinationImage, DEFAULT_FALLBACK_IMAGE } from './data/destinationImages.js';
 
 // Expose navigation functions globally for inline HTML event handlers
 window.raahiNavigate = (hash) => navigateTo(hash);
@@ -26,11 +23,9 @@ function initDiscoveryFilters() {
       ? experiencesData 
       : experiencesData.filter(item => item.category === cat || item.id === cat);
 
-    grid.innerHTML = list.map(item => {
-      const imgSrc = getDestinationImage(item.destSlug || item.id, item.img || item.heroImage || DEFAULT_FALLBACK_IMAGE);
-      return `
+    grid.innerHTML = list.map(item => `
       <div class="discovery-card" onclick="window.location.hash='#/destinations/${item.destSlug || item.id}'">
-        <img src="${imgSrc}" alt="${item.name || item.title}" class="discovery-card-img" loading="lazy" onerror="this.src='assets/images/destinations/fallback-raahi.jpg'" />
+        <img src="${item.img || item.heroImage || 'assets/images/destinations/amber-fort.jpg'}" alt="${item.name || item.title}" class="discovery-card-img" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
         <div class="discovery-card-tag">${item.categoryTag || item.tag || 'CURATED EXPEDITION'}</div>
         <div class="discovery-card-content">
           <span class="eyebrow" style="margin-bottom: 4px;">${item.loc || item.state || 'India'}</span>
@@ -60,37 +55,14 @@ function initDiscoveryFilters() {
   renderCategory('all');
 }
 
-function updateDynamicCounters() {
-  try {
-    const counts = DataRegistry.getCounts();
-    document.querySelectorAll('.destinations-count-dynamic').forEach(el => {
-      el.textContent = counts.destinations;
-    });
-    document.querySelectorAll('.states-count-dynamic').forEach(el => {
-      el.textContent = counts.states;
-    });
-    document.querySelectorAll('.uts-count-dynamic').forEach(el => {
-      el.textContent = counts.uts;
-    });
-    document.querySelectorAll('.admin-count-dynamic').forEach(el => {
-      el.textContent = counts.totalAdmin;
-    });
-  } catch (e) {
-    console.error('Error updating dynamic counters:', e);
-  }
-}
-
 function bootstrapApp() {
   // 1. Initialize Core Router, Search & Assistant
   initRouter();
   initSearchModal();
-  initFeaturedCitiesCarousel('featured-cities-mount');
-  initExploreByExperience('explore-experience-mount');
   initDiscoveryFilters();
   initAssistant();
   updateJourneyBadgeCount();
   updateAllSaveButtons();
-  updateDynamicCounters();
   
   // 2. Sticky Nav Controller
   const nav = document.querySelector('.nav');

@@ -66,7 +66,7 @@ export const STAYS_DATA = [
     type: "eco",
     price: "₹16,000 / night",
     rating: 4.8,
-    image: "assets/images/destinations/leh.jpg",
+    image: "assets/images/destinations/key-monastery.jpg",
     desc: "Solar-heated eco-luxury mountain retreat adorned with traditional Ladakhi woodcraft and mountain views."
   }
 ];

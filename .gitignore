@@ -11,5 +11,3 @@ npm-debug.log*
 .system_generated/
 *.tmp
 *.log
-scratch/
-server.ps1

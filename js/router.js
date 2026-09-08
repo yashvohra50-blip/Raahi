@@ -12,8 +12,6 @@ import { staysData } from './data/staysData.js';
 import { searchIndex } from './data/searchIndex.js';
 import { renderCinematicRoute } from './cinematicPage.js';
 import { renderIndiaMap } from './components/indiaMap.js';
-import { initFeaturedCitiesCarousel } from './components/featuredCitiesCarousel.js';
-import { initExploreByExperience } from './components/exploreByExperience.js';
 import { 
   renderJourneyBuilderView, 
   addToJourney, 
@@ -24,9 +22,68 @@ import {
   updateAllSaveButtons 
 } from './journeyBuilder.js';
 
-import { DESTINATION_IMAGES, DEFAULT_FALLBACK_IMAGE, getDestinationImage } from './data/destinationImages.js';
-
-export const VERIFIED_IMAGE_MAP = DESTINATION_IMAGES;
+export const VERIFIED_IMAGE_MAP = {
+  'amber-fort': 'assets/images/destinations/amber-fort.jpg',
+  'amber-fort-detail': 'assets/images/destinations/amber-fort-detail.jpg',
+  'amber-fort-sheesh-mahal': 'assets/images/destinations/amber-fort-sheesh-mahal.jpg',
+  'hawa-mahal': 'assets/images/destinations/hawa-mahal.jpg',
+  'city-palace-jaipur': 'assets/images/destinations/city-palace-jaipur.jpg',
+  'jantar-mantar': 'assets/images/destinations/jantar-mantar.jpg',
+  'jal-mahal': 'assets/images/destinations/jal-mahal.jpg',
+  'panna-meena': 'assets/images/destinations/panna-meena.jpg',
+  'jaisalmer': 'assets/images/destinations/jaisalmer-fort.jpg',
+  'jaisalmer-fort': 'assets/images/destinations/jaisalmer-fort.jpg',
+  'patwon-ki-haveli': 'assets/images/destinations/patwon-ki-haveli.jpg',
+  'bada-bagh': 'assets/images/destinations/bada-bagh.jpg',
+  'mehrangarh-fort': 'assets/images/destinations/mehrangarh-fort.jpg',
+  'jodhpur': 'assets/images/destinations/mehrangarh-fort.jpg',
+  'city-palace-udaipur': 'assets/images/destinations/city-palace-udaipur.jpg',
+  'udaipur': 'assets/images/destinations/city-palace-udaipur.jpg',
+  'lake-pichola': 'assets/images/destinations/lake-pichola.jpg',
+  'taj-mahal': 'assets/images/destinations/taj-mahal.jpg',
+  'agra-fort': 'assets/images/destinations/agra-fort.jpg',
+  'fatehpur-sikri': 'assets/images/destinations/fatehpur-sikri.jpg',
+  'varanasi': 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1200',
+  'dashashwamedh-ghat': 'assets/images/destinations/dashashwamedh-ghat.jpg',
+  'assi-ghat': 'assets/images/destinations/assi-ghat.jpg',
+  'munnar': 'assets/images/destinations/munnar-tea.jpg',
+  'eravikulam-national-park': 'assets/images/destinations/eravikulam-national-park.jpg',
+  'munnar-tea': 'assets/images/destinations/munnar-tea.jpg',
+  'alleppey': 'assets/images/destinations/alleppey-backwaters.jpg',
+  'alleppey-backwaters': 'assets/images/destinations/alleppey-backwaters.jpg',
+  'fort-aguada': 'assets/images/destinations/fort-aguada.jpg',
+  'basilica-bom-jesus': 'assets/images/destinations/basilica-bom-jesus.jpg',
+  'hadimba-temple': 'assets/images/destinations/hadimba-temple.jpg',
+  'manali': 'assets/images/destinations/hadimba-temple.jpg',
+  'spiti-valley': 'assets/images/destinations/key-monastery.jpg',
+  'key-monastery': 'assets/images/destinations/key-monastery.jpg',
+  'spiti-key-monastery': 'assets/images/destinations/key-monastery.jpg',
+  'golden-temple': 'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200',
+  'amritsar': 'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1200',
+  'qutub-minar': 'https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1200',
+  'delhi': 'https://images.unsplash.com/photo-1587474260584-136574528ed5?q=80&w=1200',
+  'gateway-of-india': 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200',
+  'mumbai': 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200',
+  'hampi': 'https://images.unsplash.com/photo-1600100397608-f010e423b961?q=80&w=1200',
+  'konark-sun-temple': 'https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=1200',
+  'darjeeling': 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1200',
+  'mysore-palace': 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200',
+  'rann-of-kutch': 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200',
+  'khajuraho': 'https://images.unsplash.com/photo-1600100397608-f010e423b961?q=80&w=1200',
+  'meenakshi-temple': 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200',
+  'ladakh': 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200',
+  'pangong-tso': 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1200',
+  'kaziranga': 'https://images.unsplash.com/photo-1575550959106-5a7defe28b56?q=80&w=1200',
+  'sundarbans': 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200',
+  'cherrapunji': 'https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=1200',
+  'tawang': 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200',
+  'dal-lake': 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=1200',
+  'srinagar': 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=1200',
+  'rishikesh': 'https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?q=80&w=1200',
+  'kedarnath': 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200',
+  'charminar': 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=1200',
+  'chittorgarh-fort': 'https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?q=80&w=1200'
+};
 
 window.raahiAddToJourney = (id) => addToJourney(id);
 window.arvoraAddToJourney = window.raahiAddToJourney;
@@ -79,12 +136,78 @@ document.addEventListener('keydown', (e) => {
 // App Router Initializer
 export function initRouter() {
   window.addEventListener('hashchange', handleRoute);
-  window.addEventListener('load', handleRoute);
+  window.addEventListener('load', () => {
+    handleRoute();
+    setupNavClickHandlers();
+  });
   handleRoute();
+  setupNavClickHandlers();
 }
 
 export function navigateTo(hash) {
   window.location.hash = hash;
+}
+
+export function scrollToSection(targetId) {
+  const targetEl = document.getElementById(targetId);
+  if (!targetEl) return;
+  const nav = document.querySelector('.nav');
+  const navHeight = nav ? nav.offsetHeight + 16 : 80;
+  const targetPosition = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
+  window.scrollTo({
+    top: targetPosition,
+    behavior: 'smooth'
+  });
+}
+
+export function setupNavClickHandlers() {
+  document.querySelectorAll('.navlinks a, .mobile-nav-links a').forEach(link => {
+    link.onclick = (e) => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      // Close mobile drawer if active
+      const mobileDrawer = document.getElementById('mobile-menu-drawer');
+      if (mobileDrawer) {
+        mobileDrawer.classList.remove('active');
+        document.body.classList.remove('lock-scroll');
+      }
+
+      if (href.startsWith('#/') && href !== '#/home') {
+        // Route view like #/journey or #/states/rajasthan
+        return;
+      }
+
+      e.preventDefault();
+
+      // Active state highlight on header nav
+      document.querySelectorAll('.navlinks a').forEach(l => l.classList.remove('active'));
+      if (link.closest('.navlinks')) {
+        link.classList.add('active');
+      }
+
+      const targetId = href.startsWith('#/') ? null : href.replace('#', '');
+      const homeView = document.getElementById('view-home');
+      const isHomeVisible = homeView && homeView.style.display !== 'none';
+
+      if (!isHomeVisible) {
+        window.location.hash = '#/home';
+        setTimeout(() => {
+          if (targetId) {
+            scrollToSection(targetId);
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }, 120);
+      } else {
+        if (targetId) {
+          scrollToSection(targetId);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    };
+  });
 }
 
 // Global state for progressive pagination on home view
@@ -98,17 +221,6 @@ let currentDestFilter = {
   pageSize: 12
 };
 
-export function updateSEOMetadata(title, description) {
-  document.title = title;
-  const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) metaDesc.setAttribute('content', description);
-  
-  let ogTitle = document.querySelector('meta[property="og:title"]');
-  if (ogTitle) ogTitle.setAttribute('content', title);
-  let ogDesc = document.querySelector('meta[property="og:description"]');
-  if (ogDesc) ogDesc.setAttribute('content', description);
-}
-
 function handleRoute() {
   const hash = window.location.hash || '#/home';
   const homeView = document.getElementById('view-home');
@@ -121,7 +233,11 @@ function handleRoute() {
   const mainFooter = document.querySelector('.footer');
   const assistantTrigger = document.getElementById('raahi-assistant-trigger');
 
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  // Only scroll to top if navigating to a full page view route
+  const isViewRoute = hash.startsWith('#/destinations/') || hash.startsWith('#/states/') || hash.startsWith('#/cities/') || hash === '#/journey' || hash.startsWith('#/cinematic/');
+  if (isViewRoute) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
 
   // Cleanup active cinematic engine if navigating away from cinematic mode
   if (!hash.startsWith('#/cinematic/') && window.raahiCinematicEngineInstance) {
@@ -142,7 +258,6 @@ function handleRoute() {
     if (mainFooter) mainFooter.style.display = 'none';
     if (assistantTrigger) assistantTrigger.style.display = 'none';
     document.body.classList.add('in-cinematic-mode');
-    updateSEOMetadata(`RAAHI — 3D Cinematic Expedition // ${placeId.replace(/-/g, ' ').toUpperCase()}`, 'Immersive 3D spatial expedition with scroll-driven scenes, audio commentary, and architectural hotspots.');
     renderCinematicRoute(placeId);
   } else {
     if (mainNav) mainNav.style.display = 'flex';
@@ -185,13 +300,17 @@ function handleRoute() {
       }
     } else if (hash === '#/journey') {
       if (journeyView) journeyView.style.display = 'block';
-      updateSEOMetadata('RAAHI — My Journey & Route Planner', 'Interactive custom itinerary and route planner across India 28 States and 8 Union Territories.');
       renderJourneyBuilderView();
     } else {
       if (homeView) homeView.style.display = 'block';
-      const counts = DataRegistry.getCounts();
-      updateSEOMetadata(`RAAHI — Discover ${counts.states} States, ${counts.uts} Union Territories & ${counts.destinations}+ Destinations`, 'Discover verified destinations, cultural narratives, living crafts, and travel intelligence across all 28 States and 8 Union Territories in India.');
       renderHomeView();
+
+      const sectionId = (!hash.startsWith('#/') && hash.startsWith('#')) ? hash.replace('#', '') : null;
+      if (sectionId) {
+        setTimeout(() => {
+          scrollToSection(sectionId);
+        }, 100);
+      }
     }
   }
 
@@ -203,108 +322,284 @@ function handleRoute() {
  * Render Master Pan-India Home View
  */
 function renderHomeView() {
-  const counts = DataRegistry.getCounts();
-  document.title = `RAAHI — Discover ${counts.states} States, ${counts.uts} Union Territories & ${counts.destinations}+ Destinations Across India`;
+  document.title = 'RAAHI — Discover 28 States, 8 Union Territories & 111+ Destinations Across India';
 
-  // 1. Mount Featured Cities & Explore by Experience if empty
-  const featMount = document.getElementById('featured-cities-mount');
-  if (featMount && !featMount.hasChildNodes()) {
-    initFeaturedCitiesCarousel('featured-cities-mount');
-  }
-
-  const expMount = document.getElementById('explore-experience-mount');
-  if (expMount && !expMount.hasChildNodes()) {
-    initExploreByExperience('explore-experience-mount');
-  }
-
-  // 2. Mount India Map
+  // 1. Mount India Map
   const mapMount = document.getElementById('india-map-mount');
-  if (mapMount && !mapMount.hasChildNodes()) {
+  if (mapMount) {
     renderIndiaMap('india-map-mount');
   }
 
-  // 3. Render States Grid with Region Filter Chips
+  // 2. Render States Grid with Region Filter Chips
   renderStatesGridWithFilter('all');
   setupStateRegionFilterListeners();
 
-  // 4. Render Destinations Grid with Multi-Filter
+  // 3. Render Destinations Grid with Multi-Filter
   renderDestinationsGrid();
   setupDestinationsFilterListeners();
 
-  // 5. Render Stays Section
+  // 4. Render Stays Section
   renderStaysSection();
 }
 
-export function filterDestinationsByExperience(category) {
-  currentDestFilter.type = category;
-  currentDestFilter.page = 1;
-  const typeSelect = document.getElementById('dest-filter-type');
-  if (typeSelect) {
-    let matched = false;
-    for (let opt of typeSelect.options) {
-      if (opt.value.toLowerCase().includes(category.toLowerCase()) || category.toLowerCase().includes(opt.value.toLowerCase())) {
-        typeSelect.value = opt.value;
-        matched = true;
-        break;
-      }
-    }
-    if (!matched) typeSelect.value = 'all';
-  }
-  renderDestinationsGrid();
-  const destSection = document.getElementById('all-destinations');
-  if (destSection) {
-    destSection.scrollIntoView({ behavior: 'smooth' });
-  }
-}
-window.raahiFilterByExperience = filterDestinationsByExperience;
+let currentStatesCarouselIndex = 0;
+let currentFilteredStates = [];
+let statesCarouselAutoTimer = null;
+let currentStatesViewMode = 'carousel'; // 'carousel', 'rail', 'grid'
 
 function renderStatesGridWithFilter(regionFilter = 'all') {
-  const grid = document.getElementById('states-grid-container');
-  if (!grid) return;
+  const container = document.getElementById('states-grid-container');
+  if (!container) return;
 
   const allStates = DataRegistry.getAllStates();
-  const filteredStates = regionFilter === 'all' 
+  currentFilteredStates = regionFilter === 'all' 
     ? allStates 
     : regionFilter === 'ut'
       ? allStates.filter(s => s.type === 'Union Territory')
       : allStates.filter(s => s.region.toLowerCase() === regionFilter.toLowerCase() && s.type !== 'Union Territory');
 
-  grid.innerHTML = filteredStates.map((s) => {
-    const destCount = s.destinationsCount || (s.featuredDestinations ? s.featuredDestinations.length : 3);
-    return `
-      <div class="state-card" data-state="${s.slug}" onclick="window.location.hash='#/states/${s.slug}'">
-        <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/fallback-raahi.jpg'" />
-        <div class="state-dest-count">${destCount} DESTINATIONS • ${s.type === 'Union Territory' ? 'UT' : s.region.toUpperCase()}</div>
-        <div class="state-card-content">
-          <span class="eyebrow" style="margin-bottom: 6px;">${s.eyebrow || s.type.toUpperCase()}</span>
-          <h3 class="state-card-name">${s.name}</h3>
-          <p class="state-card-tagline">${s.tagline}</p>
-          <span class="state-card-action">EXPLORE ${s.name.toUpperCase()} →</span>
+  currentStatesCarouselIndex = 0;
+  renderStatesContainer();
+}
+
+function renderStatesContainer() {
+  const container = document.getElementById('states-grid-container');
+  if (!container) return;
+
+  if (statesCarouselAutoTimer) {
+    clearInterval(statesCarouselAutoTimer);
+    statesCarouselAutoTimer = null;
+  }
+
+  if (currentStatesViewMode === 'carousel') {
+    container.innerHTML = `
+      <div class="states-carousel-banner-wrapper" style="position: relative; margin-top: 10px;">
+        <!-- Left Floating Prev Arrow -->
+        <button class="states-carousel-arrow prev" id="states-carousel-prev" aria-label="Previous Slide" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); z-index: 10; width: 44px; height: 44px; border-radius: 50%; background: rgba(7, 11, 9, 0.85); border: 1px solid var(--line-strong); color: #fff; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(10px); transition: all 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+          ‹
+        </button>
+
+        <!-- Right Floating Next Arrow -->
+        <button class="states-carousel-arrow next" id="states-carousel-next" aria-label="Next Slide" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); z-index: 10; width: 44px; height: 44px; border-radius: 50%; background: rgba(7, 11, 9, 0.85); border: 1px solid var(--line-strong); color: #fff; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(10px); transition: all 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+          ›
+        </button>
+
+        <!-- Main Slide Container matching Photo 1 -->
+        <div id="states-carousel-card-stage" style="min-height: 440px; border-radius: 16px; overflow: hidden; position: relative; border: 1px solid var(--line); box-shadow: 0 20px 40px rgba(0,0,0,0.5); transition: opacity 0.25s ease;">
+          <!-- Card content generated by updateStatesCarouselStage() -->
+        </div>
+
+        <!-- Pagination Dots Bar -->
+        <div id="states-carousel-dots-bar" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; flex-wrap: wrap;">
+          <!-- Dots generated by JS -->
         </div>
       </div>
     `;
-  }).join('');
+
+    setupStatesCarouselEvents();
+    updateStatesCarouselStage();
+    startStatesCarouselAutoPlay();
+
+  } else if (currentStatesViewMode === 'rail') {
+    container.innerHTML = `
+      <div class="states-rail-slider-wrapper" style="position: relative;">
+        <div class="rail" id="states-rail-slider" style="display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin;">
+          ${currentFilteredStates.map((s) => {
+            const destCount = s.destinationsCount || (s.featuredDestinations ? s.featuredDestinations.length : 3);
+            return `
+              <div class="state-card" style="flex: 0 0 320px; height: 440px; scroll-snap-align: start;" data-state="${s.slug}" onclick="window.location.hash='#/states/${s.slug}'">
+                <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+                <div class="state-dest-count">${destCount} DESTINATIONS</div>
+                <div class="state-card-content">
+                  <span class="eyebrow" style="margin-bottom: 4px;">${s.type.toUpperCase()} • ${s.region.toUpperCase()}</span>
+                  <h3 class="state-card-name" style="font-size: 1.8rem;">${s.name}</h3>
+                  <p class="state-card-tagline" style="font-size: 0.82rem;">${s.tagline}</p>
+                  <span class="state-card-action">EXPLORE →</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  } else {
+    // Grid View
+    container.innerHTML = `
+      <div class="states-grid">
+        ${currentFilteredStates.map((s) => {
+          const destCount = s.destinationsCount || (s.featuredDestinations ? s.featuredDestinations.length : 3);
+          return `
+            <div class="state-card" data-state="${s.slug}" onclick="window.location.hash='#/states/${s.slug}'">
+              <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+              <div class="state-dest-count">${destCount} DESTINATIONS • ${s.type === 'Union Territory' ? 'UT' : s.region.toUpperCase()}</div>
+              <div class="state-card-content">
+                <span class="eyebrow" style="margin-bottom: 6px;">${s.eyebrow || s.type.toUpperCase()}</span>
+                <h3 class="state-card-name">${s.name}</h3>
+                <p class="state-card-tagline">${s.tagline}</p>
+                <span class="state-card-action">EXPLORE ${s.name.toUpperCase()} →</span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+}
+
+function updateStatesCarouselStage() {
+  const stage = document.getElementById('states-carousel-card-stage');
+  const dotsBar = document.getElementById('states-carousel-dots-bar');
+  if (!stage || currentFilteredStates.length === 0) return;
+
+  if (currentStatesCarouselIndex >= currentFilteredStates.length) {
+    currentStatesCarouselIndex = 0;
+  }
+  if (currentStatesCarouselIndex < 0) {
+    currentStatesCarouselIndex = currentFilteredStates.length - 1;
+  }
+
+  const s = currentFilteredStates[currentStatesCarouselIndex];
+  const destCount = s.destinationsCount || (s.featuredDestinations ? s.featuredDestinations.length : 3);
+  const bestTime = s.quickStats ? s.quickStats.bestTime : 'Oct — Mar';
+  const capital = s.quickStats ? s.quickStats.capital : s.capital;
+
+  stage.style.opacity = '0.3';
+
+  setTimeout(() => {
+    stage.innerHTML = `
+      <div class="states-hero-carousel-card" style="position: relative; min-height: 440px; display: flex; align-items: flex-end; padding: 40px; background: #070b09; overflow: hidden; cursor: pointer;" onclick="window.location.hash='#/states/${s.slug}'">
+        <img src="${s.heroImage}" alt="${s.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+        
+        <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,7,5,0.92) 0%, rgba(3,7,5,0.65) 50%, rgba(3,7,5,0.3) 100%), linear-gradient(0deg, rgba(3,7,5,0.95) 0%, transparent 60%); pointer-events: none;"></div>
+
+        <div style="position: relative; z-index: 3; max-width: 680px;">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase;">
+              ${s.region.toUpperCase()} INDIA • ${s.type.toUpperCase()}
+            </span>
+            <span style="font-size: 0.72rem; color: var(--muted);">&bull;</span>
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: #fff; letter-spacing: 0.1em; background: rgba(0,0,0,0.5); padding: 3px 10px; border-radius: 100px; border: 1px solid var(--line);">
+              DESTINATION ${currentStatesCarouselIndex + 1} OF ${currentFilteredStates.length}
+            </span>
+          </div>
+
+          <h3 style="font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 600; text-transform: uppercase; color: var(--cream); margin: 0 0 10px 0; line-height: 1;">
+            ${s.name}
+          </h3>
+
+          <p style="font-size: 0.98rem; color: var(--muted-bright); line-height: 1.6; margin-bottom: 20px; max-width: 580px;">
+            ${s.tagline}
+          </p>
+
+          <!-- Badges Pill Row matching Photo 1 -->
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;">
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--cream);">
+              📍 Capital: ${capital}
+            </span>
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--gold);">
+              🏛️ ${destCount} Curated Destinations
+            </span>
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--cream);">
+              🌤️ Best: ${bestTime}
+            </span>
+          </div>
+
+          <button class="btn gold" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; font-size: 0.82rem; box-shadow: 0 0 20px rgba(212,175,55,0.35);">
+            ▶ EXPLORE ${s.name.toUpperCase()} CODEX →
+          </button>
+        </div>
+      </div>
+    `;
+    stage.style.opacity = '1';
+  }, 120);
+
+  // Update Dots
+  if (dotsBar) {
+    dotsBar.innerHTML = currentFilteredStates.map((st, idx) => `
+      <span class="states-dot ${idx === currentStatesCarouselIndex ? 'active' : ''}" 
+            data-index="${idx}" 
+            title="${st.name}"
+            style="display: inline-block; width: ${idx === currentStatesCarouselIndex ? '28px' : '10px'}; height: 10px; border-radius: 100px; background: ${idx === currentStatesCarouselIndex ? 'var(--gold)' : 'rgba(255,255,255,0.25)'}; cursor: pointer; transition: all 0.3s ease;"></span>
+    `).join('');
+
+    dotsBar.querySelectorAll('.states-dot').forEach(dot => {
+      dot.onclick = (e) => {
+        e.stopPropagation();
+        currentStatesCarouselIndex = parseInt(dot.dataset.index);
+        updateStatesCarouselStage();
+      };
+    });
+  }
+}
+
+function setupStatesCarouselEvents() {
+  const prevBtn = document.getElementById('states-carousel-prev');
+  const nextBtn = document.getElementById('states-carousel-next');
+
+  if (prevBtn) {
+    prevBtn.onclick = (e) => {
+      e.stopPropagation();
+      currentStatesCarouselIndex--;
+      updateStatesCarouselStage();
+    };
+  }
+
+  if (nextBtn) {
+    nextBtn.onclick = (e) => {
+      e.stopPropagation();
+      currentStatesCarouselIndex++;
+      updateStatesCarouselStage();
+    };
+  }
+}
+
+function startStatesCarouselAutoPlay() {
+  if (statesCarouselAutoTimer) clearInterval(statesCarouselAutoTimer);
+  statesCarouselAutoTimer = setInterval(() => {
+    if (currentStatesViewMode === 'carousel' && currentFilteredStates.length > 1) {
+      currentStatesCarouselIndex++;
+      updateStatesCarouselStage();
+    }
+  }, 5000);
 }
 
 function setupStateRegionFilterListeners() {
-  const container = document.getElementById('states-region-chips');
-  if (!container) return;
+  const regionContainer = document.getElementById('states-region-chips');
+  const viewToggleContainer = document.getElementById('states-view-mode-toggle');
 
-  const chips = container.querySelectorAll('.filter-chip');
-  chips.forEach(chip => {
-    chip.onclick = () => {
-      chips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const region = chip.dataset.region || 'all';
-      renderStatesGridWithFilter(region);
-    };
-  });
+  if (regionContainer) {
+    const chips = regionContainer.querySelectorAll('.filter-chip');
+    chips.forEach(chip => {
+      chip.onclick = () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const region = chip.dataset.region || 'all';
+        renderStatesGridWithFilter(region);
+      };
+    });
+  }
+
+  if (viewToggleContainer) {
+    const viewChips = viewToggleContainer.querySelectorAll('.filter-chip');
+    viewChips.forEach(chip => {
+      chip.onclick = () => {
+        viewChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentStatesViewMode = chip.dataset.view || 'carousel';
+        renderStatesContainer();
+      };
+    });
+  }
 }
+
+let currentDestCarouselIndex = 0;
+let currentFilteredDestinations = [];
+let destCarouselAutoTimer = null;
+let currentDestViewMode = 'carousel'; // 'carousel', 'rail', 'grid'
 
 function renderDestinationsGrid() {
   const grid = document.getElementById('all-destinations-grid');
   const countLabel = document.getElementById('destinations-count-label');
-  const loadMoreBtn = document.getElementById('load-more-destinations-btn');
   if (!grid) return;
 
   let list = DataRegistry.getAllDestinations();
@@ -347,49 +642,270 @@ function renderDestinationsGrid() {
     list.sort((a, b) => (b.cinematicAvailable ? 1 : 0) - (a.cinematicAvailable ? 1 : 0));
   }
 
+  currentFilteredDestinations = list;
   const totalFiltered = list.length;
+
   if (countLabel) {
-    countLabel.textContent = `Showing ${Math.min(currentDestFilter.page * currentDestFilter.pageSize, totalFiltered)} of ${totalFiltered} destinations`;
+    countLabel.textContent = `Showing ${currentDestViewMode === 'grid' ? Math.min(currentDestFilter.page * currentDestFilter.pageSize, totalFiltered) : totalFiltered} of ${totalFiltered} destinations`;
   }
 
-  const visibleList = list.slice(0, currentDestFilter.page * currentDestFilter.pageSize);
+  currentDestCarouselIndex = 0;
+  renderDestinationsContainer();
+}
 
-  grid.innerHTML = visibleList.map(dest => {
-    const isSaved = isPlaceSaved(dest.id || dest.slug);
-    const imgUrl = getDestinationImage(dest.slug, dest.heroImage || DEFAULT_FALLBACK_IMAGE);
-    return `
-      <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-        <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/fallback-raahi.jpg'" />
-        <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
-        <div class="state-card-content">
-          <span class="eyebrow" style="margin-bottom: 4px;">${dest.state} • ${dest.region.toUpperCase()}</span>
-          <h3 class="state-card-name" style="font-size: 1.9rem;">${dest.name}</h3>
-          <p class="state-card-tagline" style="font-size: 0.88rem;">${dest.tagline || dest.shortDesc || dest.overview.slice(0, 100) + '...'}</p>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
-            <span class="state-card-action">EXPLORE DESTINATION →</span>
+function renderDestinationsContainer() {
+  const grid = document.getElementById('all-destinations-grid');
+  const loadMoreBtn = document.getElementById('load-more-destinations-btn');
+  if (!grid) return;
+
+  if (destCarouselAutoTimer) {
+    clearInterval(destCarouselAutoTimer);
+    destCarouselAutoTimer = null;
+  }
+
+  if (currentDestViewMode === 'carousel') {
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+    grid.className = '';
+    grid.style.display = 'block';
+    grid.style.gridTemplateColumns = 'none';
+
+    grid.innerHTML = `
+      <div class="dest-carousel-banner-wrapper" style="position: relative; margin-top: 10px; width: 100%;">
+        <!-- Left Floating Prev Arrow -->
+        <button class="states-carousel-arrow prev" id="dest-carousel-prev" aria-label="Previous Slide" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); z-index: 10; width: 44px; height: 44px; border-radius: 50%; background: rgba(7, 11, 9, 0.85); border: 1px solid var(--line-strong); color: #fff; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(10px); transition: all 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+          ‹
+        </button>
+
+        <!-- Right Floating Next Arrow -->
+        <button class="states-carousel-arrow next" id="dest-carousel-next" aria-label="Next Slide" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); z-index: 10; width: 44px; height: 44px; border-radius: 50%; background: rgba(7, 11, 9, 0.85); border: 1px solid var(--line-strong); color: #fff; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(10px); transition: all 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+          ›
+        </button>
+
+        <!-- Main Slide Stage Container -->
+        <div id="dest-carousel-card-stage" style="min-height: 440px; border-radius: 16px; overflow: hidden; position: relative; border: 1px solid var(--line); box-shadow: 0 20px 40px rgba(0,0,0,0.5); transition: opacity 0.25s ease;">
+          <!-- Content rendered by updateDestCarouselStage() -->
+        </div>
+
+        <!-- Pagination Dots Bar -->
+        <div id="dest-carousel-dots-bar" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px; flex-wrap: wrap;">
+          <!-- Dots rendered by JS -->
+        </div>
+      </div>
+    `;
+
+    setupDestCarouselEvents();
+    updateDestCarouselStage();
+    startDestCarouselAutoPlay();
+
+  } else if (currentDestViewMode === 'rail') {
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+    grid.className = '';
+    grid.style.display = 'block';
+    grid.style.gridTemplateColumns = 'none';
+
+    grid.innerHTML = `
+      <div class="dest-rail-slider-wrapper" style="position: relative; width: 100%;">
+        <div class="rail" id="dest-rail-slider" style="display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin;">
+          ${currentFilteredDestinations.map(dest => {
+            const isSaved = isPlaceSaved(dest.id || dest.slug);
+            const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || VERIFIED_IMAGE_MAP[dest.id] || dest.image || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+            const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 80) + '...' : '');
+            return `
+              <div class="destination-card" style="flex: 0 0 320px; height: 460px; scroll-snap-align: start;" onclick="window.location.hash='#/destinations/${dest.slug}'">
+                <img src="${imgUrl}" alt="${dest.name}" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+                <div class="dest-copy">
+                  <small>${dest.state.toUpperCase()} • ${dest.region.toUpperCase()}</small>
+                  <h3>${dest.name}</h3>
+                  <p>${descText}</p>
+                </div>
+                <div class="enter-circle">→</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  } else {
+    // Grid View
+    grid.className = 'states-grid';
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(340px, 1fr))';
+
+    const visibleList = currentFilteredDestinations.slice(0, currentDestFilter.page * currentDestFilter.pageSize);
+
+    grid.innerHTML = visibleList.map(dest => {
+      const isSaved = isPlaceSaved(dest.id || dest.slug);
+      const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || VERIFIED_IMAGE_MAP[dest.id] || dest.image || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+      const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 100) + '...' : '');
+      return `
+        <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
+          <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+          <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
+          <div class="state-card-content">
+            <span class="eyebrow" style="margin-bottom: 4px;">${dest.state} • ${dest.region.toUpperCase()}</span>
+            <h3 class="state-card-name" style="font-size: 1.9rem;">${dest.name}</h3>
+            <p class="state-card-tagline" style="font-size: 0.88rem;">${descText}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+              <span class="state-card-action">EXPLORE DESTINATION →</span>
+              <button 
+                class="btn-save-journey ${isSaved ? 'saved' : ''}" 
+                style="padding: 6px 14px; font-size: 0.72rem;" 
+                data-save-place-id="${dest.id || dest.slug}" 
+                data-saved-text="♥ Saved" 
+                data-unsaved-text="♡ Save" 
+                onclick="event.stopPropagation(); window.raahiToggleSaveJourney('${dest.id || dest.slug}');">
+                ${isSaved ? '♥ Saved' : '♡ Save'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    if (loadMoreBtn) {
+      if (visibleList.length >= currentFilteredDestinations.length) {
+        loadMoreBtn.style.display = 'none';
+      } else {
+        loadMoreBtn.style.display = 'inline-flex';
+        loadMoreBtn.textContent = `LOAD MORE DESTINATIONS (${currentFilteredDestinations.length - visibleList.length} REMAINING) ↓`;
+      }
+    }
+  }
+}
+
+function updateDestCarouselStage() {
+  const stage = document.getElementById('dest-carousel-card-stage');
+  const dotsBar = document.getElementById('dest-carousel-dots-bar');
+  if (!stage || currentFilteredDestinations.length === 0) return;
+
+  if (currentDestCarouselIndex >= currentFilteredDestinations.length) {
+    currentDestCarouselIndex = 0;
+  }
+  if (currentDestCarouselIndex < 0) {
+    currentDestCarouselIndex = currentFilteredDestinations.length - 1;
+  }
+
+  const dest = currentFilteredDestinations[currentDestCarouselIndex];
+  const isSaved = isPlaceSaved(dest.id || dest.slug);
+  const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || VERIFIED_IMAGE_MAP[dest.id] || dest.image || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+  const durationText = dest.idealDuration || '2-3 Days';
+  const bestSeasonText = dest.bestSeason || dest.bestTimeToVisit || 'OCT — MAR';
+  const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 140) + '...' : '');
+
+  stage.style.opacity = '0.3';
+
+  setTimeout(() => {
+    stage.innerHTML = `
+      <div class="dest-hero-carousel-card" style="position: relative; min-height: 440px; display: flex; align-items: flex-end; padding: 40px; background: #070b09; overflow: hidden; cursor: pointer;" onclick="window.location.hash='#/destinations/${dest.slug}'">
+        <img src="${imgUrl}" alt="${dest.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
+        
+        <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,7,5,0.92) 0%, rgba(3,7,5,0.65) 50%, rgba(3,7,5,0.3) 100%), linear-gradient(0deg, rgba(3,7,5,0.95) 0%, transparent 60%); pointer-events: none;"></div>
+
+        <div style="position: relative; z-index: 3; max-width: 680px;">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase;">
+              ${dest.state.toUpperCase()} • ${dest.region.toUpperCase()} INDIA
+            </span>
+            <span style="font-size: 0.72rem; color: var(--muted);">&bull;</span>
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: #fff; letter-spacing: 0.1em; background: rgba(0,0,0,0.5); padding: 3px 10px; border-radius: 100px; border: 1px solid var(--line);">
+              MONUMENT ${currentDestCarouselIndex + 1} OF ${currentFilteredDestinations.length}
+            </span>
+          </div>
+
+          <h3 style="font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 600; text-transform: uppercase; color: var(--cream); margin: 0 0 10px 0; line-height: 1;">
+            ${dest.name}
+          </h3>
+
+          <p style="font-size: 0.98rem; color: var(--muted-bright); line-height: 1.6; margin-bottom: 20px; max-width: 580px;">
+            ${descText}
+          </p>
+
+          <!-- Badges Pill Row matching Photo 1 -->
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;">
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--cream);">
+              📍 ${dest.state}
+            </span>
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--gold);">
+              🏛️ ${dest.type}
+            </span>
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--cream);">
+              ⏱️ ${durationText}
+            </span>
+            <span class="badge-pill" style="display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; background: rgba(13, 20, 16, 0.8); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 6px 14px; border-radius: 100px; color: var(--cream);">
+              🌤️ Best: ${bestSeasonText}
+            </span>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <button class="btn gold" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; font-size: 0.82rem; box-shadow: 0 0 20px rgba(212,175,55,0.35);">
+              ▶ EXPLORE ${dest.name.toUpperCase()} →
+            </button>
             <button 
               class="btn-save-journey ${isSaved ? 'saved' : ''}" 
-              style="padding: 6px 14px; font-size: 0.72rem;" 
+              style="padding: 12px 20px; font-size: 0.78rem;" 
               data-save-place-id="${dest.id || dest.slug}" 
-              data-saved-text="♥ Saved" 
-              data-unsaved-text="♡ Save" 
+              data-saved-text="♥ Saved to Journey" 
+              data-unsaved-text="♡ Save to Journey" 
               onclick="event.stopPropagation(); window.raahiToggleSaveJourney('${dest.id || dest.slug}');">
-              ${isSaved ? '♥ Saved' : '♡ Save'}
+              ${isSaved ? '♥ Saved to Journey' : '♡ Save to Journey'}
             </button>
           </div>
         </div>
       </div>
     `;
-  }).join('');
+    stage.style.opacity = '1';
+  }, 120);
 
-  if (loadMoreBtn) {
-    if (visibleList.length >= totalFiltered) {
-      loadMoreBtn.style.display = 'none';
-    } else {
-      loadMoreBtn.style.display = 'inline-flex';
-      loadMoreBtn.textContent = `LOAD MORE DESTINATIONS (${totalFiltered - visibleList.length} REMAINING) ↓`;
-    }
+  // Update Dots
+  if (dotsBar) {
+    const maxDots = 20;
+    const total = Math.min(currentFilteredDestinations.length, maxDots);
+    dotsBar.innerHTML = currentFilteredDestinations.slice(0, total).map((d, idx) => `
+      <span class="dest-dot ${idx === currentDestCarouselIndex ? 'active' : ''}" 
+            data-index="${idx}" 
+            title="${d.name}"
+            style="display: inline-block; width: ${idx === currentDestCarouselIndex ? '28px' : '10px'}; height: 10px; border-radius: 100px; background: ${idx === currentDestCarouselIndex ? 'var(--gold)' : 'rgba(255,255,255,0.25)'}; cursor: pointer; transition: all 0.3s ease;"></span>
+    `).join('');
+
+    dotsBar.querySelectorAll('.dest-dot').forEach(dot => {
+      dot.onclick = (e) => {
+        e.stopPropagation();
+        currentDestCarouselIndex = parseInt(dot.dataset.index);
+        updateDestCarouselStage();
+      };
+    });
   }
+}
+
+function setupDestCarouselEvents() {
+  const prevBtn = document.getElementById('dest-carousel-prev');
+  const nextBtn = document.getElementById('dest-carousel-next');
+
+  if (prevBtn) {
+    prevBtn.onclick = (e) => {
+      e.stopPropagation();
+      currentDestCarouselIndex--;
+      updateDestCarouselStage();
+    };
+  }
+
+  if (nextBtn) {
+    nextBtn.onclick = (e) => {
+      e.stopPropagation();
+      currentDestCarouselIndex++;
+      updateDestCarouselStage();
+    };
+  }
+}
+
+function startDestCarouselAutoPlay() {
+  if (destCarouselAutoTimer) clearInterval(destCarouselAutoTimer);
+  destCarouselAutoTimer = setInterval(() => {
+    if (currentDestViewMode === 'carousel' && currentFilteredDestinations.length > 1) {
+      currentDestCarouselIndex++;
+      updateDestCarouselStage();
+    }
+  }, 5000);
 }
 
 function setupDestinationsFilterListeners() {
@@ -399,6 +915,20 @@ function setupDestinationsFilterListeners() {
   const seasonSelect = document.getElementById('dest-filter-season');
   const sortSelect = document.getElementById('dest-filter-sort');
   const loadMoreBtn = document.getElementById('load-more-destinations-btn');
+  const destViewToggle = document.getElementById('dest-view-mode-toggle');
+
+  if (destViewToggle) {
+    const viewChips = destViewToggle.querySelectorAll('.filter-chip');
+    viewChips.forEach(chip => {
+      chip.onclick = () => {
+        viewChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentDestViewMode = chip.dataset.view || 'carousel';
+        currentDestCarouselIndex = 0;
+        renderDestinationsContainer();
+      };
+    });
+  }
 
   if (regionSelect) {
     regionSelect.onchange = (e) => {
@@ -442,7 +972,7 @@ function setupDestinationsFilterListeners() {
   if (loadMoreBtn) {
     loadMoreBtn.onclick = () => {
       currentDestFilter.page += 1;
-      renderDestinationsGrid();
+      renderDestinationsContainer();
     };
   }
 }
@@ -474,7 +1004,7 @@ function renderStateView(stateSlug) {
     return;
   }
 
-  updateSEOMetadata(`${state.name} (${state.type}) — RAAHI Pan-India Travel Discovery`, `${state.tagline} Discover ${state.name} curated destinations, heritage citadels, living crafts, and authentic culinary traditions.`);
+  document.title = `${state.name} (${state.type}) — RAAHI Pan-India Travel Discovery`;
   const container = document.getElementById('view-state');
   if (!container) return;
 
@@ -534,59 +1064,30 @@ function renderStateView(stateSlug) {
         </div>
       </section>
 
-      <!-- Curated Destinations Explorer in this State -->
-      <section style="padding: 40px 0 60px;" id="state-explorer">
+      <!-- Curated Destinations in this State -->
+      <section style="padding: 40px 0 60px;">
         <div class="section-head">
           <div>
-            <span class="eyebrow">DESTINATION EXPLORER // ${state.name.toUpperCase()}</span>
-            <h2 class="heading-medium" style="text-transform: uppercase;">Curated Destinations (<span id="state-dest-count-badge">${destsCount}</span>)</h2>
+            <span class="eyebrow">EXPLORE ${state.name.toUpperCase()}</span>
+            <h2 class="heading-medium" style="text-transform: uppercase;">Curated Destinations (${destsCount})</h2>
           </div>
-          <p style="color: var(--muted); font-size: 0.9rem; max-width: 380px;">
-            Filter and discover premier destinations across ${state.name} with live intelligence, local dishes, and spatial routing.
+          <p style="color: var(--muted); font-size: 0.9rem; max-width: 340px;">
+            Select any destination below for in-depth travel intelligence, pacing, and 3D exploration.
           </p>
         </div>
 
-        <!-- Explorer Filter Toolbar -->
-        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 28px; padding: 16px 20px; background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 8px;">
-          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
-            <input 
-              type="text" 
-              id="state-dest-search" 
-              placeholder="Search in ${state.name}..." 
-              style="background: rgba(0,0,0,0.5); border: 1px solid var(--line); color: var(--cream); padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; width: 240px;"
-            />
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <button class="filter-chip state-filter-chip active" data-cat="all">All</button>
-              <button class="filter-chip state-filter-chip" data-cat="Heritage">Heritage</button>
-              <button class="filter-chip state-filter-chip" data-cat="Nature">Nature</button>
-              <button class="filter-chip state-filter-chip" data-cat="Spiritual">Spiritual</button>
-              <button class="filter-chip state-filter-chip" data-cat="Culture">Culture</button>
-            </div>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <label for="state-dest-sort" style="font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Sort:</label>
-            <select id="state-dest-sort" style="background: rgba(0,0,0,0.6); border: 1px solid var(--line); color: var(--cream); padding: 8px 14px; border-radius: 6px; font-size: 0.82rem;">
-              <option value="featured">Featured Hubs</option>
-              <option value="rating">Highest Rated</option>
-              <option value="popularity">Popularity</option>
-              <option value="name">Alphabetical (A-Z)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="states-grid" id="state-destinations-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
+        <div class="states-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
           ${stateDests.map(dest => {
             const isSaved = isPlaceSaved(dest.id || dest.slug);
-            const imgUrl = getDestinationImage(dest.slug, dest.heroImage || DEFAULT_FALLBACK_IMAGE);
+            const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
             return `
-              <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/states/${state.slug}/${dest.slug}'">
-                <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/fallback-raahi.jpg'" />
+              <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
+                <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
                 <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
                 <div class="state-card-content">
                   <span class="eyebrow" style="margin-bottom: 4px;">${state.name} • ${dest.bestSeason || 'BEST: OCT-MAR'}</span>
                   <h3 class="state-card-name" style="font-size: 2.1rem;">${dest.name}</h3>
-                  <p class="state-card-tagline" style="font-size: 0.88rem;">${dest.tagline || dest.shortDescription || (dest.overview ? dest.overview.slice(0, 100) + '...' : '')}</p>
+                  <p class="state-card-tagline" style="font-size: 0.88rem;">${dest.tagline || dest.shortDesc || dest.overview.slice(0, 100) + '...'}</p>
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
                     <span class="state-card-action">EXPLORE DESTINATION →</span>
                     <button 
@@ -664,7 +1165,7 @@ function renderStateView(stateSlug) {
 
       <!-- Practical Intelligence -->
       ${state.travelInfo ? `
-        <section style="padding: 40px 0 80px; border-top: 1px solid var(--line);">
+        <section style="padding: 40px 0 60px; border-top: 1px solid var(--line);">
           <span class="eyebrow">PRACTICAL INTELLIGENCE</span>
           <h2 class="heading-medium" style="text-transform: uppercase;">Travel Essentials</h2>
           <div class="travel-info-box">
@@ -684,6 +1185,20 @@ function renderStateView(stateSlug) {
         </section>
       ` : ''}
 
+      <!-- Live Google AI Knowledge Integration -->
+      <section style="padding: 40px 0 80px; border-top: 1px solid var(--line);">
+        <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(13, 20, 16, 0.95) 100%); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 16px; padding: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+          <div>
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase;">✦ GOOGLE GEMINI AI KNOWLEDGE ENGINE</span>
+            <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--cream); margin: 6px 0;">Have a question about ${state.name}?</h3>
+            <p style="color: var(--muted-bright); font-size: 0.92rem; margin: 0; max-width: 580px;">Ask about hidden gems, 3-day travel routes, regional cuisine, or historical facts about ${state.name} powered by live Google Knowledge.</p>
+          </div>
+          <button class="btn gold" onclick="window.raahiAskAssistant('Tell me all details, hidden gems, and travel tips for ${state.name}')" style="padding: 14px 28px; font-size: 0.85rem; box-shadow: 0 0 25px rgba(212,175,55,0.35);">
+            ⚡ ASK GOOGLE AI ABOUT ${state.name.toUpperCase()} →
+          </button>
+        </div>
+      </section>
+
       <div style="text-align: center; padding: 40px 0 60px; border-top: 1px solid var(--line); display: flex; gap: 16px; justify-content: center;">
         <button class="btn light" onclick="window.location.hash='#states'">
           ← Explore All 36 States & UTs
@@ -694,120 +1209,10 @@ function renderStateView(stateSlug) {
       </div>
     </div>
   `;
-
-  setupStateDestinationsExplorer(state, stateDests);
-}
-
-function setupStateDestinationsExplorer(state, stateDests) {
-  const searchInput = document.getElementById('state-dest-search');
-  const sortSelect = document.getElementById('state-dest-sort');
-  const filterChips = document.querySelectorAll('.state-filter-chip');
-  const grid = document.getElementById('state-destinations-grid');
-  const countBadge = document.getElementById('state-dest-count-badge');
-
-  if (!grid) return;
-
-  let currentCategory = 'all';
-  let searchQuery = '';
-  let currentSort = 'featured';
-
-  function render() {
-    let filtered = [...stateDests];
-
-    if (currentCategory !== 'all') {
-      filtered = filtered.filter(d => 
-        (d.type && d.type.toLowerCase().includes(currentCategory.toLowerCase())) ||
-        (d.tags && d.tags.some(t => t.toLowerCase().includes(currentCategory.toLowerCase())))
-      );
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      filtered = filtered.filter(d => 
-        d.name.toLowerCase().includes(q) ||
-        (d.shortDescription && d.shortDescription.toLowerCase().includes(q)) ||
-        (d.overview && d.overview.toLowerCase().includes(q)) ||
-        (d.attractions && d.attractions.some(a => a.name.toLowerCase().includes(q)))
-      );
-    }
-
-    if (currentSort === 'name') {
-      filtered.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (currentSort === 'rating') {
-      filtered.sort((a, b) => (b.rating || 4.8) - (a.rating || 4.8));
-    } else if (currentSort === 'popularity') {
-      filtered.sort((a, b) => (b.popularity || 85) - (a.popularity || 85));
-    }
-
-    if (countBadge) {
-      countBadge.textContent = `${filtered.length} of ${stateDests.length}`;
-    }
-
-    if (filtered.length === 0) {
-      grid.innerHTML = `
-        <div style="grid-column: 1 / -1; padding: 48px 24px; text-align: center; border: 1px dashed var(--line); border-radius: 8px;">
-          <p style="color: var(--muted-bright); font-size: 1.1rem; margin-bottom: 12px;">No destinations matched your criteria in ${state.name}.</p>
-          <button class="btn light" onclick="document.getElementById('state-dest-search').value=''; document.querySelectorAll('.state-filter-chip')[0].click();">Reset Filters</button>
-        </div>
-      `;
-      return;
-    }
-
-    grid.innerHTML = filtered.map(dest => {
-      const isSaved = isPlaceSaved(dest.id || dest.slug);
-      const imgUrl = getDestinationImage(dest.slug, dest.heroImage || DEFAULT_FALLBACK_IMAGE);
-      return `
-        <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/states/${state.slug}/${dest.slug}'">
-          <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/fallback-raahi.jpg'" />
-          <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
-          <div class="state-card-content">
-            <span class="eyebrow" style="margin-bottom: 4px;">${state.name} • ${dest.bestSeason || 'BEST: OCT-MAR'}</span>
-            <h3 class="state-card-name" style="font-size: 2.1rem;">${dest.name}</h3>
-            <p class="state-card-tagline" style="font-size: 0.88rem;">${dest.tagline || dest.shortDescription || (dest.overview ? dest.overview.slice(0, 100) + '...' : '')}</p>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
-              <span class="state-card-action">EXPLORE DESTINATION →</span>
-              <button 
-                class="btn-save-journey ${isSaved ? 'saved' : ''}" 
-                style="padding: 6px 14px; font-size: 0.72rem;" 
-                data-save-place-id="${dest.id || dest.slug}" 
-                data-saved-text="♥ Saved" 
-                data-unsaved-text="♡ Save" 
-                onclick="event.stopPropagation(); window.raahiToggleSaveJourney('${dest.id || dest.slug}');">
-                ${isSaved ? '♥ Saved' : '♡ Save'}
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  if (searchInput) {
-    searchInput.oninput = (e) => {
-      searchQuery = e.target.value;
-      render();
-    };
-  }
-
-  if (sortSelect) {
-    sortSelect.onchange = (e) => {
-      currentSort = e.target.value;
-      render();
-    };
-  }
-
-  filterChips.forEach(chip => {
-    chip.onclick = () => {
-      filterChips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      currentCategory = chip.dataset.cat || 'all';
-      render();
-    };
-  });
 }
 
 /**
- * Render Universal Destination View (Pan-India authentic catalog)
+ * Render Universal Destination View (111+ destinations)
  */
 function renderDestinationView(destSlug) {
   let dest = DataRegistry.getDestination(destSlug);
@@ -833,7 +1238,7 @@ function renderDestinationView(destSlug) {
       tagline: p.shortDesc || 'Historic architectural monument',
       overview: p.overview || p.shortDesc || 'An iconic historical destination.',
       whyItMatters: p.whyItMatters || 'Preserves vital cultural lineage.',
-      heroImage: getDestinationImage(p.id, p.heroImage || DEFAULT_FALLBACK_IMAGE),
+      heroImage: VERIFIED_IMAGE_MAP[p.id] || p.heroImage || 'assets/images/destinations/amber-fort.jpg',
       idealDuration: p.durationNeeded || '2-3 Hours',
       bestTimeToVisit: 'October to March',
       bestSeason: 'OCT — MAR',
@@ -856,13 +1261,13 @@ function renderDestinationView(destSlug) {
     return;
   }
 
-  updateSEOMetadata(`${dest.name} (${dest.state}) — RAAHI Travel Intelligence`, (dest.shortDescription || dest.overview || `Explore ${dest.name}, an iconic landmark in ${dest.state}, India.`).slice(0, 160));
+  document.title = `${dest.name} (${dest.state}) — RAAHI Travel Intelligence`;
 
   const container = document.getElementById('view-destination');
   if (!container) return;
 
   const isSaved = isPlaceSaved(dest.id || dest.slug);
-  const heroImg = getDestinationImage(dest.slug, dest.heroImage || DEFAULT_FALLBACK_IMAGE);
+  const heroImg = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
   const durationText = dest.idealDuration || '2–3 Days';
   const bestSeasonText = dest.bestSeason || dest.bestTimeToVisit || 'OCT — MAR';
   const crowdLevelText = (dest.crowdLevel || (dest.slug === 'amber-fort' || dest.slug === 'taj-mahal' || dest.slug === 'dashashwamedh-ghat' ? 'HIGH' : 'MODERATE')).toUpperCase();
@@ -1189,7 +1594,21 @@ function renderDestinationView(destSlug) {
         </section>
       ` : ''}
 
-      <div style="display: flex; gap: 1rem; justify-content: center; padding: 40px 0 60px; border-top: 1px solid var(--line);">
+      <!-- Live Google AI Knowledge Integration -->
+      <section style="margin: 40px 0 60px;">
+        <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(13, 20, 16, 0.95) 100%); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 16px; padding: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+          <div>
+            <span style="font-family: var(--font-display); font-size: 0.72rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase;">✦ GOOGLE GEMINI AI KNOWLEDGE ENGINE</span>
+            <h3 style="font-family: var(--font-display); font-size: 1.6rem; color: var(--cream); margin: 6px 0;">Have a question about ${dest.name}?</h3>
+            <p style="color: var(--muted-bright); font-size: 0.92rem; margin: 0; max-width: 580px;">Ask about secret viewpoints, photography angles, ticket queue bypass, or local food recommendations for ${dest.name} powered by live Google Knowledge.</p>
+          </div>
+          <button class="btn gold" onclick="window.raahiAskAssistant('Tell me all details, hidden gems, photography angles, and local food for ${dest.name}')" style="padding: 14px 28px; font-size: 0.85rem; box-shadow: 0 0 25px rgba(212,175,55,0.35);">
+            ⚡ ASK GOOGLE AI ABOUT ${dest.name.toUpperCase()} →
+          </button>
+        </div>
+      </section>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; padding: 40px 0 60px; border-top: 1px solid var(--line); flex-wrap: wrap;">
         <button class="btn" onclick="window.location.hash='#/states/${dest.stateSlug}'">
           ← Back to ${dest.state}
         </button>
