@@ -239,7 +239,7 @@ function handleRoute() {
   const assistantTrigger = document.getElementById('raahi-assistant-trigger');
 
   // Only scroll to top if navigating to a full page view route
-  const isViewRoute = hash.startsWith('#/destinations/') || hash.startsWith('#/states/') || hash.startsWith('#/cities/') || hash === '#/journey' || hash === '#/login' || hash === '#/signup' || hash.startsWith('#/cinematic/');
+  const isViewRoute = hash.startsWith('#/destinations/') || hash.startsWith('#/states/') || hash.startsWith('#/cities/') || hash === '#/journey' || hash === '#/login' || hash === '#/signup' || hash.startsWith('#/cinematic/') || hash.startsWith('#/fair') || hash.startsWith('#fair');
   if (isViewRoute) {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }

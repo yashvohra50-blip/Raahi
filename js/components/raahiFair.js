@@ -1039,6 +1039,33 @@ export const RaahiFair = {
         </div>
       </section>
     `;
+  },
+
+  /**
+   * Render compact discovery card for homepage
+   */
+  renderDiscoveryCard(containerId = 'home-fair-card-mount', options = {}) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const city = options.city || 'jaipur';
+    const title = options.title || 'Know the Fair Price Before You Pay';
+    const subtitle = options.subtitle || 'Official municipal auto rickshaw meters, ASI heritage entry tariffs, boat unions, and certified artisan craft benchmarks. Zero guesswork.';
+
+    container.innerHTML = `
+      <div class="raahi-fair-discovery-card" style="background: linear-gradient(135deg, rgba(212,175,55,0.06) 0%, rgba(14,21,18,0.9) 100%); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin: 30px 0;">
+        <div class="raahi-fair-discovery-content" style="max-width: 650px;">
+          <span class="eyebrow" style="color: var(--gold); margin-bottom: 6px; display: inline-block;">
+            ⚖️ RAAHI FAIR // PRICE TRANSPARENCY
+          </span>
+          <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--cream); margin: 0 0 6px;">${title}</h3>
+          <p style="color: var(--muted-bright); font-size: 0.9rem; line-height: 1.5; margin: 0;">${subtitle}</p>
+        </div>
+        <button class="btn gold" onclick="window.raahiOpenFairModal({ city: '${city}' })" style="white-space: nowrap; padding: 12px 24px; font-weight: 700;">
+          ⚖ OPEN FAIR CALCULATOR ↗
+        </button>
+      </div>
+    `;
   }
 };
 
