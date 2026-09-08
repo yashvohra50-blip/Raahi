@@ -201,6 +201,125 @@ function showToast(msg) {
   }, 3500);
 }
 
+// Global Window Hooks for Codex Operator Access Modal
+window.openAuthModal = function() {
+  const modal = document.getElementById('auth-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+  }
+};
+
+window.closeAuthModal = function() {
+  const modal = document.getElementById('auth-modal');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+  const errEl = document.getElementById('auth-error-msg');
+  if (errEl) errEl.textContent = '';
+};
+
+window.loginWithGoogle = async function() {
+  window.closeAuthModal();
+  return triggerFirebaseSignIn('Google');
+};
+
+window.loginWithGitHub = async function() {
+  window.closeAuthModal();
+  return triggerFirebaseSignIn('GitHub');
+};
+
+window.loginWithEmail = async function() {
+  const emailEl = document.getElementById('auth-email');
+  const pwdEl = document.getElementById('auth-password');
+  const errEl = document.getElementById('auth-error-msg');
+  if (errEl) errEl.textContent = '';
+
+  const email = emailEl ? emailEl.value.trim() : '';
+  const password = pwdEl ? pwdEl.value.trim() : '';
+
+  if (!email || !password) {
+    if (errEl) errEl.textContent = 'ERR: Email & Passcode required for Operator clearance.';
+    return;
+  }
+
+  try {
+    if (firebaseAuthInstance) {
+      const userCred = await firebaseAuthInstance.signInWithEmailAndPassword(email, password);
+      const user = userCred.user;
+      const raahiUser = {
+        email: user.email,
+        name: user.displayName || email.split('@')[0],
+        avatar: user.photoURL || email.charAt(0).toUpperCase(),
+        uid: user.uid,
+        loginTime: new Date().toISOString()
+      };
+      localStorage.setItem('raahi_user', JSON.stringify(raahiUser));
+      if (window.updateAuthNavButton) window.updateAuthNavButton();
+      window.closeAuthModal();
+      showToast(`Welcome back Operator ${raahiUser.name}!`);
+    } else {
+      const userObj = {
+        email: email,
+        name: email.split('@')[0],
+        avatar: email.charAt(0).toUpperCase(),
+        loginTime: new Date().toISOString()
+      };
+      localStorage.setItem('raahi_user', JSON.stringify(userObj));
+      if (window.updateAuthNavButton) window.updateAuthNavButton();
+      window.closeAuthModal();
+      showToast(`Operator ${userObj.name} authenticated.`);
+    }
+  } catch (err) {
+    if (errEl) errEl.textContent = `ERR: ${err.message}`;
+  }
+};
+
+window.signupWithEmail = async function() {
+  const emailEl = document.getElementById('auth-email');
+  const pwdEl = document.getElementById('auth-password');
+  const errEl = document.getElementById('auth-error-msg');
+  if (errEl) errEl.textContent = '';
+
+  const email = emailEl ? emailEl.value.trim() : '';
+  const password = pwdEl ? pwdEl.value.trim() : '';
+
+  if (!email || !password) {
+    if (errEl) errEl.textContent = 'ERR: Email & Passcode required to register Operator.';
+    return;
+  }
+
+  try {
+    if (firebaseAuthInstance) {
+      const userCred = await firebaseAuthInstance.createUserWithEmailAndPassword(email, password);
+      const user = userCred.user;
+      const raahiUser = {
+        email: user.email,
+        name: email.split('@')[0],
+        avatar: email.charAt(0).toUpperCase(),
+        uid: user.uid,
+        loginTime: new Date().toISOString()
+      };
+      localStorage.setItem('raahi_user', JSON.stringify(raahiUser));
+      if (window.updateAuthNavButton) window.updateAuthNavButton();
+      window.closeAuthModal();
+      showToast(`Operator ${raahiUser.name} registered.`);
+    } else {
+      const userObj = {
+        email: email,
+        name: email.split('@')[0],
+        avatar: email.charAt(0).toUpperCase(),
+        loginTime: new Date().toISOString()
+      };
+      localStorage.setItem('raahi_user', JSON.stringify(userObj));
+      if (window.updateAuthNavButton) window.updateAuthNavButton();
+      window.closeAuthModal();
+      showToast(`Operator ${userObj.name} registered.`);
+    }
+  } catch (err) {
+    if (errEl) errEl.textContent = `ERR: ${err.message}`;
+  }
+};
+
 // Global Window Hooks
 window.raahiTriggerFirebaseSignIn = (provider) => triggerFirebaseSignIn(provider);
 window.raahiOpenSecurityModal = () => openSecurityModal();
