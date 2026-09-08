@@ -45,10 +45,11 @@ export function initFirebaseAuth() {
       displayAuthStatus(`[${err.code || 'ERR'}]: ${err.message}`);
     });
 
-  // Keep trigger button in sync with auth state
+  // Keep trigger button in sync with auth state & restore active session
   auth.onAuthStateChanged((user) => {
     if (user) {
-      const name = (user.displayName || user.email.split("@")[0]).toUpperCase();
+      console.log("[Session Restored] Active user:", user.email || user.displayName);
+      const name = (user.displayName || (user.email ? user.email.split("@")[0] : "OPERATOR")).toUpperCase();
       const raahiUser = {
         email: user.email || 'operator@raahi.in',
         name: name,
@@ -59,7 +60,8 @@ export function initFirebaseAuth() {
       localStorage.setItem('raahi_user', JSON.stringify(raahiUser));
       updateSecurityModalUser(raahiUser);
       updateSecurityModalLogs(`> Firebase Production Session Active: ${name}`);
-      window.closeAuthModal();
+      if (typeof window.closeAuthModal === 'function') window.closeAuthModal();
+      if (typeof window.enterDashboard === 'function') window.enterDashboard();
     } else {
       localStorage.removeItem('raahi_user');
       updateSecurityModalUser(null);
@@ -113,39 +115,51 @@ window.loginWithGoogle = async function(e) {
   }
 };
 
-// GitHub Sign-In with Redirect Fallback
-window.loginWithGitHub = async function(e) {
-  if (e && e.preventDefault) e.preventDefault();
-
-  if (window.location.protocol === 'file:') {
-    displayAuthStatus("Cannot run OAuth from file://. Serve site via http://localhost:9090");
-    return;
-  }
-  if (typeof firebase === 'undefined' || !firebase.auth) {
-    displayAuthStatus("Firebase SDK failed to load. Check script tags.");
-    return;
+window.loginWithGithub = async function(e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
   }
 
-  displayAuthStatus("Connecting to GitHub...", false);
+  const errEl = document.getElementById("auth-error-msg") || document.getElementById("auth-status-box");
+  if (errEl) {
+    errEl.style.display = "block";
+    errEl.style.color = "#34d399";
+    errEl.textContent = "Connecting to GitHub...";
+  }
+
   const provider = new firebase.auth.GithubAuthProvider();
+  provider.addScope('read:user');
+  provider.addScope('user:email');
 
   try {
-    const res = await firebase.auth().signInWithPopup(provider);
-    console.log("[Auth] GitHub Success:", res.user.email);
-    window.closeAuthModal();
-  } catch (err) {
-    console.error("[Auth] GitHub Error:", err);
-    if (err.code === "auth/popup-blocked") {
-      displayAuthStatus("Popup blocked by browser. Redirecting...", false);
-      firebase.auth().signInWithRedirect(provider);
-    } else if (err.code === "auth/unauthorized-domain" || err.code === "auth/operation-not-allowed") {
-      displayAuthStatus(`[${err.code}]: Domain pending activation in Firebase Console. Logging in locally...`, false);
-      simulateFallbackLogin('GitHub');
-    } else {
-      displayAuthStatus(`[${err.code}]: ${err.message}`);
+    const result = await firebase.auth().signInWithPopup(provider);
+    const user = result.user;
+    console.log("[GitHub Auth] Logged in successfully:", user.email || user.displayName);
+
+    if (errEl) {
+      errEl.textContent = "Authenticated! Launching...";
+    }
+
+    // Close modal & enter site
+    if (typeof window.closeAuthModal === 'function') window.closeAuthModal();
+    if (typeof window.enterDashboard === 'function') window.enterDashboard();
+  } catch (error) {
+    console.error("[GitHub Auth Error]", error);
+
+    if (errEl) {
+      errEl.style.display = "block";
+      errEl.style.color = "#f87171";
+
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        errEl.textContent = "An account already exists with this email via Google. Please sign in with Google instead, or enable account linking in Firebase Console.";
+      } else {
+        errEl.textContent = error.message;
+      }
     }
   }
 };
+window.loginWithGitHub = window.loginWithGithub;
 
 // Email Authentication
 window.loginWithEmail = async function() {
