@@ -322,6 +322,8 @@ function handleRoute() {
       renderJourneyBuilderView();
     } else if (hash === '#login' || hash === '#/login' || hash === '#auth' || hash === '#/auth' || hash === '#signup' || hash === '#/signup') {
       if (loginView) loginView.style.display = 'block';
+      if (mainNav) mainNav.style.display = 'none';
+      if (mainFooter) mainFooter.style.display = 'none';
       const tab = (hash.includes('signup')) ? 'signup' : 'login';
       if (window.raahiRenderLoginPage) {
         window.raahiRenderLoginPage(tab);

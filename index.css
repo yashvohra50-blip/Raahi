@@ -3842,18 +3842,60 @@ header::before {
 }
 
 /* ============================================================
-   CRAZY SPLIT-SCREEN DEDICATED AUTH PAGE & QUOTE ROTATOR
+   CRAZY SPLIT-SCREEN DEDICATED AUTH PAGE & DAILY LIFE QUOTE ENGINE
    ============================================================ */
+.auth-page-wrapper {
+  padding: 40px 20px 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.auth-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.auth-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold, #d4af37);
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.auth-back-link:hover {
+  transform: translateX(-4px);
+}
+
+.auth-page-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #94a3b8;
+}
+
 .auth-page-container {
   position: relative;
   width: 100%;
-  max-width: 1050px;
+  max-width: 1100px;
   min-height: 640px;
   margin: 0 auto;
   background: rgba(15, 23, 42, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 24px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.2);
+  border-radius: 28px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85), 0 0 50px rgba(99, 102, 241, 0.25);
   display: flex;
   overflow: hidden;
 }
@@ -3917,38 +3959,28 @@ header::before {
   z-index: 2;
 }
 
-.auth-brand-logo {
-  display: flex;
+.auth-brand-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 2rem;
-}
-
-.auth-logo-mark {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--gold, #d4af37);
-  box-shadow: 0 0 16px var(--gold, #d4af37);
-}
-
-.auth-logo-text {
+  gap: 8px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 6px 14px;
+  border-radius: 99px;
   font-family: var(--font-display, 'Outfit', sans-serif);
-  font-size: 1.6rem;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  color: #f8fafc;
-}
-
-.auth-eyebrow {
-  font-family: var(--font-mono, monospace);
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.12em;
   color: var(--gold, #d4af37);
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.auth-brand-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold, #d4af37);
+  box-shadow: 0 0 8px var(--gold, #d4af37);
 }
 
 .auth-brand-headline {
@@ -3967,17 +3999,58 @@ header::before {
   font-size: 0.92rem;
   color: #94a3b8;
   line-height: 1.6;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.2rem;
 }
 
 /* Quote Widget */
 .auth-quote-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 1.5rem;
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 1.6rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.quote-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.quote-category-tag {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--gold, #d4af37);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  padding: 3px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+}
+
+.quote-shuffle-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  padding: 4px 12px;
+  color: #cbd5e1;
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quote-shuffle-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  transform: scale(1.05);
 }
 
 .auth-quote-card .quote-mark {
@@ -4390,38 +4463,10 @@ header::before {
   .auth-brand-side {
     display: none;
   }
-  .auth-modal-container {
-    max-width: 440px;
+  .auth-page-container {
+    max-width: 100%;
     min-height: auto;
   }
-}
-
-/* Floating Sign In Quick Trigger */
-.raahi-floating-login-btn {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 999;
-  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #030712;
-  font-family: var(--font-display, 'Outfit', sans-serif);
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 10px 20px;
-  border-radius: 999px;
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.45);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.raahi-floating-login-btn:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 14px 35px rgba(212, 175, 55, 0.65);
 }
 
 

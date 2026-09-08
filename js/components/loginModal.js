@@ -1,40 +1,58 @@
 /**
- * RAAHI // Dedicated Full-Page Auth Engine & Live Quote Rotator
- * Full-page split-screen login page with interactive quote rotator, ambient neon glow, and local session management
+ * RAAHI // Dedicated Full-Page Auth Portal & Daily Life Quote Engine
+ * High-aesthetic split-screen login page featuring daily life quotes, category tags, manual shuffle controls, and session management.
  */
 
-const RAAHI_AUTH_QUOTES = [
+const DAILY_LIFE_QUOTES = [
   {
-    text: "The world is a book, and those who do not travel read only one page.",
-    author: "Saint Augustine"
+    text: "You have power over your mind - not outside events. Realize this, and you will find strength.",
+    author: "Marcus Aurelius",
+    tag: "MINDFULNESS & STOICISM"
   },
   {
-    text: "Not all those who wander are lost.",
-    author: "J.R.R. Tolkien"
+    text: "Your time is limited, so don't waste it living someone else's life.",
+    author: "Steve Jobs",
+    tag: "PURPOSE & VISION"
+  },
+  {
+    text: "You have to dream before your dreams can come true.",
+    author: "APJ Abdul Kalam",
+    tag: "INSPIRATION"
+  },
+  {
+    text: "Arise, awake, and stop not till the goal is reached.",
+    author: "Swami Vivekananda",
+    tag: "PERSISTENCE"
+  },
+  {
+    text: "Desire is a contract that you make with yourself to be unhappy until you get what you want.",
+    author: "Naval Ravikant",
+    tag: "DAILY WISDOM"
+  },
+  {
+    text: "Happiness is not something readymade. It comes from your own actions.",
+    author: "Dalai Lama",
+    tag: "HAPPINESS"
+  },
+  {
+    text: "The world is a book, and those who do not travel read only one page.",
+    author: "Saint Augustine",
+    tag: "DISCOVERY & TRAVEL"
   },
   {
     text: "Live as if you were to die tomorrow. Learn as if you were to live forever.",
-    author: "Mahatma Gandhi"
+    author: "Mahatma Gandhi",
+    tag: "LIFE LESSONS"
   },
   {
-    text: "Where the mind is without fear and the head is held high, into that heaven of freedom let my country awake.",
-    author: "Rabindranath Tagore"
+    text: "Small deeds done are better than great deeds planned.",
+    author: "Peter Marshall",
+    tag: "ACTION"
   },
   {
-    text: "The journey of a thousand miles begins with a single step.",
-    author: "Lao Tzu"
-  },
-  {
-    text: "To travel is to live, to experience, and to discover the soul of the earth.",
-    author: "Hans Christian Andersen"
-  },
-  {
-    text: "Travel expands the mind and fills the gap of unknown horizons.",
-    author: "Rumi"
-  },
-  {
-    text: "India is the cradle of the human race, the birthplace of human speech, the mother of history.",
-    author: "Mark Twain"
+    text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+    author: "Aristotle",
+    tag: "MASTERY"
   }
 ];
 
@@ -49,46 +67,58 @@ export function renderLoginPage(tab = 'login') {
   const container = document.getElementById('view-login');
   if (!container) return;
 
-  document.title = "Sign In & Passport — RAAHI Pan-India Travel Discovery";
+  document.title = "Passport Sign In — RAAHI Pan-India Travel Platform";
   window.scrollTo({ top: 0, behavior: 'instant' });
 
-  container.innerHTML = `
-    <div class="breadcrumb-bar wrap" style="padding-top: 100px;">
-      <a href="#/home">RAAHI</a>
-      <span class="sep">/</span>
-      <span style="color: var(--cream);">Passport & Sign In</span>
-    </div>
+  // Pick a initial quote randomly or sequentially
+  const quote = DAILY_LIFE_QUOTES[currentQuoteIdx];
 
-    <section class="wrap" style="padding: 20px 0 100px;">
+  container.innerHTML = `
+    <div class="auth-page-wrapper">
+      <!-- Dedicated Top Header Bar for Sign In Page -->
+      <div class="auth-page-header">
+        <a href="#/home" class="auth-back-link">
+          <span class="arrow">←</span> BACK TO EXPLORE RAAHI
+        </a>
+        <div class="auth-page-brand">
+          <span class="auth-logo-mark"></span>
+          <span class="auth-logo-text">RAAHI PASSPORT</span>
+        </div>
+      </div>
+
       <div class="auth-page-container">
-        <!-- Left Side: Crazy Brand & Quote Rotator -->
+        <!-- Left Side: Ultra-Attractive Brand & Daily Life Quote Rotator -->
         <div class="auth-brand-side">
           <div class="auth-brand-aura"></div>
           <div class="auth-brand-content">
-            <div class="auth-brand-logo">
-              <span class="auth-logo-mark"></span>
-              <span class="auth-logo-text">RAAHI</span>
+            <div class="auth-brand-badge">
+              <span class="badge-dot"></span>
+              <span>DAILY LIFE WISDOM & DISCOVERY</span>
             </div>
 
-            <span class="auth-eyebrow">NATIONAL TOURISM DISCOVERY</span>
-            <h2 class="auth-brand-headline">Unlock Unexplored<br>India & Royal Stays</h2>
+            <h2 class="auth-brand-headline">Discover India,<br>Empower Your Journey</h2>
             <p class="auth-brand-desc">
-              Sync your travel itineraries, bookmark heritage palaces, and access real-time municipal fair prices across all 36 States & Union Territories.
+              Save royal palace stays, compile regional itineraries, and access official municipal tariffs across all 36 States & Union Territories.
             </p>
 
-            <!-- Quote Card Widget -->
+            <!-- Daily Life Quote Card Widget -->
             <div class="auth-quote-card" id="auth-quote-card">
+              <div class="quote-header-row">
+                <span class="quote-category-tag" id="auth-quote-tag">${quote.tag}</span>
+                <button class="quote-shuffle-btn" onclick="window.raahiNextQuote()" title="Shuffle Daily Life Quote">🎲 Next Quote</button>
+              </div>
+
               <div class="quote-mark">“</div>
-              <p id="auth-quote-text">${RAAHI_AUTH_QUOTES[currentQuoteIdx].text}</p>
+              <p id="auth-quote-text">${quote.text}</p>
               <div class="quote-author-row">
                 <span class="quote-line"></span>
-                <span id="auth-quote-author">${RAAHI_AUTH_QUOTES[currentQuoteIdx].author}</span>
+                <span id="auth-quote-author">${quote.author}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Right Side: Dedicated Login & Registration Form -->
+        <!-- Right Side: Dedicated Sign In & Sign Up Form -->
         <div class="auth-form-side">
           <div class="auth-form-wrapper">
             <div class="auth-tabs">
@@ -98,8 +128,8 @@ export function renderLoginPage(tab = 'login') {
 
             <!-- Header Titles -->
             <div class="auth-header-block">
-              <h3 class="auth-form-title" id="auth-form-title">${tab === 'signup' ? 'Join RAAHI' : 'Welcome Back'}</h3>
-              <p class="auth-form-sub" id="auth-form-sub">${tab === 'signup' ? 'Create your account to save itineraries & explore India.' : 'Enter your credentials to access your RAAHI passport.'}</p>
+              <h3 class="auth-form-title" id="auth-form-title">${tab === 'signup' ? 'Join RAAHI Platform' : 'Welcome Back'}</h3>
+              <p class="auth-form-sub" id="auth-form-sub">${tab === 'signup' ? 'Create your explorer passport to sync itineraries across devices.' : 'Enter your credentials to access your RAAHI passport.'}</p>
             </div>
 
             <!-- Quick Social Login -->
@@ -170,7 +200,7 @@ export function renderLoginPage(tab = 'login') {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   `;
 
   startQuoteRotation();
@@ -179,21 +209,33 @@ export function renderLoginPage(tab = 'login') {
 function startQuoteRotation() {
   if (quoteTimer) clearInterval(quoteTimer);
   quoteTimer = setInterval(() => {
-    currentQuoteIdx = (currentQuoteIdx + 1) % RAAHI_AUTH_QUOTES.length;
-    const textEl = document.getElementById('auth-quote-text');
-    const authorEl = document.getElementById('auth-quote-author');
-    if (textEl && authorEl) {
-      textEl.style.opacity = '0';
-      authorEl.style.opacity = '0';
-      setTimeout(() => {
-        textEl.textContent = RAAHI_AUTH_QUOTES[currentQuoteIdx].text;
-        authorEl.textContent = RAAHI_AUTH_QUOTES[currentQuoteIdx].author;
-        textEl.style.opacity = '1';
-        authorEl.style.opacity = '1';
-      }, 400);
-    }
+    window.raahiNextQuote();
   }, 6000);
 }
+
+window.raahiNextQuote = function() {
+  currentQuoteIdx = (currentQuoteIdx + 1) % DAILY_LIFE_QUOTES.length;
+  const quote = DAILY_LIFE_QUOTES[currentQuoteIdx];
+  const tagEl = document.getElementById('auth-quote-tag');
+  const textEl = document.getElementById('auth-quote-text');
+  const authorEl = document.getElementById('auth-quote-author');
+
+  if (textEl && authorEl) {
+    textEl.style.opacity = '0';
+    authorEl.style.opacity = '0';
+    if (tagEl) tagEl.style.opacity = '0';
+
+    setTimeout(() => {
+      if (tagEl) tagEl.textContent = quote.tag;
+      textEl.textContent = quote.text;
+      authorEl.textContent = quote.author;
+
+      if (tagEl) tagEl.style.opacity = '1';
+      textEl.style.opacity = '1';
+      authorEl.style.opacity = '1';
+    }, 300);
+  }
+};
 
 // Global window functions
 window.raahiRenderLoginPage = (tab = 'login') => renderLoginPage(tab);
