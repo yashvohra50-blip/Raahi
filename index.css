@@ -4422,5 +4422,34 @@ header::before {
   }
 }
 
+/* Floating Sign In Quick Trigger */
+.raahi-floating-login-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #030712;
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 10px 20px;
+  border-radius: 999px;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.45);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.raahi-floating-login-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 14px 35px rgba(212, 175, 55, 0.65);
+}
+
+
 
 
