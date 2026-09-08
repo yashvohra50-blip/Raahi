@@ -1,8 +1,9 @@
 /**
  * RAAHI // Interactive Leaflet & SVG India Map Component
  * Displays all 28 States, 8 UTs, and key destinations with Leaflet GIS engine,
- * high-resolution satellite aerial imagery (house & building level detail),
- * layer switcher, interactive pin markers, live search/geocoding, and spatial telemetry.
+ * Google Maps Ultra-High Definition Satellite & Hybrid Aerial Imagery (House & Building Level Detail),
+ * zero-blank-tile maxNativeZoom safety guards, layer switcher, interactive pin markers,
+ * live search/geocoding, and spatial telemetry.
  */
 
 import { STATES_DATA } from '../data/statesData.js';
@@ -63,15 +64,17 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
     <div class="raahi-search-console" style="margin-bottom: 20px; display: flex; gap: 12px; position: relative; flex-wrap: wrap;">
       <div class="search-input-wrapper" style="flex: 1; min-width: 280px; position: relative;">
         <input type="text" id="raahi-map-query-input" class="raahi-map-input" 
-          placeholder="Scan any Indian state, city, or destination (e.g., Jaipur, Dehradun, Varanasi, Hampi, Kerala, Ladakh)..." 
+          placeholder="Scan any house, street, landmark, city, or state (e.g., Amber Fort, Jaipur, Dehradun, Varanasi, Hampi, Kerala, Ladakh)..." 
           autocomplete="off" style="width: 100%; padding: 14px 18px; background: rgba(13, 20, 16, 0.9); border: 1px solid var(--line); border-radius: 8px; color: #fff; font-family: var(--font-body); font-size: 0.9rem;" />
         <div id="raahi-map-autocomplete" class="autocomplete-dropdown" style="position: absolute; top: 100%; left: 0; right: 0; background: #0d1410; border: 1px solid var(--line); border-top: none; border-radius: 0 0 8px 8px; z-index: 1000; max-height: 250px; overflow-y: auto; display: none;"></div>
       </div>
 
       <select id="raahi-tile-layer-select" class="raahi-select" style="padding: 12px 16px; background: rgba(13, 20, 16, 0.9); border: 1px solid var(--gold); border-radius: 8px; color: var(--gold); font-family: var(--font-display); font-size: 0.82rem; cursor: pointer;">
-        <option value="satellite" selected>🛰️ SATELLITE (HOUSES & AERIAL DETAIL)</option>
-        <option value="osm">🗺️ OPENSTREETMAP (STREET VIEW)</option>
-        <option value="voyager">🏙️ CARTO VOYAGER (BUILDINGS & STREETS)</option>
+        <option value="googleHybrid" selected>🛰️ GOOGLE SATELLITE (HOUSES & ROOFS DETAILED)</option>
+        <option value="googleSat">🌍 PURE SATELLITE (NO LABELS)</option>
+        <option value="googleStreets">🏙️ GOOGLE STREETS & BUILDINGS</option>
+        <option value="esriSat">🛰️ ESRI AERIAL SATELLITE</option>
+        <option value="osm">🗺️ OPENSTREETMAP</option>
       </select>
 
       <button id="raahi-map-search-btn" class="btn gold" style="padding: 12px 24px;">
@@ -86,7 +89,7 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
     <div class="spatial-telemetry-bar" style="display: flex; justify-content: space-between; align-items: center; background: rgba(13, 20, 16, 0.7); padding: 10px 18px; border: 1px solid var(--line); border-bottom: none; border-radius: 8px 8px 0 0; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.08em;">
       <span style="color: var(--muted-bright); display: inline-flex; align-items: center; gap: 6px;">
         <span style="width: 8px; height: 8px; background: var(--emerald, #10b981); border-radius: 50%; box-shadow: 0 0 8px var(--emerald, #10b981);"></span> 
-        LIVE SPATIAL VECTOR MAP // HIGH-RESOLUTION SATELLITE & HOUSES ENGINE
+        LIVE SPATIAL VECTOR MAP // ULTRA-HIGH RESOLUTION GOOGLE SATELLITE & HOUSES ENGINE
       </span>
       <span id="raahi-map-status" style="color: var(--emerald, #10b981);">VECTOR LOCKED // RAJASTHAN</span>
     </div>
@@ -186,55 +189,73 @@ function initRaahiLeafletMap() {
     raahiMapInstance = null;
   }
 
-  // Centered on India (22.5937° N, 78.9629° E) with maxZoom 19 for house & building-level zoom
+  // Centered on India (22.5937° N, 78.9629° E) supporting maxZoom 21 for house & building-level zoom
   raahiMapInstance = L.map('raahi-leaflet-map', {
     center: [22.5937, 78.9629],
     zoom: 5,
-    maxZoom: 19,
+    maxZoom: 21,
     zoomControl: true,
     scrollWheelZoom: true
   });
 
-  // Tile Layers Definitions
-  const esriSatellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Tiles &copy; Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP',
-    maxZoom: 19
+  // Google Maps Hybrid (Satellite + High-Res Street & House Labels)
+  const googleHybrid = L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+    subdomains: ['0', '1', '2', '3'],
+    attribution: '&copy; Google Maps Hybrid Satellite Engine',
+    maxZoom: 21,
+    maxNativeZoom: 20
   });
 
-  const esriLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 19
+  // Google Satellite (Pure Ultra-High Res Aerial Imagery)
+  const googleSat = L.tileLayer('https://mt{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    subdomains: ['0', '1', '2', '3'],
+    attribution: '&copy; Google Maps Satellite Engine',
+    maxZoom: 21,
+    maxNativeZoom: 20
   });
 
+  // Google Streets & House Outlines
+  const googleStreets = L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    subdomains: ['0', '1', '2', '3'],
+    attribution: '&copy; Google Maps Street View Engine',
+    maxZoom: 21,
+    maxNativeZoom: 20
+  });
+
+  // Esri Satellite Aerial Imagery
+  const esriSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri World Imagery',
+    maxZoom: 21,
+    maxNativeZoom: 18
+  });
+
+  // OpenStreetMap Layer
   const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors | RAAHI Spatial Map',
-    maxZoom: 19
-  });
-
-  const cartoVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-    maxZoom: 19
+    maxZoom: 21,
+    maxNativeZoom: 19
   });
 
   activeTileLayers = {
-    satellite: [esriSatellite, esriLabels],
-    osm: [osmLayer],
-    voyager: [cartoVoyager]
+    googleHybrid: [googleHybrid],
+    googleSat: [googleSat],
+    googleStreets: [googleStreets],
+    esriSat: [esriSat],
+    osm: [osmLayer]
   };
 
-  // Default to High-Res Satellite + Labels so houses and buildings are clearly visible when zooming in
-  esriSatellite.addTo(raahiMapInstance);
-  esriLabels.addTo(raahiMapInstance);
+  // Default to Google Maps Hybrid Satellite so every house, building roof, street, and lane loads crisp & clear
+  googleHybrid.addTo(raahiMapInstance);
 
   // Add Leaflet Native Layer Control on Top Right
   const baseMaps = {
-    "🛰️ Satellite (Houses & Aerial Detail)": esriSatellite,
-    "🗺️ OpenStreetMap Standard": osmLayer,
-    "🏙️ CartoDB Voyager (Street Detail)": cartoVoyager
+    "🛰️ Google Satellite + House Labels": googleHybrid,
+    "🌍 Google Pure Satellite Imagery": googleSat,
+    "🏙️ Google Streets & Buildings": googleStreets,
+    "🛰️ Esri Aerial Satellite": esriSat,
+    "🗺️ OpenStreetMap": osmLayer
   };
-  const overlayMaps = {
-    "🏷️ Street & City Labels": esriLabels
-  };
-  L.control.layers(baseMaps, overlayMaps, { position: 'topright' }).addTo(raahiMapInstance);
+  L.control.layers(baseMaps, null, { position: 'topright' }).addTo(raahiMapInstance);
 
   // Add Glowing Pins for All 36 Indian States/UTs
   Object.keys(STATES_DATA).forEach(slug => {
@@ -313,7 +334,7 @@ function selectStateOnMap(slug, lat, lng, name) {
   if (!state) return;
 
   if (raahiMapInstance) {
-    raahiMapInstance.flyTo([lat, lng], 13, { duration: 1.5 });
+    raahiMapInstance.flyTo([lat, lng], 14, { duration: 1.5 });
 
     if (activeMarker) {
       activeMarker.setLatLng([lat, lng]);
@@ -432,7 +453,7 @@ function setupMapSearchHandlers(mount) {
           const lng = parseFloat(item.lon ?? item.lng);
 
           if (raahiMapInstance) {
-            raahiMapInstance.flyTo([lat, lng], 15, { duration: 1.5 });
+            raahiMapInstance.flyTo([lat, lng], 17, { duration: 1.5 });
             if (activeMarker) activeMarker.setLatLng([lat, lng]);
           }
 
