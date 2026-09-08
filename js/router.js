@@ -561,6 +561,9 @@ function renderDestinationsContainer() {
 
   if (currentDestViewMode === 'carousel') {
     if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+    grid.className = '';
+    grid.style.display = 'block';
+    grid.style.gridTemplateColumns = 'none';
 
     grid.innerHTML = `
       <div class="dest-carousel-banner-wrapper" style="position: relative; margin-top: 10px; width: 100%;">
@@ -592,20 +595,24 @@ function renderDestinationsContainer() {
 
   } else if (currentDestViewMode === 'rail') {
     if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+    grid.className = '';
+    grid.style.display = 'block';
+    grid.style.gridTemplateColumns = 'none';
 
     grid.innerHTML = `
       <div class="dest-rail-slider-wrapper" style="position: relative; width: 100%;">
         <div class="rail" id="dest-rail-slider" style="display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin;">
           ${currentFilteredDestinations.map(dest => {
             const isSaved = isPlaceSaved(dest.id || dest.slug);
-            const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+            const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || VERIFIED_IMAGE_MAP[dest.id] || dest.image || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+            const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 80) + '...' : '');
             return `
               <div class="destination-card" style="flex: 0 0 320px; height: 460px; scroll-snap-align: start;" onclick="window.location.hash='#/destinations/${dest.slug}'">
                 <img src="${imgUrl}" alt="${dest.name}" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
                 <div class="dest-copy">
                   <small>${dest.state.toUpperCase()} • ${dest.region.toUpperCase()}</small>
                   <h3>${dest.name}</h3>
-                  <p>${dest.tagline || dest.shortDesc || dest.overview.slice(0, 80) + '...'}</p>
+                  <p>${descText}</p>
                 </div>
                 <div class="enter-circle">→</div>
               </div>
@@ -616,11 +623,16 @@ function renderDestinationsContainer() {
     `;
   } else {
     // Grid View
+    grid.className = 'states-grid';
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(340px, 1fr))';
+
     const visibleList = currentFilteredDestinations.slice(0, currentDestFilter.page * currentDestFilter.pageSize);
 
     grid.innerHTML = visibleList.map(dest => {
       const isSaved = isPlaceSaved(dest.id || dest.slug);
-      const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+      const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || VERIFIED_IMAGE_MAP[dest.id] || dest.image || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+      const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 100) + '...' : '');
       return `
         <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
           <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='assets/images/destinations/amber-fort.jpg'" />
@@ -628,7 +640,7 @@ function renderDestinationsContainer() {
           <div class="state-card-content">
             <span class="eyebrow" style="margin-bottom: 4px;">${dest.state} • ${dest.region.toUpperCase()}</span>
             <h3 class="state-card-name" style="font-size: 1.9rem;">${dest.name}</h3>
-            <p class="state-card-tagline" style="font-size: 0.88rem;">${dest.tagline || dest.shortDesc || dest.overview.slice(0, 100) + '...'}</p>
+            <p class="state-card-tagline" style="font-size: 0.88rem;">${descText}</p>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
               <span class="state-card-action">EXPLORE DESTINATION →</span>
               <button 
@@ -671,9 +683,10 @@ function updateDestCarouselStage() {
 
   const dest = currentFilteredDestinations[currentDestCarouselIndex];
   const isSaved = isPlaceSaved(dest.id || dest.slug);
-  const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
+  const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || VERIFIED_IMAGE_MAP[dest.id] || dest.image || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
   const durationText = dest.idealDuration || '2-3 Days';
   const bestSeasonText = dest.bestSeason || dest.bestTimeToVisit || 'OCT — MAR';
+  const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 140) + '...' : '');
 
   stage.style.opacity = '0.3';
 
@@ -700,7 +713,7 @@ function updateDestCarouselStage() {
           </h3>
 
           <p style="font-size: 0.98rem; color: var(--muted-bright); line-height: 1.6; margin-bottom: 20px; max-width: 580px;">
-            ${dest.tagline || dest.shortDesc || dest.overview.slice(0, 120) + '...'}
+            ${descText}
           </p>
 
           <!-- Badges Pill Row matching Photo 1 -->
