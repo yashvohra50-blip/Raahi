@@ -233,12 +233,13 @@ function handleRoute() {
   const cinematicView = document.getElementById('view-cinematic');
   const journeyView = document.getElementById('view-journey');
   const fairView = document.getElementById('view-fair');
+  const loginView = document.getElementById('view-login');
   const mainNav = document.querySelector('.nav');
   const mainFooter = document.querySelector('.footer');
   const assistantTrigger = document.getElementById('raahi-assistant-trigger');
 
   // Only scroll to top if navigating to a full page view route
-  const isViewRoute = hash.startsWith('#/destinations/') || hash.startsWith('#/states/') || hash.startsWith('#/cities/') || hash === '#/journey' || hash.startsWith('#/cinematic/');
+  const isViewRoute = hash.startsWith('#/destinations/') || hash.startsWith('#/states/') || hash.startsWith('#/cities/') || hash === '#/journey' || hash === '#/login' || hash === '#/signup' || hash.startsWith('#/cinematic/');
   if (isViewRoute) {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
@@ -251,7 +252,7 @@ function handleRoute() {
     } catch (e) {}
   }
 
-  [homeView, stateView, cityView, destView, cinematicView, journeyView, fairView].forEach(v => {
+  [homeView, stateView, cityView, destView, cinematicView, journeyView, fairView, loginView].forEach(v => {
     if (v) v.style.display = 'none';
   });
 
@@ -320,12 +321,11 @@ function handleRoute() {
       if (journeyView) journeyView.style.display = 'block';
       renderJourneyBuilderView();
     } else if (hash === '#login' || hash === '#/login' || hash === '#auth' || hash === '#/auth' || hash === '#signup' || hash === '#/signup') {
-      if (homeView) homeView.style.display = 'block';
-      renderHomeView();
+      if (loginView) loginView.style.display = 'block';
       const tab = (hash.includes('signup')) ? 'signup' : 'login';
-      setTimeout(() => {
-        if (window.raahiOpenAuthModal) window.raahiOpenAuthModal(tab);
-      }, 100);
+      if (window.raahiRenderLoginPage) {
+        window.raahiRenderLoginPage(tab);
+      }
     } else {
       if (homeView) homeView.style.display = 'block';
       renderHomeView();

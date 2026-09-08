@@ -4,6 +4,21 @@
 
 import { searchIndex } from '../data/searchIndex.js';
 
+// Global search opener attached immediately on module load
+window.raahiOpenSearchModal = () => {
+  initSearchModal();
+  const overlay = document.getElementById('raahi-search-overlay');
+  const modal = document.getElementById('raahi-search-modal');
+  const input = document.getElementById('global-search-input');
+  if (overlay) overlay.classList.add('active');
+  if (modal) modal.classList.add('active');
+  document.body.classList.add('lock-scroll');
+  if (input) {
+    input.value = '';
+    input.focus();
+  }
+};
+
 export function initSearchModal() {
   // Check if modal already exists
   if (document.getElementById('raahi-search-modal')) return;

@@ -39,23 +39,16 @@
 
     <nav class="navlinks">
       <a href="#/home" class="active">Explore</a>
+      <a href="#/fair">Fair Prices</a>
       <a href="#interactive-map">Map</a>
       <a href="#all-destinations">Destinations</a>
       <a href="#journey-discovery">Journeys</a>
       <a href="#/journey">Build Route</a>
       <a href="#stays">Stays</a>
-<<<<<<< HEAD
-      <button class="raahi-fair-nav-pill" id="raahi-fair-nav-btn" onclick="window.raahiOpenFairModal();" aria-label="Open Raahi Fair Price Intelligence" title="Know the price before you pay">
-        <span class="pill-icon">⚖</span>
-        <span class="pill-text">RAAHI FAIR</span>
-      </button>
-=======
-      <a href="javascript:void(0)" onclick="window.raahiOpenAuthModal('login')" style="color: var(--gold); font-weight: 700;">🔑 Sign In</a>
       <a href="#about">About</a>
->>>>>>> origin/main
     </nav>
 
-    <div style="display: flex; align-items: center; gap: 12px;">
+    <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
       <button onclick="window.raahiOpenSearchModal()" class="search-nav-btn" title="Search all 36 States & 111+ Destinations (Ctrl+K)">
         <span class="search-icon">🔍</span>
         <span class="search-text">Search India...</span>
@@ -67,7 +60,7 @@
       </button>
 
       <div id="raahi-nav-auth-container">
-        <button onclick="window.raahiOpenAuthModal('login')" class="btn gold" style="padding: 8px 18px; font-size: 0.78rem; font-weight: 700; border-radius: 99px; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+        <button onclick="window.location.hash='#/login'" class="btn gold" style="padding: 7px 16px; font-size: 0.75rem; font-weight: 700; border-radius: 99px; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
           🔑 SIGN IN
         </button>
       </div>
@@ -90,19 +83,6 @@
     </button>
 
     <nav class="mobile-nav-links">
-<<<<<<< HEAD
-      <a href="#/home" onclick="window.raahiCloseMobileMenu();">Explore</a>
-      <a href="#interactive-map" onclick="window.raahiCloseMobileMenu();">Map</a>
-      <a href="#all-destinations" onclick="window.raahiCloseMobileMenu();">Destinations</a>
-      <a href="#journey-discovery" onclick="window.raahiCloseMobileMenu();">Journeys</a>
-      <a href="#/journey" onclick="window.raahiCloseMobileMenu();">Build Route</a>
-      <a href="#stays" onclick="window.raahiCloseMobileMenu();">Stays</a>
-      <a href="javascript:void(0)" onclick="window.raahiCloseMobileMenu(); window.raahiOpenFairModal();" style="color: var(--gold); display: flex; align-items: center; gap: 10px;">
-        <span>⚖</span> Raahi Fair
-      </a>
-      <a href="javascript:void(0)" onclick="window.raahiCloseMobileMenu(); window.raahiOpenJourneyDrawer();">♡ My Journey (<span class="journey-count-badge">0</span>)</a>
-      <a href="#about" onclick="window.raahiCloseMobileMenu();">About</a>
-=======
       <a href="#/home" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Explore Home</a>
       <a href="#/fair" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">⚖️ Fair Prices & Rates</a>
       <a href="#interactive-map" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Interactive India Map</a>
@@ -112,10 +92,13 @@
       <a href="javascript:void(0)" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll'); window.raahiOpenJourneyDrawer();">♡ My Journey (<span class="journey-count-badge">0</span>)</a>
       <a href="#/journey" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Build Route</a>
       <a href="#stays" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">Heritage Stays</a>
-      <a href="javascript:void(0)" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll'); window.raahiOpenAuthModal('login');" style="color: var(--gold); font-weight: 700;">🔑 Sign In / My Account</a>
+      <a href="#/login" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');" style="color: var(--gold); font-weight: 700;">🔑 Sign In / My Account</a>
       <a href="#about" onclick="document.getElementById('mobile-menu-drawer').classList.remove('active'); document.body.classList.remove('lock-scroll');">About RAAHI</a>
->>>>>>> origin/main
     </nav>
+    <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--muted-dim); letter-spacing: 0.1em; margin-top: 30px;">
+      RAAHI PAN-INDIA TOURISM PLATFORM © 2026
+    </div>
+  </div>
     <div style="font-family: var(--font-display); font-size: 0.75rem; color: var(--muted-dim); letter-spacing: 0.1em; margin-top: 30px;">
       RAAHI PAN-INDIA TOURISM PLATFORM © 2026
     </div>
@@ -421,6 +404,9 @@
 
     <!-- 7. Raahi Fair Price Intelligence Container (#/fair) -->
     <div id="view-fair" style="display: none;"></div>
+
+    <!-- 8. Dedicated Auth & Passport Page Container (#/login) -->
+    <div id="view-login" style="display: none;"></div>
   </main>
 
   <!-- Contextual Intelligent Travel Assistant ("Ask RAAHI") -->
