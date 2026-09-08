@@ -1121,7 +1121,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The sacred birthplace of Lord Rama on the banks of the holy Saryu River, home to the monumental Shri Ram Janmabhoomi Mandir, Hanuman Garhi, and illuminated evening Saryu Aarti ghats.",
     "shortDescription": "Sacred holy city on the Saryu River, birthplace of Lord Rama.",
-    "image": "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/taj-mahal.jpg"
     ],
@@ -1197,7 +1197,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "The sacred land of Braj Bhoomi on the Yamuna River, birthplace of Lord Krishna, famous for Shri Krishna Janmasthan, Banke Bihari Temple, Prem Mandir, and world-renowned Lathmar Holi.",
     "shortDescription": "Sacred birthplace of Lord Krishna with ancient temple courtyards and vibrant Holi.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/taj-mahal.jpg"
     ],
@@ -3037,7 +3037,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "India's first UNESCO World Heritage City, famous for Sabarmati Ashram, intricate stepwells like Adalaj, Sidi Saiyyed Mosque stone lattice screens, and street food.",
     "shortDescription": "UNESCO World Heritage city with historic pols, stepwells, and Sabarmati Ashram.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -3191,7 +3191,7 @@ export const DESTINATIONS_DATA = {
     "region": "West",
     "description": "UNESCO World Heritage rock-cut cave monuments dating from 2nd century BCE to 10th century CE, including the monolithic Kailash Temple carved top-down from a single basalt cliff.",
     "shortDescription": "Ancient rock-cut cave temples and the world's largest monolithic sculpture.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -3652,7 +3652,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The UNESCO World Heritage capital of the Vijayanagara Empire, set amidst an unreal surreal landscape of massive granite boulders, stone chariot temples, and riverside ruins along the Tungabhadra.",
     "shortDescription": "Surreal boulder landscape with UNESCO ruins of the 14th-century Vijayanagara Empire.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -3729,7 +3729,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The heritage City of Palaces, famous for the illuminated Indo-Saracenic Mysore Palace, Chamundi Hills, Mysore Silk, sandalwood carving, and the grand 10-day Dasara festival.",
     "shortDescription": "City of Palaces, royal Dasara celebrations, Mysore silk, and sandalwood.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -4036,7 +4036,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "The City of Pearls, famous for the 1591 Charminar, Golconda Fort with acoustic architecture, Qutb Shahi Tombs, Chowmahalla Palace, and authentic Hyderabadi Dum Biryani.",
     "shortDescription": "City of Pearls with Charminar, acoustic Golconda Fort, and royal biryani.",
-    "image": "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-udaipur.jpg"
     ],
@@ -4575,7 +4575,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "The epicenter of Buddhism where Gautama Buddha attained supreme enlightenment under the sacred Bodhi Tree at Mahabodhi Temple, and the 5th-century ruins of Nalanda University.",
     "shortDescription": "The sacred Bodhi Tree of Buddha's enlightenment and ancient Nalanda University.",
-    "image": "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -4805,7 +4805,7 @@ export const DESTINATIONS_DATA = {
     "region": "Central",
     "description": "UNESCO World Heritage temple complex built between 950 and 1050 CE by the Chandela dynasty, renowned for exquisite sandstone sculptures depicting medieval life and celestial beauty.",
     "shortDescription": "UNESCO medieval temple complex with exquisite sandstone master sculptures.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -5796,7 +5796,7 @@ export const DESTINATIONS_DATA = {
     "region": "North",
     "description": "Ranthambore National Park is one of the premier destinations in Rajasthan, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Famous tiger reserve where Royal Bengal Tigers roam amidst 10th-century fortress ruins.",
-    "image": "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/eravikulam-national-park.jpg"
     ],
@@ -7088,7 +7088,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Thanjavur & Great Living Chola Temples is one of the premier destinations in Tamil Nadu, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO 11th-century Brihadisvara Temple with an 80-tonne single granite block cupola.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -7469,7 +7469,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Badami, Aihole & Pattadakal is one of the premier destinations in Karnataka, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "6th-century rock-cut cave temples and UNESCO cradle of Indian temple architecture.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -7621,7 +7621,7 @@ export const DESTINATIONS_DATA = {
     "region": "South",
     "description": "Warangal & Ramappa Temple is one of the premier destinations in Telangana, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO World Heritage Ramappa Temple crafted with floating bricks and Kakatiya stone arches.",
-    "image": "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],
@@ -7773,7 +7773,7 @@ export const DESTINATIONS_DATA = {
     "region": "East",
     "description": "Rajgir & Pawapuri is one of the premier destinations in Bihar, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "Ancient capital of the Magadha Empire, Vulture Peak, Peace Pagoda, and natural hot springs.",
-    "image": "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/city-palace-jaipur.jpg"
     ],
@@ -7925,7 +7925,7 @@ export const DESTINATIONS_DATA = {
     "region": "Central",
     "description": "Sanchi Buddhist Monuments is one of the premier destinations in Madhya Pradesh, renowned for its authentic cultural traditions, historical monuments, and captivating natural settings.",
     "shortDescription": "UNESCO World Heritage 3rd-century BCE Great Stupa commissioned by Emperor Ashoka.",
-    "image": "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1200",
     "gallery": [
       "assets/images/destinations/amber-fort.jpg"
     ],

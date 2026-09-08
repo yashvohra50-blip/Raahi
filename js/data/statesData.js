@@ -665,7 +665,7 @@ export const STATES_DATA = {
     capital: "Bengaluru",
     eyebrow: "VIJAYANAGARA RUINS • COFFEE FORESTS",
     tagline: "UNESCO boulder ruins of Hampi, Mysore royal palaces, and Western Ghats wildlife.",
-    heroImage: "https://images.unsplash.com/photo-1600100395162-43b9d620584b?q=80&w=1200",
+    heroImage: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200",
     accentColor: "#8b5cf6",
     story: "Karnataka is a diverse state where the ancient and the hyper-modern thrive together. From the monumental boulder-hewn ruins of Hampi and Hoysala temples to the coffee hills of Coorg and tech capital Bengaluru.",
     quickStats: {
@@ -745,7 +745,7 @@ export const STATES_DATA = {
     capital: "Hyderabad",
     eyebrow: "PEARL CITADELS • DECCAN ARCHITECTURE",
     tagline: "Historic Golconda ramparts, Charminar bazaars, Kakatiya stone temples, and royal biryani.",
-    heroImage: "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    heroImage: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
     accentColor: "#ec4899",
     story: "Telangana is a land of rich Deccan history where Qutb Shahi and Asaf Jahi dynasties blended with indigenous Telugu culture. Known for Charminar and Golconda Fort in Hyderabad and UNESCO-listed Ramappa Temple.",
     quickStats: {
@@ -942,7 +942,7 @@ export const STATES_DATA = {
     capital: "Patna",
     eyebrow: "BUDDHIST ENLIGHTENMENT • NALANDA ROOTS",
     tagline: "The Bodhi Tree where Buddha found enlightenment, ancient universities, and Madhubani art.",
-    heroImage: "https://images.unsplash.com/photo-1625834807406-b72bf88439f0?q=80&w=1200",
+    heroImage: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1200",
     accentColor: "#eab308",
     story: "Bihar is the sacred birthplace of Buddhism and Jainism. Here under the Bodhi Tree in Bodh Gaya, Gautama Buddha attained enlightenment. Home to ancient Nalanda University.",
     quickStats: {
@@ -1136,7 +1136,7 @@ export const STATES_DATA = {
     capital: "Dispur (Guwahati)",
     eyebrow: "BRAHMAPUTRA REALM • ONE-HORNED RHINOS",
     tagline: "Kaziranga rhino sanctuaries, Majuli river island, golden Muga silk, and tea valleys.",
-    heroImage: "https://images.unsplash.com/photo-1616432655073-f1165a25b16c?q=80&w=1200",
+    heroImage: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1200",
     accentColor: "#10b981",
     story: "Assam is the majestic gateway to Northeast India, dominated by the mighty Brahmaputra River. It is home to Kaziranga National Park, world's largest river island Majuli, and rolling tea gardens.",
     quickStats: {
