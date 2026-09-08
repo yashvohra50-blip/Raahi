@@ -552,11 +552,17 @@ export class FairPriceEngine {
       if (itemNameLower.includes(q)) score += 10;
       if (q.includes(item.destinationId || '---')) score += 8;
 
-      const words = q.split(/\s+/).filter(w => w.length > 2);
+      const stopWords = new Set([
+        'ride', 'price', 'cost', 'ticket', 'entry', 'normal', 'what', 'from', 'paying',
+        'tour', 'trip', 'visit', 'charges', 'rate', 'fair', 'much', 'how', 'the', 'for',
+        'and', 'are', 'you', 'with', 'about', 'some', 'per', 'fee', 'hours', 'hour'
+      ]);
+
+      const words = q.split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w));
       for (const w of words) {
-        if (itemNameLower.includes(w)) score += 3;
+        if (itemNameLower.includes(w)) score += 4;
         if (catLower.includes(w)) score += 1;
-        if (cityLower.includes(w)) score += 2;
+        if (cityLower.includes(w)) score += 3;
       }
 
       // Contextual boosts
@@ -564,17 +570,21 @@ export class FairPriceEngine {
         score += 2;
       }
 
-      // Specific query intents
-      if (q.includes('ticket') || q.includes('entry')) {
-        if (item.category === 'monuments') score += 4;
+      // Specific query intents with distinctive intent nouns
+      if ((q.includes('ticket') || q.includes('entry')) && (item.category === 'monuments')) {
+        if (q.includes(item.citySlug) || (item.destinationId && q.includes(item.destinationId.replace(/-/g, ' ')))) {
+          score += 6;
+        }
       }
-      if (q.includes('camel') && item.id.includes('camel')) score += 8;
-      if (q.includes('shikara') && item.id.includes('shikara')) score += 8;
-      if (q.includes('pashmina') && item.id.includes('pashmina')) score += 8;
+      if (q.includes('camel') && item.id.includes('camel')) score += 10;
+      if (q.includes('shikara') && item.id.includes('shikara')) score += 10;
+      if (q.includes('pashmina') && item.id.includes('pashmina')) score += 10;
+      if (q.includes('rafting') && item.id.includes('rafting')) score += 10;
       if (q.includes('boat') && item.id.includes('boat')) score += 8;
       if (q.includes('guide') && item.id.includes('guide')) score += 8;
       if (q.includes('parking') && item.id.includes('parking')) score += 8;
       if (q.includes('ferry') && item.id.includes('ferry')) score += 8;
+      if (q.includes('thali') && item.id.includes('thali')) score += 8;
 
       if (score > highestScore) {
         highestScore = score;
@@ -582,7 +592,7 @@ export class FairPriceEngine {
       }
     }
 
-    if (bestCatalogItem && highestScore >= 3) {
+    if (bestCatalogItem && highestScore >= 7) {
       const evalRes = userQuote ? this.evaluateQuote({
         userQuote,
         fairMin: bestCatalogItem.priceMin,

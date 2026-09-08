@@ -62,9 +62,9 @@ export const RaahiFair = {
   distanceKm: 13.8,
   vehicleType: 'auto',
   isNight: false,
-  waitingMin: 0,
-  userQuote: '',
   activeModalQuery: '',
+  getCommunityReports,
+  saveCommunityReport,
 
   /**
    * Open the Quick-Access Raahi Fair Cinematic Modal / Panel
