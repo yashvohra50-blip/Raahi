@@ -111,25 +111,75 @@
       <!-- Master Hero Section -->
       <section class="hero">
         <div class="hero-bg"></div>
-        <div class="hero-content">
-          <span class="eyebrow">NATIONAL TOURISM PLATFORM // 28 STATES & 8 UNION TERRITORIES</span>
-          <h1>
-            RAAHI<br>
-            DON'T JUST VISIT.<br>
-            <span>EXPERIENCE INDIA.</span>
-          </h1>
-          <p>
-            Discover 111+ curated destinations across all 36 Indian states and union territories. Explore royal citadels, high-altitude passes, sacred ghats, and living artisan quarters.
-          </p>
-          <div class="hero-actions">
-            <button onclick="window.raahiOpenSearchModal()" class="btn gold" style="display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);">
-              🔍 SEARCH ALL 36 STATES & DESTINATIONS
-            </button>
-            <a href="#interactive-map" class="btn light">INTERACTIVE INDIA MAP →</a>
-            <a href="#states" class="btn">EXPLORE 36 STATES & UTS →</a>
+        <div class="hero-ambient-glow"></div>
+        <div class="hero-grid-pattern"></div>
+        <div class="hero-wrap">
+          <div class="hero-content">
+            <div class="hero-eyebrow-badge">
+              <span class="pulse-dot"></span>
+              <span>✦ NATIONAL TOURISM PLATFORM // 28 STATES & 8 UNION TERRITORIES</span>
+            </div>
+            <h1 class="hero-title">
+              DON'T JUST VISIT.<br>
+              <span class="gold-gradient-text">EXPERIENCE INDIA.</span>
+            </h1>
+            <p class="hero-subtitle">
+              Discover 111+ curated destinations across all 36 Indian states and union territories. Explore royal citadels, high-altitude passes, sacred ghats, and living artisan quarters.
+            </p>
+            <div class="hero-actions">
+              <button onclick="window.raahiOpenSearchModal()" class="btn gold hero-btn-primary" title="Search all 36 States & Destinations">
+                <span class="btn-shine"></span>
+                <span>🔍 SEARCH ALL 36 STATES & DESTINATIONS</span>
+              </button>
+              <a href="#interactive-map" class="btn light hero-btn-secondary">
+                <span>INTERACTIVE INDIA MAP</span>
+                <span class="arrow">→</span>
+              </a>
+              <a href="#states" class="btn hero-btn-tertiary">
+                <span>EXPLORE 36 STATES & UTS</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Creative Floating Heritage Showcase Widget -->
+          <div class="hero-floating-card">
+            <div class="card-glass-body">
+              <div class="card-header-badge">
+                <span class="star-icon">✦</span>
+                <span>NATIONAL ARCHIVE HUB</span>
+              </div>
+              <div class="card-stat-grid">
+                <div class="stat-box">
+                  <span class="stat-val">36</span>
+                  <span class="stat-lbl">States & UTs</span>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-val">111+</span>
+                  <span class="stat-lbl">Curated Places</span>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-val">100%</span>
+                  <span class="stat-lbl">Verified Data</span>
+                </div>
+              </div>
+              <div class="card-live-ticker">
+                <span class="ticker-pulse"></span>
+                <span class="ticker-text">Amber Fort • Alleppey Backwaters • Taj Mahal • Munnar Tea Hills</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="hero-meta">NATIONAL ARCHIVE // 2026 // 36 DIVISIONS</div>
+
+        <div class="hero-meta">
+          <span class="meta-line"></span>
+          <span>NATIONAL ARCHIVE // 2026 // 36 DIVISIONS</span>
+        </div>
+
+        <div class="hero-scroll-indicator" onclick="document.getElementById('interactive-map')?.scrollIntoView({behavior: 'smooth'})" title="Scroll down to explore">
+          <span class="scroll-label">EXPLORE ARCHIVE</span>
+          <span class="scroll-arrow">↓</span>
+        </div>
         <div class="hero-line"></div>
       </section>
 
