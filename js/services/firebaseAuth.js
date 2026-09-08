@@ -1,6 +1,5 @@
 /**
  * RAAHI // Firebase Production Authentication Client Engine
- * Robust OAuth Redirect & Fallback Engine for Google, GitHub & Email Authentication.
  */
 
 // --- FIREBASE PRODUCTION CLIENT CONFIG ---
@@ -13,65 +12,66 @@ const firebaseConfig = {
   appId: "1:30439141474:web:294f728b48c81890a7213b"
 };
 
-function getAuth() {
-  if (typeof window.firebase !== "undefined" && window.firebase.apps && !window.firebase.apps.length) {
+// Guarantee SDK initialization
+if (typeof firebase !== 'undefined') {
+  if (!firebase.apps.length) {
     try {
-      window.firebase.initializeApp(firebaseConfig);
+      firebase.initializeApp(firebaseConfig);
+      console.log("[Firebase] Initialized successfully");
     } catch (e) {
-      console.warn('[RAAHI Auth] Firebase initializeApp warning:', e);
+      console.warn("[Firebase] initializeApp warning:", e);
     }
   }
-  return (typeof window.firebase !== "undefined" && window.firebase.auth) ? window.firebase.auth() : null;
+} else {
+  console.error("[Firebase] Fatal: SDK script not found in <head>");
 }
 
+const auth = typeof firebase !== 'undefined' && firebase.auth ? firebase.auth() : null;
+
 export function initFirebaseAuth() {
-  const authInstance = getAuth();
-  if (!authInstance) return;
+  if (!auth) return;
 
-  // Process OAuth Redirect Results when returning from Google / GitHub login site
-  authInstance.getRedirectResult().then((result) => {
-    if (result && result.user) {
-      const user = result.user;
-      console.log('[RAAHI Auth] Successfully redirected back from OAuth provider:', user.displayName || user.email);
-      showToast(`Welcome ${user.displayName || 'Operator'}! OAuth sign-in authorized.`);
-      closeAuthModal();
-    }
-  }).catch((err) => {
-    console.warn('[RAAHI Auth] Redirect Result Notice:', err.code, err.message);
-    handleAuthError(err, 'OAuth');
-  });
+  // Handle return from signInWithRedirect
+  auth.getRedirectResult()
+    .then((result) => {
+      if (result && result.user) {
+        console.log("[Auth] Redirect sign-in success:", result.user.email);
+        showToast(`Welcome ${result.user.displayName || 'Operator'}! OAuth sign-in authorized.`);
+        window.closeAuthModal();
+      }
+    })
+    .catch((err) => {
+      displayAuthStatus(`[${err.code || 'ERR'}]: ${err.message}`);
+    });
 
-  // Auth Session Listener
-  authInstance.onAuthStateChanged((user) => {
-    const btnText = document.getElementById("auth-btn-text");
+  // Keep trigger button in sync with auth state
+  auth.onAuthStateChanged((user) => {
     const btn = document.getElementById("auth-trigger-btn");
+    const btnText = document.getElementById("auth-btn-text");
 
     if (user) {
-      const displayName = user.displayName || (user.email ? user.email.split("@")[0].toUpperCase() : "OPERATOR");
-      if (btnText) btnText.textContent = `${displayName} [SIGN OUT]`;
+      const name = (user.displayName || user.email.split("@")[0]).toUpperCase();
+      if (btnText) btnText.textContent = `${name} [SIGN OUT]`;
       if (btn) {
         btn.style.borderColor = "rgba(16, 185, 129, 0.6)";
-        btn.onclick = () => {
-          const instance = getAuth();
-          if (instance) instance.signOut();
-        };
+        btn.onclick = () => auth.signOut();
       }
       const raahiUser = {
         email: user.email || 'operator@raahi.in',
-        name: displayName,
-        avatar: user.photoURL || displayName.charAt(0),
+        name: name,
+        avatar: name.charAt(0),
         uid: user.uid,
         loginTime: new Date().toISOString()
       };
       localStorage.setItem('raahi_user', JSON.stringify(raahiUser));
       updateSecurityModalUser(raahiUser);
-      updateSecurityModalLogs(`> Firebase Production Session Active: ${displayName}`);
-      closeAuthModal();
+      updateSecurityModalLogs(`> Firebase Production Session Active: ${name}`);
+      window.closeAuthModal();
     } else {
       if (btnText) btnText.textContent = "OPERATOR SIGN IN";
       if (btn) {
         btn.style.borderColor = "rgba(255, 255, 255, 0.08)";
-        btn.onclick = openAuthModal;
+        btn.onclick = window.openAuthModal;
       }
       localStorage.removeItem('raahi_user');
       updateSecurityModalUser(null);
@@ -80,59 +80,93 @@ export function initFirebaseAuth() {
   });
 }
 
-// Google Authentication - signInWithPopup + Popup Blocked Redirect Fallback
-window.loginWithGoogle = async function() {
-  const errEl = document.getElementById("auth-error-msg");
-  if (errEl) errEl.textContent = "Connecting to Google...";
+// Modal View Controllers
+window.openAuthModal = function() {
+  const modal = document.getElementById("auth-modal");
+  if (modal) modal.style.display = "flex";
+};
 
+window.closeAuthModal = function() {
+  const modal = document.getElementById("auth-modal");
+  if (modal) modal.style.display = "none";
+  const err = document.getElementById("auth-error-msg");
+  if (err) err.textContent = "";
+};
+
+function displayAuthStatus(msg, isError = true) {
+  const errEl = document.getElementById("auth-error-msg");
+  if (errEl) {
+    errEl.style.display = "block";
+    errEl.style.color = isError ? "#f43f5e" : "#10b981";
+    errEl.textContent = msg;
+  }
+}
+
+// Google Sign-In with Redirect Fallback
+window.loginWithGoogle = async function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  
+  if (window.location.protocol === 'file:') {
+    displayAuthStatus("Cannot run OAuth from file://. Serve site via http://localhost:9090");
+    return;
+  }
   if (typeof firebase === 'undefined' || !firebase.auth) {
-    if (errEl) errEl.textContent = "Firebase Auth SDK not loaded. Check script imports.";
-    simulateFallbackLogin('Google');
+    displayAuthStatus("Firebase SDK failed to load. Check script tags.");
     return;
   }
 
+  displayAuthStatus("Connecting to Google...", false);
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
 
   try {
     const res = await firebase.auth().signInWithPopup(provider);
-    console.log("Logged in:", res.user);
-    if (typeof closeAuthModal === 'function') closeAuthModal();
+    console.log("[Auth] Google Success:", res.user.email);
+    window.closeAuthModal();
   } catch (err) {
-    console.error("Google Auth error:", err);
+    console.error("[Auth] Google Error:", err);
     if (err.code === "auth/popup-blocked") {
-      if (errEl) errEl.textContent = "Popup blocked! Redirecting...";
+      displayAuthStatus("Popup blocked by browser. Redirecting...", false);
       firebase.auth().signInWithRedirect(provider);
+    } else if (err.code === "auth/unauthorized-domain" || err.code === "auth/operation-not-allowed") {
+      displayAuthStatus(`[${err.code}]: Domain pending activation in Firebase Console. Logging in locally...`, false);
+      simulateFallbackLogin('Google');
     } else {
-      handleAuthError(err, 'Google');
+      displayAuthStatus(`[${err.code}]: ${err.message}`);
     }
   }
 };
 
-// GitHub Authentication - signInWithPopup + Popup Blocked Redirect Fallback
-window.loginWithGitHub = async function() {
-  const errEl = document.getElementById("auth-error-msg");
-  if (errEl) errEl.textContent = "Connecting to GitHub...";
+// GitHub Sign-In with Redirect Fallback
+window.loginWithGitHub = async function(e) {
+  if (e && e.preventDefault) e.preventDefault();
 
+  if (window.location.protocol === 'file:') {
+    displayAuthStatus("Cannot run OAuth from file://. Serve site via http://localhost:9090");
+    return;
+  }
   if (typeof firebase === 'undefined' || !firebase.auth) {
-    if (errEl) errEl.textContent = "Firebase Auth SDK not loaded. Check script imports.";
-    simulateFallbackLogin('GitHub');
+    displayAuthStatus("Firebase SDK failed to load. Check script tags.");
     return;
   }
 
+  displayAuthStatus("Connecting to GitHub...", false);
   const provider = new firebase.auth.GithubAuthProvider();
 
   try {
     const res = await firebase.auth().signInWithPopup(provider);
-    console.log("Logged in with GitHub:", res.user);
-    if (typeof closeAuthModal === 'function') closeAuthModal();
+    console.log("[Auth] GitHub Success:", res.user.email);
+    window.closeAuthModal();
   } catch (err) {
-    console.error("GitHub Auth error:", err);
+    console.error("[Auth] GitHub Error:", err);
     if (err.code === "auth/popup-blocked") {
-      if (errEl) errEl.textContent = "Popup blocked! Redirecting...";
+      displayAuthStatus("Popup blocked by browser. Redirecting...", false);
       firebase.auth().signInWithRedirect(provider);
+    } else if (err.code === "auth/unauthorized-domain" || err.code === "auth/operation-not-allowed") {
+      displayAuthStatus(`[${err.code}]: Domain pending activation in Firebase Console. Logging in locally...`, false);
+      simulateFallbackLogin('GitHub');
     } else {
-      handleAuthError(err, 'GitHub');
+      displayAuthStatus(`[${err.code}]: ${err.message}`);
     }
   }
 };
@@ -152,16 +186,15 @@ window.loginWithEmail = async function() {
   const pass = passInput ? passInput.value : "";
 
   if (!email || !pass) {
-    const errEl = document.getElementById("auth-error-msg");
-    if (errEl) errEl.textContent = "Please enter both Email and Passcode.";
+    displayAuthStatus("Please enter both Email and Passcode.");
     return;
   }
 
   try {
     await auth.signInWithEmailAndPassword(email, pass);
-    closeAuthModal();
+    window.closeAuthModal();
   } catch (err) {
-    handleAuthError(err, 'Email');
+    displayAuthStatus(`[${err.code}]: ${err.message}`);
   }
 };
 
@@ -180,37 +213,17 @@ window.signupWithEmail = async function() {
   const pass = passInput ? passInput.value : "";
 
   if (!email || !pass) {
-    const errEl = document.getElementById("auth-error-msg");
-    if (errEl) errEl.textContent = "Please enter both Email and Passcode.";
+    displayAuthStatus("Please enter both Email and Passcode.");
     return;
   }
 
   try {
     await auth.createUserWithEmailAndPassword(email, pass);
-    closeAuthModal();
+    window.closeAuthModal();
   } catch (err) {
-    handleAuthError(err, 'Email');
+    displayAuthStatus(`[${err.code}]: ${err.message}`);
   }
 };
-
-// Helper to handle and display Auth errors with instant fallback
-function handleAuthError(err, providerName = 'Google') {
-  console.error('[RAAHI Auth] Error:', err.code, err.message);
-  const errEl = document.getElementById("auth-error-msg");
-  
-  let userMsg = err.message || 'Authentication error';
-  
-  // If domain is not authorized in Firebase Console or provider not configured, log user in via fallback session
-  if (err.code === 'auth/unauthorized-domain' || err.code === 'auth/operation-not-allowed' || err.code === 'auth/invalid-api-key' || err.code === 'auth/internal-error' || err.code === 'auth/auth-domain-config-required' || err.code === 'auth/popup-blocked') {
-    console.warn(`[RAAHI Auth] Firebase ${err.code}. Activating fallback session for ${providerName}.`);
-    showToast(`Authorized local session for ${providerName}.`);
-    simulateFallbackLogin(providerName);
-    return;
-  }
-
-  if (errEl) errEl.textContent = `[${err.code || 'ERR'}]: ${userMsg}`;
-  updateSecurityModalLogs(`> Auth Notice: ${userMsg}`);
-}
 
 function simulateFallbackLogin(providerName = 'Operator') {
   const cleanName = providerName.charAt(0).toUpperCase() + providerName.slice(1);
@@ -233,7 +246,7 @@ function simulateFallbackLogin(providerName = 'Operator') {
       if (btnText) btnText.textContent = "OPERATOR SIGN IN";
       if (btn) {
         btn.style.borderColor = "rgba(255, 255, 255, 0.08)";
-        btn.onclick = openAuthModal;
+        btn.onclick = window.openAuthModal;
       }
       showToast('Signed out from Operator session.');
     };
@@ -241,22 +254,9 @@ function simulateFallbackLogin(providerName = 'Operator') {
 
   if (window.updateAuthNavButton) window.updateAuthNavButton();
   showToast(`Welcome Operator ${userObj.name}!`);
-  closeAuthModal();
+  window.closeAuthModal();
   window.location.hash = '#/home';
 }
-
-// Modal Controls
-window.openAuthModal = function() {
-  const modal = document.getElementById("auth-modal");
-  if (modal) modal.style.display = "flex";
-};
-
-window.closeAuthModal = function() {
-  const modal = document.getElementById("auth-modal");
-  if (modal) modal.style.display = "none";
-  const err = document.getElementById("auth-error-msg");
-  if (err) err.textContent = "";
-};
 
 export function triggerFirebaseSignIn(providerName = 'Google') {
   if (providerName.toLowerCase() === 'github') {
