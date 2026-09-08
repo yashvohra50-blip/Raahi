@@ -125,10 +125,15 @@ export const RaahiFair = {
    * Render the contents of the Quick-Access Modal
    */
   renderModal(modalElement, context = {}) {
+    const el = (typeof modalElement === 'string') 
+      ? document.getElementById(modalElement) 
+      : (modalElement || document.getElementById('raahi-fair-modal'));
+    if (!el) return;
+
     const initialQuery = context.query || (context.destination ? `Entry ticket for ${context.destination}` : '');
     const initialCity = context.city || 'jaipur';
 
-    modalElement.innerHTML = `
+    el.innerHTML = `
       <div class="fair-modal-header">
         <div class="fair-modal-title-group">
           <div class="fair-modal-eyebrow">
@@ -291,7 +296,7 @@ export const RaahiFair = {
       </div>
     `;
 
-    this.attachModalEventListeners(modalElement, context);
+    this.attachModalEventListeners(el, context);
   },
 
   /**
@@ -331,13 +336,18 @@ export const RaahiFair = {
    * Attach interactive listeners inside the modal
    */
   attachModalEventListeners(modalElement, context = {}) {
-    const input = modalElement.querySelector('#raahi-fair-modal-input');
-    const submitBtn = modalElement.querySelector('#raahi-fair-modal-submit');
-    const quoteInput = modalElement.querySelector('#raahi-fair-modal-quote');
-    const suggestedPills = modalElement.querySelectorAll('.fair-suggested-pill');
-    const toggleReportBtn = modalElement.querySelector('#fair-toggle-report-btn');
-    const cancelReportBtn = modalElement.querySelector('#fair-cancel-report-btn');
-    const reportForm = modalElement.querySelector('#fair-report-form');
+    const el = (typeof modalElement === 'string') 
+      ? document.getElementById(modalElement) 
+      : (modalElement || document.getElementById('raahi-fair-modal'));
+    if (!el) return;
+
+    const input = el.querySelector('#raahi-fair-modal-input');
+    const submitBtn = el.querySelector('#raahi-fair-modal-submit');
+    const quoteInput = el.querySelector('#raahi-fair-modal-quote');
+    const suggestedPills = el.querySelectorAll('.fair-suggested-pill');
+    const toggleReportBtn = el.querySelector('#fair-toggle-report-btn');
+    const cancelReportBtn = el.querySelector('#fair-cancel-report-btn');
+    const reportForm = el.querySelector('#fair-report-form');
 
     const doSearch = () => {
       const q = input?.value.trim() || '';
