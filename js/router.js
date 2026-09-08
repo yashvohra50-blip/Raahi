@@ -109,12 +109,78 @@ document.addEventListener('keydown', (e) => {
 // App Router Initializer
 export function initRouter() {
   window.addEventListener('hashchange', handleRoute);
-  window.addEventListener('load', handleRoute);
+  window.addEventListener('load', () => {
+    handleRoute();
+    setupNavClickHandlers();
+  });
   handleRoute();
+  setupNavClickHandlers();
 }
 
 export function navigateTo(hash) {
   window.location.hash = hash;
+}
+
+export function scrollToSection(targetId) {
+  const targetEl = document.getElementById(targetId);
+  if (!targetEl) return;
+  const nav = document.querySelector('.nav');
+  const navHeight = nav ? nav.offsetHeight + 16 : 80;
+  const targetPosition = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
+  window.scrollTo({
+    top: targetPosition,
+    behavior: 'smooth'
+  });
+}
+
+export function setupNavClickHandlers() {
+  document.querySelectorAll('.navlinks a, .mobile-nav-links a').forEach(link => {
+    link.onclick = (e) => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      // Close mobile drawer if active
+      const mobileDrawer = document.getElementById('mobile-menu-drawer');
+      if (mobileDrawer) {
+        mobileDrawer.classList.remove('active');
+        document.body.classList.remove('lock-scroll');
+      }
+
+      if (href.startsWith('#/') && href !== '#/home') {
+        // Route view like #/journey or #/states/rajasthan
+        return;
+      }
+
+      e.preventDefault();
+
+      // Active state highlight on header nav
+      document.querySelectorAll('.navlinks a').forEach(l => l.classList.remove('active'));
+      if (link.closest('.navlinks')) {
+        link.classList.add('active');
+      }
+
+      const targetId = href.startsWith('#/') ? null : href.replace('#', '');
+      const homeView = document.getElementById('view-home');
+      const isHomeVisible = homeView && homeView.style.display !== 'none';
+
+      if (!isHomeVisible) {
+        window.location.hash = '#/home';
+        setTimeout(() => {
+          if (targetId) {
+            scrollToSection(targetId);
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }, 120);
+      } else {
+        if (targetId) {
+          scrollToSection(targetId);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    };
+  });
 }
 
 // Global state for progressive pagination on home view
@@ -140,7 +206,11 @@ function handleRoute() {
   const mainFooter = document.querySelector('.footer');
   const assistantTrigger = document.getElementById('raahi-assistant-trigger');
 
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  // Only scroll to top if navigating to a full page view route
+  const isViewRoute = hash.startsWith('#/destinations/') || hash.startsWith('#/states/') || hash.startsWith('#/cities/') || hash === '#/journey' || hash.startsWith('#/cinematic/');
+  if (isViewRoute) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
 
   // Cleanup active cinematic engine if navigating away from cinematic mode
   if (!hash.startsWith('#/cinematic/') && window.raahiCinematicEngineInstance) {
@@ -207,6 +277,13 @@ function handleRoute() {
     } else {
       if (homeView) homeView.style.display = 'block';
       renderHomeView();
+
+      const sectionId = (!hash.startsWith('#/') && hash.startsWith('#')) ? hash.replace('#', '') : null;
+      if (sectionId) {
+        setTimeout(() => {
+          scrollToSection(sectionId);
+        }, 100);
+      }
     }
   }
 
