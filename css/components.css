@@ -1569,12 +1569,15 @@ body.lock-scroll {
 
 .search-modal {
   position: fixed;
-  top: 50%;
+  top: 95px;
   left: 50%;
-  transform: translate(-50%, -46%) scale(0.94);
+  transform: translate(-50%, -15px) scale(0.96);
   z-index: 9999;
-  width: 90vw;
+  width: 92vw;
   max-width: 780px;
+  max-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(145deg, rgba(13, 20, 16, 0.98) 0%, rgba(7, 11, 9, 0.98) 100%);
   border: 1px solid rgba(212, 175, 55, 0.4);
   border-radius: 20px;
@@ -1582,13 +1585,13 @@ body.lock-scroll {
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.25s ease;
 }
 
 .search-modal.active {
   opacity: 1;
   visibility: visible;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, 0) scale(1);
 }
 
 .search-modal-header {
