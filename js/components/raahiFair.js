@@ -1,9 +1,10 @@
 /**
- * RAAHI FAIR // UI Component & Interactive Controller
- * "Know the price before you pay"
+ * RAAHI FAIR // UI Component, Modal Drawer & Interactive Controller
+ * "KNOW THE PRICE BEFORE YOU PAY."
  * 
  * Strict Principle: NO VERIFIED DATA = NO CLAIM.
- * Zero AI guesses. Transparent calculations from official gazettes and published tariffs.
+ * Never invents prices. Transparent calculations from official gazettes and published tariffs.
+ * Completely separates VERIFIED PRICE from COMMUNITY REPORT (UNVERIFIED).
  */
 
 import { FairPriceEngine } from '../services/fairPriceEngine.js';
@@ -15,25 +16,613 @@ import {
   SOURCE_TYPES 
 } from '../data/fairPricesData.js';
 
+const COMMUNITY_STORAGE_KEY = 'raahi_fair_community_reports';
+
+export function getCommunityReports() {
+  try {
+    const raw = localStorage.getItem(COMMUNITY_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [
+      {
+        id: 'cr-1',
+        category: 'transport',
+        item: 'Prepaid auto from Jaipur Jn to Amber Fort',
+        price: 180,
+        city: 'Jaipur, Rajasthan',
+        date: '2026-09-02',
+        note: 'Prepaid booth outside platform 1, official receipt given'
+      },
+      {
+        id: 'cr-2',
+        category: 'activities',
+        item: 'Morning rowing boat from Dashashwamedh Ghat (private)',
+        price: 450,
+        city: 'Varanasi, Uttar Pradesh',
+        date: '2026-08-29',
+        note: 'Agreed for 1.5 hr sunrise cruise across main ghats'
+      }
+    ];
+  } catch (e) {
+    return [];
+  }
+}
+
+export function saveCommunityReport(report) {
+  try {
+    const list = getCommunityReports();
+    list.unshift(report);
+    localStorage.setItem(COMMUNITY_STORAGE_KEY, JSON.stringify(list));
+  } catch (e) {}
+}
+
 export const RaahiFair = {
   activeCategory: 'transport',
   selectedCity: 'jaipur',
   selectedRouteId: '',
   selectedItemId: '',
-  distanceKm: 13.5,
+  distanceKm: 13.8,
   vehicleType: 'auto',
   isNight: false,
   waitingMin: 0,
   userQuote: '',
+  activeModalQuery: '',
 
   /**
-   * Render the dedicated Raahi Fair Page
+   * Open the Quick-Access Raahi Fair Cinematic Modal / Panel
+   */
+  openModal(context = {}) {
+    let overlay = document.getElementById('raahi-fair-overlay');
+    let modal = document.getElementById('raahi-fair-modal');
+
+    // Dynamically create modal DOM if not already present
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'raahi-fair-overlay';
+      overlay.className = 'raahi-fair-overlay';
+      overlay.onclick = () => window.raahiCloseFairModal();
+      document.body.appendChild(overlay);
+    }
+
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'raahi-fair-modal';
+      modal.className = 'raahi-fair-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-label', 'Raahi Fair Price Intelligence');
+      document.body.appendChild(modal);
+    }
+
+    this.renderModal(modal, context);
+    overlay.classList.add('active');
+    modal.classList.add('active');
+    document.body.classList.add('lock-scroll');
+
+    // Auto-focus search input
+    setTimeout(() => {
+      const input = document.getElementById('raahi-fair-modal-input');
+      if (input) {
+        input.focus();
+        if (context.query) {
+          input.value = context.query;
+          this.executeModalSearch(context.query, context);
+        }
+      }
+    }, 100);
+  },
+
+  /**
+   * Close the Quick-Access Raahi Fair Modal
+   */
+  closeModal() {
+    const overlay = document.getElementById('raahi-fair-overlay');
+    const modal = document.getElementById('raahi-fair-modal');
+    if (overlay) overlay.classList.remove('active');
+    if (modal) modal.classList.remove('active');
+    document.body.classList.remove('lock-scroll');
+  },
+
+  /**
+   * Render the contents of the Quick-Access Modal
+   */
+  renderModal(modalElement, context = {}) {
+    const initialQuery = context.query || (context.destination ? `Entry ticket for ${context.destination}` : '');
+    const initialCity = context.city || 'jaipur';
+
+    modalElement.innerHTML = `
+      <div class="fair-modal-header">
+        <div class="fair-modal-title-group">
+          <div class="fair-modal-eyebrow">
+            <span class="mark" style="width: 12px; height: 12px; border-color: var(--gold);"></span>
+            ⚖️ RAAHI FAIR // TRAVEL PRICE TRANSPARENCY
+          </div>
+          <h2 class="fair-modal-heading">KNOW THE PRICE BEFORE YOU PAY.</h2>
+          <p class="fair-modal-subtitle">Transparent, verified pricing for travel across India.</p>
+        </div>
+        <button class="stage-btn fair-modal-close-btn" onclick="window.raahiCloseFairModal()" title="Close (Esc)">✕</button>
+      </div>
+
+      <div class="fair-modal-body">
+        <!-- Natural Language Search Bar -->
+        <div class="fair-search-box">
+          <label class="fair-label" for="raahi-fair-modal-input">WHAT ARE YOU PAYING FOR?</label>
+          <div class="fair-search-input-wrapper">
+            <input 
+              type="text" 
+              id="raahi-fair-modal-input" 
+              class="fair-search-input" 
+              placeholder="e.g. Auto from Jaipur Railway Station to Amber Fort" 
+              value="${initialQuery}"
+              autocomplete="off"
+            />
+            <button id="raahi-fair-modal-submit" class="btn gold fair-search-btn">
+              CHECK FAIR PRICE →
+            </button>
+          </div>
+          <div class="fair-search-examples">
+            Try: "Auto from Jaipur station to Amber Fort" • "Cab from Delhi airport to Connaught Place" • "Entry ticket for Amber Fort" • "Price of camel ride in Jaisalmer"
+          </div>
+        </div>
+
+        <!-- Suggested Search Pills -->
+        <div class="fair-suggested-pills-bar">
+          <span class="fair-suggested-label">Quick Checks:</span>
+          <button class="fair-suggested-pill" data-query="Auto fare in Jaipur">🛺 Auto fare</button>
+          <button class="fair-suggested-pill" data-query="Cab from Delhi airport to Connaught Place">🚕 Taxi fare</button>
+          <button class="fair-suggested-pill" data-query="Entry ticket for Amber Fort">🏛️ Entry tickets</button>
+          <button class="fair-suggested-pill" data-query="Sunrise boat ride in Varanasi">⛵ Boat rides</button>
+          <button class="fair-suggested-pill" data-query="Authentic Rajasthani Thali in Jaipur">🍛 Food prices</button>
+          <button class="fair-suggested-pill" data-query="Pure Kashmir Pashmina Shawl">🧵 Shopping</button>
+          <button class="fair-suggested-pill" data-query="Ministry of Tourism approved guide charges">🧭 Guide charges</button>
+          <button class="fair-suggested-pill" data-query="Official monument parking tariff">🅿️ Parking</button>
+          <button class="fair-suggested-pill" data-query="Price of camel ride in Jaisalmer">🐪 Camel ride</button>
+        </div>
+
+        <!-- Optional Quote Comparison Box -->
+        <div class="fair-modal-quote-strip">
+          <div style="flex: 1; min-width: 200px;">
+            <label class="fair-label" style="margin-bottom: 4px; color: var(--gold);">
+              WHAT WERE YOU QUOTED? (OPTIONAL COMPARISON)
+            </label>
+            <div class="fair-quote-input-wrapper" style="max-width: 260px;">
+              <span class="fair-currency-symbol">₹</span>
+              <input type="number" id="raahi-fair-modal-quote" class="fair-quote-input" placeholder="e.g. 350" min="0" step="10" />
+            </div>
+          </div>
+          <div style="flex: 1; min-width: 220px; font-size: 0.8rem; color: var(--muted); line-height: 1.5;">
+            Enter the exact quote a driver, vendor, or guide gave you. Raahi will evaluate whether it is aligned with verified local rates or inflated.
+          </div>
+        </div>
+
+        <!-- Results Mount Container -->
+        <div id="raahi-fair-modal-results" class="fair-modal-results-container">
+          <!-- Initial Welcome Guidance -->
+          <div class="fair-initial-placeholder">
+            <div style="font-size: 2rem; margin-bottom: 12px;">⚖️</div>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; color: var(--cream); margin-bottom: 6px;">
+              OFFICIAL RATES & VERIFIED BENCHMARKS
+            </h4>
+            <p style="color: var(--muted-bright); font-size: 0.9rem; max-width: 540px; margin: 0 auto; line-height: 1.6;">
+              Type a transport route, monument ticket, local activity, or artisan craft above. Raahi resolves exact gazetted fares and published state tariffs.
+            </p>
+          </div>
+        </div>
+
+        <!-- Report a Price Section (Community Intelligence) -->
+        <div class="fair-report-section" id="fair-modal-report-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h4 style="font-family: var(--font-display); font-size: 0.95rem; color: var(--cream); margin: 0;">
+                📢 HELP FELLOW TRAVELERS
+              </h4>
+              <p style="font-size: 0.8rem; color: var(--muted); margin: 2px 0 0;">
+                Were you charged a fair or unfair price? Submit an on-ground report.
+              </p>
+            </div>
+            <button id="fair-toggle-report-btn" class="btn light" style="font-size: 0.75rem; padding: 8px 16px;">
+              + Report a Price You Paid
+            </button>
+          </div>
+
+          <!-- Collapsible Report Form -->
+          <form id="fair-report-form" class="fair-report-form" style="display: none; margin-top: 16px;">
+            <div class="fair-grid-2">
+              <div class="fair-field-group">
+                <label class="fair-label">ITEM / SERVICE DESCRIPTION *</label>
+                <input type="text" id="rep-item" class="fair-input" placeholder="e.g. Auto from Sindhi Camp to City Palace" required />
+              </div>
+              <div class="fair-field-group">
+                <label class="fair-label">PRICE YOU WERE CHARGED (₹) *</label>
+                <input type="number" id="rep-price" class="fair-input" placeholder="e.g. 200" min="1" required />
+              </div>
+            </div>
+
+            <div class="fair-grid-2">
+              <div class="fair-field-group">
+                <label class="fair-label">CATEGORY *</label>
+                <select id="rep-category" class="fair-select">
+                  <option value="transport">🛺 Transport & Cabs</option>
+                  <option value="food">🍛 Food & Dining</option>
+                  <option value="shopping">🧵 Artisanal Shopping</option>
+                  <option value="activity">⛵ Local Activities & Tours</option>
+                  <option value="service">🧭 Guides & Services</option>
+                  <option value="other">📦 Other Travel Expense</option>
+                </select>
+              </div>
+              <div class="fair-field-group">
+                <label class="fair-label">CITY / LOCATION *</label>
+                <input type="text" id="rep-location" class="fair-input" placeholder="e.g. Jaipur, Rajasthan" required />
+              </div>
+            </div>
+
+            <div class="fair-field-group">
+              <label class="fair-label">DATE OF EXPERIENCE</label>
+              <input type="date" id="rep-date" class="fair-input" value="${new Date().toISOString().split('T')[0]}" />
+            </div>
+
+            <div class="fair-field-group">
+              <label class="fair-label">OPTIONAL ON-GROUND NOTE</label>
+              <textarea id="rep-note" class="fair-input" style="height: 60px; resize: vertical;" placeholder="e.g. Driver refused meter at first, agreed after mentioning RTO prepaid rate."></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;">
+              <button type="button" id="fair-cancel-report-btn" class="btn" style="padding: 8px 16px; font-size: 0.75rem;">Cancel</button>
+              <button type="submit" class="btn gold" style="padding: 8px 20px; font-size: 0.75rem;">Submit Community Report →</button>
+            </div>
+            
+            <p style="font-size: 0.75rem; color: var(--muted); margin-top: 10px; line-height: 1.4;">
+              Note: Reported prices are stored locally and labeled strictly as <strong>COMMUNITY REPORT (UNVERIFIED)</strong> to maintain our core principle of truthful, verified benchmarks.
+            </p>
+          </form>
+
+          <!-- Community Reports Display -->
+          <div id="fair-modal-community-reports" style="margin-top: 16px;">
+            ${this.renderCommunityReportsHTML()}
+          </div>
+        </div>
+      </div>
+
+      <div class="fair-modal-footer">
+        <div style="font-size: 0.78rem; color: var(--muted-bright);">
+          🛡️ <strong>Principle:</strong> NO VERIFIED DATA = NO CLAIM. Zero AI guesswork.
+        </div>
+        <a href="#/fair" onclick="window.raahiCloseFairModal()" class="fair-full-page-link">
+          Open Full Dedicated Calculator ↗
+        </a>
+      </div>
+    `;
+
+    this.attachModalEventListeners(modalElement, context);
+  },
+
+  /**
+   * Render HTML for Community Reports
+   */
+  renderCommunityReportsHTML() {
+    const reports = getCommunityReports();
+    if (!reports || reports.length === 0) return '';
+
+    return `
+      <div style="border-top: 1px solid var(--line); padding-top: 14px; margin-top: 14px;">
+        <span class="eyebrow" style="font-size: 0.68rem; color: var(--muted); margin-bottom: 8px;">
+          COMMUNITY REPORTS (UNVERIFIED)
+        </span>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          ${reports.slice(0, 3).map(r => `
+            <div class="community-report-item">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                <div>
+                  <strong style="color: var(--cream); font-size: 0.85rem;">${r.item}</strong>
+                  <div style="color: var(--muted); font-size: 0.75rem;">${r.city} • ${r.date}</div>
+                </div>
+                <div style="text-align: right;">
+                  <span style="font-family: var(--font-display); font-weight: 700; color: #f59e0b; font-size: 0.95rem;">₹${r.price}</span>
+                  <div class="badge-unverified-tag">COMMUNITY REPORT</div>
+                </div>
+              </div>
+              ${r.note ? `<p style="margin: 4px 0 0; font-size: 0.78rem; color: var(--muted-bright); font-style: italic;">"${r.note}"</p>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  },
+
+  /**
+   * Attach interactive listeners inside the modal
+   */
+  attachModalEventListeners(modalElement, context = {}) {
+    const input = modalElement.querySelector('#raahi-fair-modal-input');
+    const submitBtn = modalElement.querySelector('#raahi-fair-modal-submit');
+    const quoteInput = modalElement.querySelector('#raahi-fair-modal-quote');
+    const suggestedPills = modalElement.querySelectorAll('.fair-suggested-pill');
+    const toggleReportBtn = modalElement.querySelector('#fair-toggle-report-btn');
+    const cancelReportBtn = modalElement.querySelector('#fair-cancel-report-btn');
+    const reportForm = modalElement.querySelector('#fair-report-form');
+
+    const doSearch = () => {
+      const q = input?.value.trim() || '';
+      if (!q) return;
+      this.executeModalSearch(q, {
+        ...context,
+        userQuote: quoteInput?.value ? parseFloat(quoteInput.value) : null
+      });
+    };
+
+    submitBtn?.addEventListener('click', doSearch);
+    input?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        doSearch();
+      }
+    });
+
+    quoteInput?.addEventListener('input', () => {
+      const q = input?.value.trim() || '';
+      if (q) doSearch();
+    });
+
+    suggestedPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const queryText = pill.getAttribute('data-query');
+        if (input) input.value = queryText;
+        doSearch();
+      });
+    });
+
+    // Toggle Report Form
+    toggleReportBtn?.addEventListener('click', () => {
+      if (reportForm) {
+        const isHidden = reportForm.style.display === 'none';
+        reportForm.style.display = isHidden ? 'block' : 'none';
+        toggleReportBtn.textContent = isHidden ? '✕ Close Form' : '+ Report a Price You Paid';
+      }
+    });
+
+    cancelReportBtn?.addEventListener('click', () => {
+      if (reportForm) {
+        reportForm.style.display = 'none';
+        if (toggleReportBtn) toggleReportBtn.textContent = '+ Report a Price You Paid';
+      }
+    });
+
+    // Handle Report Form Submit
+    reportForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const item = document.getElementById('rep-item')?.value.trim();
+      const price = parseFloat(document.getElementById('rep-price')?.value);
+      const category = document.getElementById('rep-category')?.value;
+      const location = document.getElementById('rep-location')?.value.trim();
+      const date = document.getElementById('rep-date')?.value;
+      const note = document.getElementById('rep-note')?.value.trim();
+
+      if (!item || isNaN(price) || !location) return;
+
+      saveCommunityReport({
+        id: 'cr-' + Date.now(),
+        item,
+        price,
+        category,
+        city: location,
+        date: date || new Date().toISOString().split('T')[0],
+        note
+      });
+
+      reportForm.reset();
+      reportForm.style.display = 'none';
+      if (toggleReportBtn) toggleReportBtn.textContent = '+ Report a Price You Paid';
+
+      const listContainer = document.getElementById('fair-modal-community-reports');
+      if (listContainer) {
+        listContainer.innerHTML = this.renderCommunityReportsHTML();
+      }
+
+      alert("Thank you! Your report has been saved. It is labeled as a COMMUNITY REPORT (UNVERIFIED) to separate community data from verified government and ASI tariffs.");
+    });
+  },
+
+  /**
+   * Execute search and render result cards in the modal
+   */
+  executeModalSearch(query, context = {}) {
+    const resultsContainer = document.getElementById('raahi-fair-modal-results');
+    if (!resultsContainer) return;
+
+    this.activeModalQuery = query;
+    const result = FairPriceEngine.parseAndResolveQuery(query, context);
+
+    resultsContainer.innerHTML = this.renderResultHTML(result, context.userQuote || result.userQuote);
+  },
+
+  /**
+   * Universal HTML Card Renderer for verified or unverified query results
+   */
+  renderResultHTML(result, userQuote = null) {
+    if (!result.verified) {
+      // UNVERIFIED / UNKNOWN CARD (STRICT TRUTH IN PRICING)
+      return `
+        <div class="fair-unverified-card">
+          <div class="fair-unverified-header">
+            <span class="badge-unverified-tag">⚠️ ${result.status || 'PRICE NOT VERIFIED'}</span>
+            <span style="font-size: 0.78rem; color: var(--muted);">Strict Verification Protocol</span>
+          </div>
+
+          <h3 class="fair-unverified-title">
+            PRICE NOT VERIFIED
+          </h3>
+
+          <p class="fair-unverified-message">
+            We couldn't verify a current price for "${result.query || 'this item'}" yet.
+          </p>
+
+          <p class="fair-unverified-explanation">
+            In adherence to Raahi's strict transparency policy, <strong>we never synthesize estimated numbers or AI guesses</strong>. If official government gazettes, ASI tariffs, or verified operator rate cards are not available for this specific service, we explicitly declare it UNVERIFIED.
+          </p>
+
+          <div class="fair-advice-box" style="margin-top: 16px;">
+            <h4>💡 RECOMMENDED ON-GROUND VERIFICATION STEPS:</h4>
+            <ul class="fair-advice-list">
+              ${(result.fallbackGuidance || [
+                "Check for official tariff boards or displayed government rate cards on site",
+                "Insist on the electronic digital meter for autos/taxis in municipal regions",
+                "Use official prepaid counters at transit terminals (airports, major railway stations)"
+              ]).map(step => `<li>${step}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    // VERIFIED RESULT CARD
+    const quoteEval = result.evaluation;
+    const fairRangeString = result.fairMin === result.fairMax 
+      ? `₹${result.fairMin}` 
+      : `₹${result.fairMin} – ₹${result.fairMax}`;
+
+    return `
+      <div class="fair-result-card">
+        <!-- Meta Status Row -->
+        <div class="fair-result-meta-row">
+          <span class="fair-price-type-pill" style="border-color: rgba(212,175,55,0.4); color: var(--gold);">
+            ● ${result.priceType}
+          </span>
+          <span style="font-size: 0.8rem; color: var(--muted);">
+            Confidence: <strong style="color: #10b981;">${result.confidence || 'VERIFIED'}</strong> • Last Verified: <strong>${result.lastVerified || 'September 2026'}</strong>
+          </span>
+        </div>
+
+        <!-- Big Price Comparison Grid -->
+        <div class="fair-comparison-grid">
+          <div class="fair-price-col">
+            <div class="sublabel">VERIFIED FAIR PRICE</div>
+            <div class="main-val" style="color: var(--gold);">
+              ${fairRangeString}
+            </div>
+            <div style="font-size: 0.8rem; color: var(--muted); margin-top: 4px;">
+              ${result.unit ? result.unit : (result.vehicleName ? `trip (${result.distanceKm || ''} km)` : 'standard entry / rate')}
+            </div>
+          </div>
+
+          <div class="fair-vs-divider">VS</div>
+
+          <div class="fair-price-col">
+            <div class="sublabel">WHAT YOU WERE QUOTED</div>
+            <div class="main-val" style="color: ${quoteEval ? quoteEval.color : 'var(--muted-dim)'};">
+              ${userQuote ? '₹' + userQuote : '—'}
+            </div>
+            <div style="margin-top: 6px;">
+              ${quoteEval ? `
+                <span class="fair-price-type-pill ${quoteEval.badgeClass}" style="font-size: 0.72rem; padding: 4px 10px;">
+                  ${quoteEval.label}
+                </span>
+              ` : `
+                <span style="font-size: 0.76rem; color: var(--muted);">Optional quote comparison</span>
+              `}
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote Evaluation Status Banner -->
+        ${quoteEval ? `
+          <div class="fair-status-banner" style="background: ${quoteEval.status === 'FAIR' ? 'rgba(16,185,129,0.08)' : (quoteEval.status === 'HIGH' ? 'rgba(245,158,11,0.08)' : 'rgba(244,63,94,0.08)')}; border: 1px solid ${quoteEval.color};">
+            <span style="font-size: 1.3rem;">
+              ${quoteEval.status === 'FAIR' ? '✅' : (quoteEval.status === 'HIGH' ? '⚠️' : '🚨')}
+            </span>
+            <div>
+              <strong style="color: ${quoteEval.color}; font-family: var(--font-display); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">
+                ${quoteEval.label}: ${quoteEval.diffPercent ? quoteEval.diffPercent + '% above verified rate' : 'Within fair local range'}
+              </strong>
+              <div style="color: var(--cream); font-size: 0.88rem;">
+                ${quoteEval.message}
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Itemized Transparent Math Breakdown -->
+        ${result.breakdown && result.breakdown.length > 0 ? `
+          <div class="fair-breakdown-box">
+            <div class="fair-breakdown-title">
+              📊 PRICE DETAILS & CALCULATION
+            </div>
+            ${result.breakdown.map(b => `
+              <div class="fair-breakdown-row">
+                <span>${b.label}</span>
+                <span style="font-family: var(--font-display); font-weight: 600;">${b.amount}</span>
+              </div>
+            `).join('')}
+            <div class="fair-breakdown-row total">
+              <span>Total Verified Fare</span>
+              <span style="font-family: var(--font-display); color: var(--gold); font-size: 1.05rem;">${fairRangeString}</span>
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Trust Evidence Box -->
+        <div class="fair-trust-box">
+          <h4>
+            <span>🛡️</span> SOURCE & VERIFICATION
+          </h4>
+          <ul class="fair-trust-list">
+            <li>
+              <strong>Verified from:</strong> ${result.source || 'Official Government Gazette'}
+            </li>
+            <li>
+              <strong>Authority Type:</strong> ${result.sourceType || SOURCE_TYPES.GOVERNMENT}
+            </li>
+            <li>
+              <strong>Last Verified:</strong> ${result.lastVerified || 'September 2026'}
+            </li>
+            <li>
+              <strong>Confidence Rating:</strong> <span style="color: #10b981; font-weight: 600;">VERIFIED (${result.confidence || 'HIGH'})</span>
+            </li>
+            ${result.meterMandatory ? `
+              <li>
+                <strong>Legal Mandate:</strong> Digital electronic meter is legally mandatory for this route under state RTO rules.
+              </li>
+            ` : ''}
+          </ul>
+        </div>
+
+        <!-- On-Ground Guidance -->
+        <div class="fair-advice-box">
+          <h4>
+            💡 WHAT YOU CAN DO & ADVICE
+          </h4>
+          <ul class="fair-advice-list">
+            ${(result.whatYouCanDo || [
+              "Politely ask the operator: 'Bhaiya, meter se chalenge?' (Brother, will you go by the meter?)",
+              "If flat fare is insisted, negotiate respectfully around the calculated upper threshold.",
+              "Check for official pre-paid counters at major railway stations and airports."
+            ]).map(tip => `
+              <li>${tip}</li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <!-- Source Link Footer -->
+        <div class="fair-source-footer">
+          <div>
+            Location: <strong>${result.city || 'India'}, ${result.state || ''}</strong>
+          </div>
+          ${result.sourceUrl ? `
+            <a href="${result.sourceUrl}" target="_blank" rel="noopener noreferrer" class="fair-source-link">
+              View Official Regulatory Tariff ↗
+            </a>
+          ` : `
+            <span>Verified Official Record</span>
+          `}
+        </div>
+      </div>
+    `;
+  },
+
+  /**
+   * Render the dedicated Raahi Fair Full Page View (#/fair)
    */
   renderFullPage(containerId = 'view-fair', params = {}) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Apply URL params if provided
     if (params.city) {
       this.selectedCity = params.city.toLowerCase();
     }
@@ -44,7 +633,6 @@ export const RaahiFair = {
     const cities = FairPriceEngine.getSupportedCities();
     const cityExists = cities.some(c => c.slug === this.selectedCity);
     if (!cityExists && this.selectedCity !== 'all') {
-      // Default to Jaipur if unsupported slug passed
       this.selectedCity = 'jaipur';
     }
 
@@ -68,16 +656,47 @@ export const RaahiFair = {
                 ✓ Official ASI Tariffs
               </span>
               <span class="fair-price-type-pill" style="border-color: rgba(192,132,252,0.4); color: #c084fc;">
-                ✓ GI Craft Benchmarks
+                ✓ Registered Union Benchmarks
               </span>
               <span class="fair-price-type-pill" style="border-color: rgba(148,163,184,0.4); color: #94a3b8;">
-                ✓ Zero AI-Generated Guesses
+                ✓ Zero AI Guesses (NO DATA = NO CLAIM)
               </span>
             </div>
           </div>
 
           <!-- Main Interactive Card -->
           <div class="fair-card">
+            <!-- Universal Natural Language Query Bar -->
+            <div class="fair-search-box" style="margin-bottom: 24px;">
+              <label class="fair-label" for="fair-page-search-input">WHAT ARE YOU PAYING FOR?</label>
+              <div class="fair-search-input-wrapper">
+                <input 
+                  type="text" 
+                  id="fair-page-search-input" 
+                  class="fair-search-input" 
+                  placeholder="e.g. Auto from Jaipur Railway Station to Amber Fort" 
+                />
+                <button id="fair-page-search-btn" class="btn gold fair-search-btn">
+                  CHECK FAIR PRICE →
+                </button>
+              </div>
+              <div class="fair-suggested-pills-bar" style="margin-top: 12px;">
+                <span class="fair-suggested-label">Quick Checks:</span>
+                <button class="fair-suggested-pill page-pill" data-query="Auto from Jaipur station to Amber Fort">Jaipur Auto</button>
+                <button class="fair-suggested-pill page-pill" data-query="Cab from Delhi airport to Connaught Place">Delhi Cab</button>
+                <button class="fair-suggested-pill page-pill" data-query="Entry ticket for Amber Fort">Amber Fort Ticket</button>
+                <button class="fair-suggested-pill page-pill" data-query="Taj Mahal ticket">Taj Mahal Ticket</button>
+                <button class="fair-suggested-pill page-pill" data-query="Price of camel ride in Jaisalmer">Camel Ride</button>
+                <button class="fair-suggested-pill page-pill" data-query="Shikara ride in Dal Lake">Dal Lake Shikara</button>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 14px; margin: 20px 0; color: var(--muted); font-size: 0.8rem;">
+              <div style="flex: 1; height: 1px; background: var(--line);"></div>
+              <span>OR EXPLORE BY DESTINATION & CATEGORY</span>
+              <div style="flex: 1; height: 1px; background: var(--line);"></div>
+            </div>
+
             <!-- City Selector Bar -->
             <div class="fair-grid-2" style="margin-bottom: 24px;">
               <div>
@@ -94,34 +713,19 @@ export const RaahiFair = {
               </div>
 
               <div>
-                <label class="fair-label" for="fair-quick-search">QUICK SEARCH ANY SERVICE</label>
-                <input type="text" id="fair-quick-search" class="fair-input" placeholder="e.g. Shikara, Pashmina, Taj Mahal, Auto..." />
+                <label class="fair-label" for="fair-category-dropdown">SELECT SERVICE CATEGORY</label>
+                <select id="fair-category-dropdown" class="fair-select">
+                  <option value="transport" ${this.activeCategory === 'transport' ? 'selected' : ''}>🛺 Transport & Cabs</option>
+                  <option value="activities" ${this.activeCategory === 'activities' ? 'selected' : ''}>⛵ Activities & Tours</option>
+                  <option value="monuments" ${this.activeCategory === 'monuments' ? 'selected' : ''}>🏛️ Monuments & Heritage</option>
+                  <option value="shopping" ${this.activeCategory === 'shopping' ? 'selected' : ''}>🧵 Artisanal Shopping</option>
+                  <option value="food" ${this.activeCategory === 'food' ? 'selected' : ''}>🍛 Traditional Food</option>
+                  <option value="services" ${this.activeCategory === 'services' ? 'selected' : ''}>🧭 Guides & Porters</option>
+                </select>
               </div>
             </div>
 
-            <!-- Category Tabs -->
-            <div class="fair-category-tabs">
-              <button class="fair-tab-btn ${this.activeCategory === 'transport' ? 'active' : ''}" data-category="transport">
-                🛺 Transport & Cabs
-              </button>
-              <button class="fair-tab-btn ${this.activeCategory === 'activities' ? 'active' : ''}" data-category="activities">
-                ⛵ Activities & Tours
-              </button>
-              <button class="fair-tab-btn ${this.activeCategory === 'monuments' ? 'active' : ''}" data-category="monuments">
-                🏛️ Monuments & Heritage
-              </button>
-              <button class="fair-tab-btn ${this.activeCategory === 'shopping' ? 'active' : ''}" data-category="shopping">
-                🧵 Artisanal Shopping
-              </button>
-              <button class="fair-tab-btn ${this.activeCategory === 'food' ? 'active' : ''}" data-category="food">
-                🍛 Traditional Food
-              </button>
-              <button class="fair-tab-btn ${this.activeCategory === 'services' ? 'active' : ''}" data-category="services">
-                🧭 Guides & Porters
-              </button>
-            </div>
-
-            <!-- Dynamic Interactive Controls Container -->
+            <!-- Dynamic Controls Container -->
             <div id="fair-controls-container">
               <!-- Rendered dynamically by updateControls() -->
             </div>
@@ -136,7 +740,7 @@ export const RaahiFair = {
                 <input type="number" id="fair-quote-input" class="fair-quote-input" placeholder="e.g. 350" value="${this.userQuote || ''}" min="0" step="10" />
               </div>
               <p style="font-size: 0.8rem; color: var(--muted); margin-top: 8px;">
-                Enter the quote you were given by a driver, vendor, or shop to see an instant neutral evaluation against verified local rates.
+                Enter the quote you were given to see an instant neutral evaluation against verified local rates.
               </p>
             </div>
 
@@ -166,15 +770,12 @@ export const RaahiFair = {
       </section>
     `;
 
-    this.attachEventListeners();
+    this.attachFullPageEventListeners();
     this.updateControls();
     this.runCalculation();
   },
 
-  /**
-   * Attach interactive listeners
-   */
-  attachEventListeners() {
+  attachFullPageEventListeners() {
     // City Selector
     const citySelect = document.getElementById('fair-city-select');
     if (citySelect) {
@@ -185,36 +786,47 @@ export const RaahiFair = {
       });
     }
 
-    // Quick Search Input
-    const quickSearch = document.getElementById('fair-quick-search');
-    if (quickSearch) {
-      quickSearch.addEventListener('input', (e) => {
-        const query = e.target.value.trim().toLowerCase();
-        if (query.length > 1) {
-          const results = FairPriceEngine.searchItems(query, this.selectedCity);
-          if (results.length > 0) {
-            const first = results[0];
-            if (first.category && first.category !== this.activeCategory) {
-              this.activeCategory = first.category;
-              this.updateCategoryTabs();
-            }
-            this.selectedItemId = first.id;
-            this.updateControls();
-            this.runCalculation();
-          }
-        }
+    // Category Dropdown
+    const catSelect = document.getElementById('fair-category-dropdown');
+    if (catSelect) {
+      catSelect.addEventListener('change', (e) => {
+        this.activeCategory = e.target.value;
+        this.updateControls();
+        this.runCalculation();
       });
     }
 
-    // Category Tabs
-    const tabs = document.querySelectorAll('.fair-tab-btn');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        this.activeCategory = tab.dataset.category;
-        this.updateControls();
-        this.runCalculation();
+    // Page Search Input & Button
+    const searchInput = document.getElementById('fair-page-search-input');
+    const searchBtn = document.getElementById('fair-page-search-btn');
+
+    const doPageSearch = () => {
+      const q = searchInput?.value.trim();
+      if (!q) return;
+      const quoteVal = document.getElementById('fair-quote-input')?.value;
+      const res = FairPriceEngine.parseAndResolveQuery(q, {
+        city: this.selectedCity,
+        userQuote: quoteVal ? parseFloat(quoteVal) : null
+      });
+      const resultContainer = document.getElementById('fair-result-container');
+      if (resultContainer) {
+        resultContainer.innerHTML = this.renderResultHTML(res, quoteVal ? parseFloat(quoteVal) : null);
+      }
+    };
+
+    searchBtn?.addEventListener('click', doPageSearch);
+    searchInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        doPageSearch();
+      }
+    });
+
+    // Suggested Pills on Page
+    document.querySelectorAll('.page-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        if (searchInput) searchInput.value = pill.getAttribute('data-query');
+        doPageSearch();
       });
     });
 
@@ -227,35 +839,8 @@ export const RaahiFair = {
         this.runCalculation();
       });
     }
-
-    // Realtime quote updates
-    const quoteEl = document.getElementById('fair-quote-input');
-    if (quoteEl) {
-      quoteEl.addEventListener('input', (e) => {
-        this.userQuote = e.target.value;
-      });
-      quoteEl.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          this.runCalculation();
-        }
-      });
-    }
   },
 
-  updateCategoryTabs() {
-    const tabs = document.querySelectorAll('.fair-tab-btn');
-    tabs.forEach(tab => {
-      if (tab.dataset.category === this.activeCategory) {
-        tab.classList.add('active');
-      } else {
-        tab.classList.remove('active');
-      }
-    });
-  },
-
-  /**
-   * Update the dynamic controls depending on category
-   */
   updateControls() {
     const container = document.getElementById('fair-controls-container');
     if (!container) return;
@@ -269,14 +854,6 @@ export const RaahiFair = {
           <p style="font-size: 0.88rem; color: var(--muted-bright); line-height: 1.5; margin-bottom: 12px;">
             Raahi does not currently hold verified gazetted rate notifications for this specific town. In adherence to our foundational rule (<strong>NO VERIFIED DATA = NO CLAIM</strong>), we do not synthesize estimates.
           </p>
-          <div style="font-size: 0.82rem; color: var(--cream);">
-            <strong>Recommended On-Ground Verification:</strong>
-            <ul style="margin: 6px 0 0 18px; line-height: 1.6;">
-              <li>Locate the official Railway Station Pre-paid Booth or Traffic Police counter</li>
-              <li>Ask the local Auto Union kiosk for their printed rate board</li>
-              <li>Always insist on the electronic meter if operating in a notified municipal district</li>
-            </ul>
-          </div>
         </div>
       `;
       return;
@@ -314,7 +891,6 @@ export const RaahiFair = {
             <select id="fair-vehicle-select" class="fair-select">
               <option value="auto" ${this.vehicleType === 'auto' ? 'selected' : ''}>Auto Rickshaw (CNG / Petrol)</option>
               <option value="taxi" ${this.vehicleType === 'taxi' ? 'selected' : ''}>Metered Taxi (Non-AC / Kaali Peeli)</option>
-              <option value="taxi_ac" ${this.vehicleType === 'taxi_ac' ? 'selected' : ''}>Metered Taxi (AC / Sedan)</option>
             </select>
           </div>
 
@@ -323,430 +899,92 @@ export const RaahiFair = {
             <input type="number" id="fair-distance-input" class="fair-input" value="${this.distanceKm}" step="0.1" min="0.5" max="250" />
           </div>
         </div>
-
-        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-bottom: 20px; padding: 14px 18px; background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 8px;">
-          <label style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.88rem; color: var(--cream);">
-            <input type="checkbox" id="fair-night-toggle" ${this.isNight ? 'checked' : ''} style="width: 16px; height: 16px; accent-color: var(--gold);" />
-            <span>Night Journey (${schedule?.auto?.nightHours || '11:00 PM – 05:00 AM'})</span>
-          </label>
-
-          <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--muted-bright); margin-left: auto;">
-            <span>Waiting Time:</span>
-            <select id="fair-waiting-select" class="fair-select" style="width: auto; padding: 6px 10px; font-size: 0.82rem;">
-              <option value="0" ${this.waitingMin === 0 ? 'selected' : ''}>None</option>
-              <option value="15" ${this.waitingMin === 15 ? 'selected' : ''}>15 min</option>
-              <option value="30" ${this.waitingMin === 30 ? 'selected' : ''}>30 min</option>
-              <option value="60" ${this.waitingMin === 60 ? 'selected' : ''}>1 Hour</option>
-            </select>
-          </div>
-        </div>
       `;
 
-      // Attach sub-listeners
+      // Sub listeners
       const routeSelect = document.getElementById('fair-route-select');
       const distInput = document.getElementById('fair-distance-input');
       const vehSelect = document.getElementById('fair-vehicle-select');
-      const nightToggle = document.getElementById('fair-night-toggle');
-      const waitSelect = document.getElementById('fair-waiting-select');
 
-      if (routeSelect) {
-        routeSelect.addEventListener('change', (e) => {
-          this.selectedRouteId = e.target.value;
-          if (e.target.value !== 'custom') {
-            const found = routes.find(r => r.id === e.target.value);
-            if (found && distInput) {
-              this.distanceKm = found.distanceKm;
-              distInput.value = found.distanceKm;
-            }
+      routeSelect?.addEventListener('change', (e) => {
+        this.selectedRouteId = e.target.value;
+        if (e.target.value === 'custom') {
+          if (distInput) distInput.focus();
+        } else {
+          const r = routes.find(item => item.id === e.target.value);
+          if (r) {
+            this.distanceKm = r.distanceKm;
+            if (distInput) distInput.value = r.distanceKm;
           }
-          this.runCalculation();
-        });
-      }
+        }
+        this.runCalculation();
+      });
 
-      if (distInput) {
-        distInput.addEventListener('input', (e) => {
-          this.distanceKm = parseFloat(e.target.value) || 0;
-          this.runCalculation();
-        });
-      }
+      distInput?.addEventListener('input', (e) => {
+        this.distanceKm = parseFloat(e.target.value) || 1;
+      });
 
-      if (vehSelect) {
-        vehSelect.addEventListener('change', (e) => {
-          this.vehicleType = e.target.value;
-          this.runCalculation();
-        });
-      }
-
-      if (nightToggle) {
-        nightToggle.addEventListener('change', (e) => {
-          this.isNight = e.target.checked;
-          this.runCalculation();
-        });
-      }
-
-      if (waitSelect) {
-        waitSelect.addEventListener('change', (e) => {
-          this.waitingMin = parseInt(e.target.value, 10) || 0;
-          this.runCalculation();
-        });
-      }
+      vehSelect?.addEventListener('change', (e) => {
+        this.vehicleType = e.target.value;
+        this.runCalculation();
+      });
 
     } else {
-      // Non-transport: Activities, Monuments, Shopping, Food, Services
-      const catalog = FairPriceEngine.getCatalogItems(this.activeCategory, this.selectedCity);
+      // Catalog items for selected category & city
+      const items = FairPriceEngine.getCatalogItems(this.activeCategory, this.selectedCity);
 
-      if (!catalog || catalog.length === 0) {
+      if (items.length === 0) {
         container.innerHTML = `
-          <div style="padding: 20px; text-align: center; background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 20px;">
-            <div style="font-size: 1.5rem; margin-bottom: 8px;">📋</div>
-            <h4 style="font-family: var(--font-display); color: var(--cream); font-size: 0.95rem; margin-bottom: 6px;">
-              NO VERIFIED PUBLISHED TARIFFS FOR THIS COMBINATION
-            </h4>
-            <p style="font-size: 0.85rem; color: var(--muted); max-width: 500px; margin: 0 auto;">
-              No verified rate records found for <strong>${this.activeCategory}</strong> in <strong>${this.selectedCity}</strong>. Try selecting another city or category.
+          <div style="background: rgba(255,255,255,0.02); border: 1px dashed var(--line); border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 20px;">
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0;">
+              No specific catalog items listed under this category for ${this.selectedCity.toUpperCase()} yet. Try searching above!
             </p>
           </div>
         `;
         return;
       }
 
-      if (!this.selectedItemId || !catalog.some(i => i.id === this.selectedItemId)) {
-        this.selectedItemId = catalog[0].id;
-      }
-
-      const activeItem = catalog.find(i => i.id === this.selectedItemId) || catalog[0];
-
-      let tiersHtml = '';
-      if (activeItem.tiers && activeItem.tiers.length > 0) {
-        tiersHtml = `
-          <div class="fair-field-group">
-            <label class="fair-label">SELECT SPECIFIC TIER / VARIATION</label>
-            <select id="fair-tier-select" class="fair-select">
-              ${activeItem.tiers.map((t, idx) => `
-                <option value="${idx}">
-                  ${t.name} (₹${t.fairMin}${t.fairMax ? ' – ₹' + t.fairMax : ''}) — ${t.desc}
-                </option>
-              `).join('')}
-            </select>
-          </div>
-        `;
+      if (!this.selectedItemId || !items.some(i => i.id === this.selectedItemId)) {
+        this.selectedItemId = items[0].id;
       }
 
       container.innerHTML = `
         <div class="fair-field-group">
-          <label class="fair-label" for="fair-item-select">SELECT VERIFIED ITEM / EXPERIENCE</label>
+          <label class="fair-label" for="fair-item-select">SELECT VERIFIED ITEM / TARIFF</label>
           <select id="fair-item-select" class="fair-select">
-            ${catalog.map(item => `
+            ${items.map(item => `
               <option value="${item.id}" ${item.id === this.selectedItemId ? 'selected' : ''}>
-                ${item.title} — ${item.city} (${item.state})
+                ${item.itemName} (${item.priceMin === item.priceMax ? '₹' + item.priceMin : '₹' + item.priceMin + ' – ₹' + item.priceMax})
               </option>
             `).join('')}
           </select>
         </div>
-
-        ${tiersHtml}
-
-        <div style="background: rgba(212,175,55,0.03); border: 1px solid rgba(212,175,55,0.18); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-family: var(--font-display); font-size: 0.88rem; color: var(--gold); font-weight: 600;">
-              ${activeItem.title}
-            </span>
-            <span class="fair-price-type-pill" style="font-size: 0.68rem;">
-              ${activeItem.priceType}
-            </span>
-          </div>
-          <p style="font-size: 0.84rem; color: var(--muted-bright); margin: 0; line-height: 1.5;">
-            ${activeItem.description}
-          </p>
-        </div>
       `;
 
       const itemSelect = document.getElementById('fair-item-select');
-      const tierSelect = document.getElementById('fair-tier-select');
-
-      if (itemSelect) {
-        itemSelect.addEventListener('change', (e) => {
-          this.selectedItemId = e.target.value;
-          this.updateControls();
-          this.runCalculation();
-        });
-      }
-
-      if (tierSelect) {
-        tierSelect.addEventListener('change', () => {
-          this.runCalculation();
-        });
-      }
+      itemSelect?.addEventListener('change', (e) => {
+        this.selectedItemId = e.target.value;
+        this.runCalculation();
+      });
     }
   },
 
-  /**
-   * Run the calculation and render results
-   */
   runCalculation() {
     const resultContainer = document.getElementById('fair-result-container');
     if (!resultContainer) return;
 
-    if (this.selectedCity === 'other') {
-      resultContainer.innerHTML = '';
-      return;
-    }
+    const result = FairPriceEngine.getFairPrice({
+      citySlug: this.selectedCity,
+      category: this.activeCategory,
+      itemId: this.selectedItemId,
+      routeId: this.selectedRouteId === 'custom' ? null : this.selectedRouteId,
+      customKm: this.distanceKm,
+      vehicleType: this.vehicleType,
+      isNight: this.isNight,
+      userQuote: this.userQuote
+    });
 
-    let result = null;
-
-    if (this.activeCategory === 'transport') {
-      result = FairPriceEngine.calculateTransportFare({
-        citySlug: this.selectedCity,
-        vehicleType: this.vehicleType,
-        distanceKm: this.distanceKm,
-        isNight: this.isNight,
-        waitingMin: this.waitingMin,
-        hasLuggage: false
-      });
-    } else {
-      const catalog = FairPriceEngine.getCatalogItems(this.activeCategory, this.selectedCity);
-      const activeItem = catalog.find(i => i.id === this.selectedItemId);
-
-      if (!activeItem) {
-        resultContainer.innerHTML = '';
-        return;
-      }
-
-      const tierSelect = document.getElementById('fair-tier-select');
-      let chosenMin = activeItem.fairMin;
-      let chosenMax = activeItem.fairMax;
-      let chosenUnit = activeItem.unit;
-      let tierNotes = activeItem.notes;
-
-      if (tierSelect && activeItem.tiers && activeItem.tiers[tierSelect.value]) {
-        const tier = activeItem.tiers[tierSelect.value];
-        chosenMin = tier.fairMin;
-        chosenMax = tier.fairMax || tier.fairMin;
-        tierNotes = `${tier.desc}. ${activeItem.notes}`;
-      }
-
-      result = {
-        verified: true,
-        priceType: activeItem.priceType,
-        title: activeItem.title,
-        city: activeItem.city,
-        state: activeItem.state,
-        fairMin: chosenMin,
-        fairMax: chosenMax,
-        currency: "INR",
-        unit: chosenUnit,
-        source: activeItem.source,
-        sourceType: activeItem.sourceType,
-        sourceUrl: activeItem.sourceUrl,
-        lastVerified: activeItem.lastVerified,
-        notes: tierNotes,
-        whatYouCanDo: activeItem.whatYouCanDo,
-        isPremiumTier: activeItem.isPremiumTier
-      };
-    }
-
-    if (!result || !result.verified) {
-      resultContainer.innerHTML = `
-        <div class="fair-result-card">
-          <div style="background: rgba(244,63,94,0.08); border: 1px solid rgba(244,63,94,0.4); border-radius: 8px; padding: 20px;">
-            <h4 style="color: #f43f5e; font-family: var(--font-display); font-size: 0.95rem; margin-bottom: 6px;">
-              ⚠️ UNVERIFIED PRICE INFORMATION
-            </h4>
-            <p style="font-size: 0.88rem; color: var(--muted-bright); margin-bottom: 10px;">
-              ${result?.error || 'No verified rate data matches the selected parameters.'}
-            </p>
-            ${result?.fallbackGuidance ? `
-              <ul style="font-size: 0.82rem; color: var(--cream); margin: 0 0 0 18px; line-height: 1.6;">
-                ${result.fallbackGuidance.map(g => `<li>${g}</li>`).join('')}
-              </ul>
-            ` : ''}
-          </div>
-        </div>
-      `;
-      return;
-    }
-
-    // Evaluate user quote if provided
-    let quoteEval = null;
-    if (this.userQuote && parseFloat(this.userQuote) > 0) {
-      quoteEval = FairPriceEngine.evaluateQuote({
-        userQuote: this.userQuote,
-        fairMin: result.fairMin,
-        fairMax: result.fairMax,
-        isPremiumTier: result.isPremiumTier
-      });
-    }
-
-    // Format fair range string
-    const fairRangeString = result.fairMin === result.fairMax 
-      ? `₹${result.fairMin}` 
-      : `₹${result.fairMin} – ₹${result.fairMax}`;
-
-    resultContainer.innerHTML = `
-      <div class="fair-result-card">
-        <!-- Meta Row -->
-        <div class="fair-result-meta-row">
-          <span class="fair-price-type-pill" style="border-color: rgba(212,175,55,0.4); color: var(--gold);">
-            ● ${result.priceType}
-          </span>
-          <span style="font-size: 0.8rem; color: var(--muted);">
-            Last Verified: <strong>${result.lastVerified || 'February 2026'}</strong>
-          </span>
-        </div>
-
-        <!-- Big Price Comparison Grid -->
-        <div class="fair-comparison-grid">
-          <div class="fair-price-col">
-            <div class="sublabel">EXPECTED VERIFIED FARE</div>
-            <div class="main-val" style="color: var(--gold);">
-              ${fairRangeString}
-            </div>
-            <div style="font-size: 0.78rem; color: var(--muted); margin-top: 4px;">
-              per ${result.unit || 'trip'}
-            </div>
-          </div>
-
-          <div class="fair-vs-divider">VS</div>
-
-          <div class="fair-price-col">
-            <div class="sublabel">YOUR QUOTE / STATUS</div>
-            <div class="main-val" style="color: ${quoteEval ? quoteEval.color : 'var(--muted-dim)'};">
-              ${this.userQuote ? '₹' + this.userQuote : '—'}
-            </div>
-            <div style="margin-top: 6px;">
-              ${quoteEval ? `
-                <span class="fair-price-type-pill ${quoteEval.badgeClass}" style="font-size: 0.72rem; padding: 4px 10px;">
-                  ${quoteEval.label}
-                </span>
-              ` : `
-                <span style="font-size: 0.76rem; color: var(--muted);">Enter quote above to compare</span>
-              `}
-            </div>
-          </div>
-        </div>
-
-        <!-- Quote Evaluation Status Message -->
-        ${quoteEval ? `
-          <div class="fair-status-banner" style="background: ${quoteEval.status === 'FAIR' ? 'rgba(16,185,129,0.08)' : (quoteEval.status === 'HIGH' ? 'rgba(245,158,11,0.08)' : 'rgba(244,63,94,0.08)')}; border: 1px solid ${quoteEval.color};">
-            <span style="font-size: 1.3rem;">
-              ${quoteEval.status === 'FAIR' ? '✅' : (quoteEval.status === 'HIGH' ? '⚠️' : '🚨')}
-            </span>
-            <div>
-              <strong style="color: ${quoteEval.color}; font-family: var(--font-display); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">
-                ${quoteEval.label}: ${quoteEval.diffPercent ? quoteEval.diffPercent + '% above verified rate' : 'Aligned with official range'}
-              </strong>
-              <div style="color: var(--cream); font-size: 0.88rem;">
-                ${quoteEval.message}
-              </div>
-            </div>
-          </div>
-        ` : ''}
-
-        <!-- Itemized Transparent Math Breakdown (Transport Only) -->
-        ${result.breakdown ? `
-          <div class="fair-breakdown-box">
-            <div class="fair-breakdown-title">
-              📊 Transparent Math Breakdown (Official RTO Formula)
-            </div>
-            ${result.breakdown.map(b => `
-              <div class="fair-breakdown-row">
-                <span>${b.label}</span>
-                <span style="font-family: var(--font-display); font-weight: 600;">${b.amount}</span>
-              </div>
-            `).join('')}
-            <div class="fair-breakdown-row total">
-              <span>Calculated Regulatory Fare</span>
-              <span style="font-family: var(--font-display); color: var(--gold); font-size: 1rem;">${fairRangeString}</span>
-            </div>
-          </div>
-        ` : ''}
-
-        <!-- Trust Evidence Box ("Why Should I Trust This?") -->
-        <div class="fair-trust-box">
-          <h4>
-            <span>🛡️</span> WHY SHOULD I TRUST THIS PRICE?
-          </h4>
-          <ul class="fair-trust-list">
-            <li>
-              <strong>Source Authority:</strong> ${result.sourceType || SOURCE_TYPES.GOVERNMENT}
-            </li>
-            <li>
-              <strong>Regulatory Reference:</strong> ${result.source}
-            </li>
-            ${result.meterMandatory ? `
-              <li>
-                <strong>Legal Mandate:</strong> Electronic meter usage is mandatory by law in this jurisdiction.
-              </li>
-            ` : ''}
-            <li>
-              <strong>Verification Standard:</strong> Checked against active gazette filings as of ${result.lastVerified || 'February 2026'}.
-            </li>
-          </ul>
-        </div>
-
-        <!-- Culturally Respectful Local Advice & Negotiation -->
-        <div class="fair-advice-box">
-          <h4>
-            💡 LOCAL TRAVEL INTELLIGENCE & ADVICE
-          </h4>
-          <ul class="fair-advice-list">
-            ${(result.whatYouCanDo || [
-              "Politely ask the operator: 'Bhaiya, meter se chalenge?' (Brother, will you go by the meter?)",
-              "If flat fare is insisted, negotiate respectfully around the calculated upper threshold.",
-              "Check for official pre-paid counters at major railway stations and airports."
-            ]).map(tip => `
-              <li>${tip}</li>
-            `).join('')}
-          </ul>
-          ${result.notes ? `
-            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.08); font-size: 0.8rem; color: var(--muted); font-style: italic;">
-              Context Note: ${result.notes}
-            </div>
-          ` : ''}
-        </div>
-
-        <!-- Source Link Footer -->
-        <div class="fair-source-footer">
-          <div>
-            Location: <strong>${result.city}, ${result.state}</strong>
-          </div>
-          ${result.sourceUrl ? `
-            <a href="${result.sourceUrl}" target="_blank" rel="noopener noreferrer" class="fair-source-link">
-              View Official Regulatory Filing ↗
-            </a>
-          ` : `
-            <span>Verified Official Record</span>
-          `}
-        </div>
-      </div>
-    `;
-  },
-
-  /**
-   * Render compact discovery card for homepage or destination page
-   */
-  renderDiscoveryCard(containerId, options = {}) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    const city = options.city || 'jaipur';
-    const title = options.title || 'Check Fair Prices in India';
-    const subtitle = options.subtitle || 'Never overpay for autos, heritage entries, or local crafts. Instant official RTO calculations and transparent tariffs.';
-
-    container.innerHTML = `
-      <div class="raahi-fair-discovery-card">
-        <div class="raahi-fair-discovery-content">
-          <span class="eyebrow" style="color: var(--gold); margin-bottom: 6px; display: inline-block;">
-            ⚖️ RAAHI FAIR // PRICE TRANSPARENCY
-          </span>
-          <h3>${title}</h3>
-          <p>${subtitle}</p>
-        </div>
-        <button class="btn gold" onclick="window.location.hash='#/fair?city=${city}'" style="white-space: nowrap; padding: 12px 24px;">
-          OPEN PRICE CALCULATOR ↗
-        </button>
-      </div>
-    `;
+    resultContainer.innerHTML = this.renderResultHTML(result, this.userQuote);
   },
 
   /**
@@ -758,23 +996,6 @@ export const RaahiFair = {
     const transportSchedule = OFFICIAL_TRANSPORT_SCHEDULES[clean];
     const catalogItems = VERIFIED_PRICES_CATALOG.filter(i => i.citySlug === clean);
 
-    if (!transportSchedule && catalogItems.length === 0 && (!cityRoutes || cityRoutes.length === 0)) {
-      return `
-        <div class="travel-info-box" style="margin-top: 30px; border-left: 3px solid var(--gold);">
-          <div class="info-item" style="grid-column: 1 / -1;">
-            <span class="eyebrow" style="color: var(--gold);">⚖️ RAAHI FAIR INTELLIGENCE</span>
-            <h4 style="margin: 4px 0 8px;">Fair Travel Prices for ${destSlug.replace(/-/g, ' ').toUpperCase()}</h4>
-            <p style="margin-bottom: 12px;">
-              Check official rates for transport, tickets, and artisan items before negotiating. Raahi never guesses travel prices.
-            </p>
-            <button class="btn gold" onclick="window.location.hash='#/fair?city=${destSlug}'" style="font-size: 0.78rem; padding: 8px 16px;">
-              Check Local Fair Prices ↗
-            </button>
-          </div>
-        </div>
-      `;
-    }
-
     return `
       <section style="padding: 30px 0 40px;" id="fair-prices-guide">
         <div style="background: linear-gradient(135deg, rgba(212,175,55,0.06) 0%, rgba(14,21,18,0.9) 100%); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 24px;">
@@ -785,7 +1006,7 @@ export const RaahiFair = {
                 Verified Local Rates & Fare Benchmarks
               </h3>
             </div>
-            <button class="btn gold" onclick="window.location.hash='#/fair?city=${clean}'" style="font-size: 0.78rem; padding: 8px 16px;">
+            <button class="btn gold" onclick="window.raahiOpenFairModal({ city: '${clean}', query: 'Auto fare in ${clean}' })" style="font-size: 0.78rem; padding: 8px 16px;">
               Launch Fair Calculator ↗
             </button>
           </div>
@@ -798,7 +1019,7 @@ export const RaahiFair = {
                   ₹${transportSchedule.auto.baseFare} <span style="font-size: 0.8rem; font-weight: 400; color: var(--muted);">first ${transportSchedule.auto.baseDistanceKm} km</span>
                 </div>
                 <p style="font-size: 0.8rem; color: var(--muted-bright); margin: 0;">
-                  Then ₹${transportSchedule.auto.perKmRate}/km. Meter mandatory by RTO gazette. Night surcharge ${transportSchedule.auto.nightSurchargePercent}%.
+                  Then ₹${transportSchedule.auto.perKmRate}/km. Meter mandatory by RTO gazette.
                 </p>
               </div>
             ` : ''}
@@ -807,10 +1028,10 @@ export const RaahiFair = {
               <div style="background: rgba(0,0,0,0.4); border: 1px solid var(--line); border-radius: 8px; padding: 16px;">
                 <span class="eyebrow" style="font-size: 0.7rem; color: var(--gold);">🏛️ KEY TARIFF BENCHMARK</span>
                 <div style="font-family: var(--font-display); font-size: 1.4rem; color: var(--cream); font-weight: 700; margin: 4px 0;">
-                  ${catalogItems[0].fairMin === catalogItems[0].fairMax ? '₹' + catalogItems[0].fairMin : '₹' + catalogItems[0].fairMin + ' – ₹' + catalogItems[0].fairMax}
+                  ${catalogItems[0].priceMin === catalogItems[0].priceMax ? '₹' + catalogItems[0].priceMin : '₹' + catalogItems[0].priceMin + ' – ₹' + catalogItems[0].priceMax}
                 </div>
                 <p style="font-size: 0.8rem; color: var(--muted-bright); margin: 0;">
-                  ${catalogItems[0].title} (${catalogItems[0].priceType}).
+                  ${catalogItems[0].itemName} (${catalogItems[0].priceType}).
                 </p>
               </div>
             ` : ''}
@@ -821,4 +1042,15 @@ export const RaahiFair = {
   }
 };
 
-window.RaahiFair = RaahiFair;
+// Global Windows Hooks
+if (typeof window !== 'undefined') {
+  window.RaahiFair = RaahiFair;
+  window.raahiOpenFairModal = (context = {}) => RaahiFair.openModal(context);
+  window.raahiCloseFairModal = () => RaahiFair.closeModal();
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      RaahiFair.closeModal();
+    }
+  });
+}

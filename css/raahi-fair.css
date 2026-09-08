@@ -552,3 +552,383 @@
     align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   TOP NAVBAR PILL BUTTON & RESPONSIVE RULES
+   ========================================================================== */
+.raahi-fair-nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0%, rgba(212, 175, 55, 0.06) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.65);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.2);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.raahi-fair-nav-pill .pill-icon {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.raahi-fair-nav-pill:hover {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.35) 0%, rgba(212, 175, 55, 0.18) 100%);
+  border-color: var(--gold);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.45);
+}
+
+.raahi-fair-nav-pill:active {
+  background: var(--gold);
+  color: #030705;
+  transform: translateY(0);
+}
+
+/* Guarantee zero navbar overlap across display widths */
+@media (min-width: 1025px) and (max-width: 1240px) {
+  .navlinks {
+    gap: 16px !important;
+    font-size: 0.7rem !important;
+  }
+  .search-nav-btn {
+    padding: 7px 12px !important;
+  }
+  .search-text, .search-kbd {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .navlinks {
+    display: none !important;
+  }
+  .menu-toggle {
+    display: block !important;
+    cursor: pointer;
+  }
+}
+
+/* ==========================================================================
+   RAAHI FAIR MODAL & QUICK-ACCESS PANEL
+   ========================================================================== */
+.raahi-fair-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 5, 0.84);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 400;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.raahi-fair-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.raahi-fair-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -48%) scale(0.97);
+  width: min(840px, 94vw);
+  max-height: 88vh;
+  background: rgba(14, 21, 18, 0.96);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 40px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 410;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.raahi-fair-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.fair-modal-header {
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+.fair-modal-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.6;
+}
+
+.fair-modal-title-group {
+  flex: 1;
+}
+
+.fair-modal-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.fair-modal-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.2vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  margin: 0 0 4px;
+}
+
+.fair-modal-subtitle {
+  color: var(--muted-bright);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.fair-modal-close-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 1rem;
+  margin-left: 16px;
+}
+
+.fair-modal-body {
+  padding: 24px 28px;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+}
+
+/* Search Box in Modal & Page */
+.fair-search-box {
+  margin-bottom: 16px;
+}
+
+.fair-search-input-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.fair-search-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 10px;
+  padding: 13px 18px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--cream);
+  transition: all 0.2s ease;
+}
+
+.fair-search-input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.25);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.fair-search-btn {
+  white-space: nowrap;
+  padding: 13px 22px;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+}
+
+.fair-search-examples {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Suggested Search Pills */
+.fair-suggested-pills-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.fair-suggested-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.fair-suggested-pill {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  color: var(--cream);
+  border-radius: 100px;
+  padding: 5px 12px;
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.fair-suggested-pill:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: rgba(212, 175, 55, 0.5);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* Quote Strip */
+.fair-modal-quote-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.fair-initial-placeholder {
+  text-align: center;
+  padding: 36px 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+}
+
+/* Unverified Result Card */
+.fair-unverified-card {
+  background: rgba(244, 63, 94, 0.04);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.fair-unverified-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.badge-unverified-tag {
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.45);
+  color: #fb7185;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+
+.fair-unverified-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: #fb7185;
+  margin: 0 0 8px;
+}
+
+.fair-unverified-message {
+  font-size: 0.95rem;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+.fair-unverified-explanation {
+  font-size: 0.85rem;
+  color: var(--muted-bright);
+  line-height: 1.6;
+}
+
+/* Report a Price Section */
+.fair-report-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-top: 24px;
+}
+
+.community-report-item {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+/* Modal Footer */
+.fair-modal-footer {
+  padding: 14px 28px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(7, 11, 9, 0.9);
+}
+
+.fair-full-page-link {
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.fair-full-page-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .fair-search-input-wrapper {
+    flex-direction: column;
+  }
+  .fair-search-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .fair-modal-header, .fair-modal-body, .fair-modal-footer {
+    padding-inline: 16px;
+  }
+}
+

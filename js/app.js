@@ -9,12 +9,16 @@ import { updateJourneyBadgeCount, isPlaceSaved, updateAllSaveButtons } from './j
 import { DataRegistry, RAAHI_DATA } from './data/dataRegistry.js';
 import { experiencesData } from './data/experiencesData.js';
 import { fetchGooglePlacePhoto, enhanceImagesWithGooglePlaces } from './services/placesPhotoService.js';
+import { RaahiFair } from './components/raahiFair.js';
 
 // Expose navigation functions globally for inline HTML event handlers
 window.raahiNavigate = (hash) => navigateTo(hash);
 window.arvoraNavigate = window.raahiNavigate;
 window.fetchGooglePlacePhoto = fetchGooglePlacePhoto;
 window.enhanceImagesWithGooglePlaces = enhanceImagesWithGooglePlaces;
+window.RaahiFair = RaahiFair;
+window.raahiOpenFairModal = (context) => RaahiFair.openModal(context);
+window.raahiCloseFairModal = () => RaahiFair.closeModal();
 
 function initDiscoveryFilters() {
   const chips = document.querySelectorAll('#discovery-filter-chips .filter-chip');
@@ -88,9 +92,13 @@ function bootstrapApp() {
     document.body.classList.add('lock-scroll');
   });
 
-  mobileClose?.addEventListener('click', () => {
+  window.raahiCloseMobileMenu = () => {
     mobileMenu?.classList.remove('active');
     document.body.classList.remove('lock-scroll');
+  };
+
+  mobileClose?.addEventListener('click', () => {
+    window.raahiCloseMobileMenu();
   });
 
   // 4. Global Keyboard Shortcuts: Ctrl+K or / to open Search

@@ -1348,6 +1348,9 @@ function renderDestinationView(destSlug) {
           <button class="btn-save-journey ${isSaved ? 'saved' : ''}" data-save-place-id="${dest.id || dest.slug}" data-saved-text="♥ SAVED TO JOURNEY" data-unsaved-text="♡ SAVE TO MY JOURNEY" onclick="window.raahiToggleSaveJourney('${dest.id || dest.slug}')">
             ${isSaved ? '♥ SAVED TO JOURNEY' : '♡ SAVE TO MY JOURNEY'}
           </button>
+          <button class="btn" style="border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.1); font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" onclick="window.raahiOpenFairModal({ query: 'Entry ticket for ${dest.name.replace(/'/g, "\\'")}', destination: '${dest.name.replace(/'/g, "\\'")}', city: '${(dest.stateSlug || dest.state || '').replace(/'/g, "\\'")}' })" title="Check transparent verified prices for ${dest.name}">
+            ⚖ Check Fair Price
+          </button>
           <button class="btn" style="border-color: rgba(212, 175, 55, 0.45); color: var(--cream);" onclick="window.raahiOpenMapsModal('${dest.slug}')">
             📍 View on Google Maps
           </button>

@@ -5,6 +5,7 @@
  */
 
 import { RAAHI_DATA } from './data.js';
+import { FairPriceEngine } from './services/fairPriceEngine.js';
 
 const STORAGE_KEY = 'raahi_custom_journey';
 
@@ -266,6 +267,7 @@ export function renderJourneyBuilderView() {
   const approxTransport = totalStops * 250;
   const approxEntry = totalStops * 150;
   const approxTotalBudget = approxStay + approxFood + approxTransport + approxEntry;
+  const fairSegmentsResult = FairPriceEngine.calculateRouteSegments(items);
 
   container.innerHTML = `
     <div class="wrap" style="padding: 120px 0 80px;">
@@ -360,6 +362,63 @@ export function renderJourneyBuilderView() {
           `;
         }).join('')}
       </div>
+
+      <!-- Raahi Fair Route Transport Cost Breakdown -->
+      ${items.length > 1 ? `
+        <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(14, 21, 18, 0.95) 100%); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 14px; padding: 24px 28px; margin: 30px 0 40px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 16px;">
+            <div>
+              <span class="eyebrow" style="color: var(--gold); margin-bottom: 4px; font-size: 0.72rem;">
+                ⚖️ RAAHI FAIR // ROUTE TRANSPORT COST
+              </span>
+              <h3 style="font-family: var(--font-display); font-size: 1.3rem; color: var(--cream); margin: 0;">
+                FAIR TRAVEL COST BREAKDOWN
+              </h3>
+              <p style="font-size: 0.84rem; color: var(--muted-bright); margin: 4px 0 0;">
+                Calculated from verified municipal RTO rate cards and surveyed transit distances.
+              </p>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: 0.75rem; color: var(--muted); display: block;">Total Verified Transport Range</span>
+              <span style="font-family: var(--font-display); font-size: 1.6rem; color: var(--gold); font-weight: 700;">
+                ${fairSegmentsResult.verifiedCount > 0 ? `₹${fairSegmentsResult.totalVerifiedMin} – ₹${fairSegmentsResult.totalVerifiedMax}` : 'No verified route data'}
+              </span>
+              <span style="font-size: 0.72rem; color: var(--muted); display: block;">(${fairSegmentsResult.verifiedCount} of ${fairSegmentsResult.totalCount} segments verified)</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+            ${fairSegmentsResult.segments.map((seg, sIdx) => `
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: rgba(0,0,0,0.4); border: 1px solid var(--line); border-radius: 8px; font-size: 0.86rem; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span style="color: var(--gold); font-weight: 700;">Stop ${sIdx + 1} ➔ ${sIdx + 2}:</span>
+                  <span style="color: var(--cream);">${seg.from} ➔ ${seg.to}</span>
+                  ${seg.distanceKm ? `<span style="color: var(--muted); font-size: 0.78rem;">(${seg.distanceKm} km)</span>` : ''}
+                </div>
+                <div>
+                  ${seg.verified ? `
+                    <span style="font-family: var(--font-display); font-weight: 700; color: #10b981; font-size: 0.95rem;">
+                      ₹${seg.fareMin} – ₹${seg.fareMax}
+                    </span>
+                    <span style="font-size: 0.72rem; color: var(--muted); margin-left: 6px;">(Auto Fare)</span>
+                  ` : `
+                    <span style="font-size: 0.75rem; color: #94a3b8; font-style: italic;">
+                      No gazetted fare available
+                    </span>
+                  `}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,0.08); font-size: 0.78rem; color: var(--muted);">
+            <span>🛡️ In adherence to our strict transparency principle, unverified segments are never assigned guessed numbers.</span>
+            <button class="btn light" onclick="window.raahiOpenFairModal({ query: 'Auto fare in ${items[0]?.city || 'Jaipur'}' })" style="padding: 6px 14px; font-size: 0.72rem;">
+              Check Rate Cards ↗
+            </button>
+          </div>
+        </div>
+      ` : ''}
 
       <!-- Footer Action Row -->
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--line); flex-wrap: wrap; gap: 16px;">

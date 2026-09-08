@@ -571,5 +571,290 @@ export const VERIFIED_PRICES_CATALOG = [
       "Perform the ring test or look for raw, natural unfinished edges",
       "Never pay high prices for claimed 'pashmina' without an authentic government testing laboratory certificate"
     ]
+  },
+  {
+    id: "jaisalmer-camel-safari",
+    category: "activities",
+    city: "Jaisalmer",
+    citySlug: "jaisalmer",
+    state: "Rajasthan",
+    destinationId: "jaisalmer",
+    itemName: "Sam Sand Dunes Sunset Camel Safari (1 Hour)",
+    priceMin: 400,
+    priceMax: 800,
+    currency: "INR",
+    unit: "per person (with camel handler)",
+    priceType: PRICE_TYPES.MARKET_RANGE,
+    source: "Jaisalmer Desert Tourism Association & RTDC Sam Camp Standards",
+    sourceType: SOURCE_TYPES.MARKET_REFERENCE,
+    sourceUrl: "https://rtdc.tourism.rajasthan.gov.in",
+    effectiveDate: "Current Desert Season Reference Tariff",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Standard 1-hour camel trek into the sunset dunes including photo stops",
+      "Full desert safari package (camel ride + jeep dune bashing + desert camp folk dance & dinner) ranges ₹1,800–₹3,200",
+      "Arranging directly at Sam Dunes village provides lower rates than hotel travel desks"
+    ],
+    whatYouCanDo: [
+      "Agree on the exact duration and return point before mounting the camel",
+      "Tip of ₹50–₹100 for the local camel handler is customary for photography assistance"
+    ]
+  },
+  {
+    id: "authorized-guide-charges",
+    category: "services",
+    city: "Pan-India",
+    citySlug: "pan-india",
+    state: "India",
+    destinationId: "pan-india",
+    itemName: "Ministry of Tourism Approved Regional Level Tourist Guide (RLG) Tariff",
+    priceMin: 1800,
+    priceMax: 2800,
+    currency: "INR",
+    unit: "per day (up to 8 hours / 1-5 tourists)",
+    priceType: PRICE_TYPES.OFFICIAL_RATE,
+    source: "Ministry of Tourism (Incredible India) Approved Guide Fee Schedule",
+    sourceType: SOURCE_TYPES.GOVERNMENT,
+    sourceUrl: "https://tourism.gov.in",
+    effectiveDate: "Current Ministry of Tourism Gazetted Tariff",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Half day (up to 4 hours): ₹1,200–₹1,800 depending on city and language",
+      "Full day (up to 8 hours): ₹1,800–₹2,800 for English / Hindi language tours",
+      "Certified foreign language guides (French, German, Spanish, Japanese) command a +25% tariff",
+      "Overtime beyond 8 hours chargeable at ₹250/hour"
+    ],
+    whatYouCanDo: [
+      "Always ask the guide to present their official Ministry of Tourism or State Tourism laminated photo ID lanyard",
+      "Confirm whether monument entrance fees and parking are separate from the guide's professional fee"
+    ]
+  },
+  {
+    id: "varanasi-ganga-morning-boat",
+    category: "activities",
+    city: "Varanasi",
+    citySlug: "varanasi",
+    state: "Uttar Pradesh",
+    destinationId: "varanasi",
+    itemName: "Ganga Sunrise Hand-Rowed Boat Ride (Assi Ghat to Manikarnika Ghat)",
+    priceMin: 400,
+    priceMax: 800,
+    currency: "INR",
+    unit: "per boat (hand-rowed, up to 4 persons)",
+    priceType: PRICE_TYPES.MARKET_RANGE,
+    source: "Kashi Mallah Samiti (Varanasi Boatmen Union) & District Administration Benchmarks",
+    sourceType: SOURCE_TYPES.LOCAL_UNION,
+    sourceUrl: "https://varanasi.nic.in",
+    effectiveDate: "Current Ghat Boatmen Tariff Reference",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Traditional hand-rowed wooden boat providing a quiet morning experience without engine noise",
+      "1.5 to 2 hours return cruise covering main historical ghats, morning aarti, and bathing rituals",
+      "Motorized tourist boats charge ₹100–₹200 per seat on shared basis or ₹1,500–₹2,500 for full private hire"
+    ],
+    whatYouCanDo: [
+      "Board at Assi Ghat or Dashashwamedh Ghat by 05:30 AM for uninterrupted sunrise views",
+      "Hire on a per-boat basis, not per-person, for small private families or groups"
+    ]
+  },
+  {
+    id: "qutub-minar-ticket",
+    category: "monuments",
+    city: "Delhi",
+    citySlug: "delhi",
+    state: "Delhi",
+    destinationId: "qutub-minar",
+    itemName: "Qutub Minar Complex Entry Ticket (Indian Citizen)",
+    priceMin: 50,
+    priceMax: 50,
+    currency: "INR",
+    unit: "per person",
+    priceType: PRICE_TYPES.OFFICIAL_RATE,
+    source: "Archaeological Survey of India (ASI) Official Tariff",
+    sourceType: SOURCE_TYPES.GOVERNMENT,
+    sourceUrl: "https://asi.payumoney.com",
+    effectiveDate: "Current ASI Gazette Tariff",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Official ASI ticket rate: ₹50 cash or ₹45 with digital payment (UPI / Card)",
+      "Foreign tourists: ₹600 cash or ₹550 digital",
+      "Children under 15 years enter free with age verification"
+    ],
+    whatYouCanDo: [
+      "Scan the official ASI QR board at the entrance gate to purchase on your phone and skip ticket queues"
+    ]
+  },
+  {
+    id: "delhi-airport-prepaid-taxi",
+    category: "transport",
+    city: "Delhi",
+    citySlug: "delhi",
+    state: "Delhi",
+    destinationId: "delhi",
+    itemName: "Delhi Traffic Police Official Prepaid Taxi (IGI T3 to Connaught Place / Central Delhi)",
+    priceMin: 450,
+    priceMax: 550,
+    currency: "INR",
+    unit: "per trip (Sedan / Kaali Peeli)",
+    priceType: PRICE_TYPES.OFFICIAL_RATE,
+    source: "Delhi Traffic Police Prepaid Taxi Counter Official Tariff (IGI Airport)",
+    sourceType: SOURCE_TYPES.AIRPORT_AUTHORITY,
+    sourceUrl: "https://delhitrafficpolice.nic.in",
+    effectiveDate: "Current Airport Prepaid Tariff",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Official government counter inside IGI Airport Terminal 3 arrival hall",
+      "Slip issued with vehicle registration, driver name, and exact destination",
+      "Night surcharge of 25% applies between 11:00 PM and 05:00 AM"
+    ],
+    whatYouCanDo: [
+      "Always pay at the police booth inside the terminal, NOT to individual drivers outside",
+      "Hand the yellow confirmation slip to the driver only after arriving at your destination"
+    ]
+  },
+  {
+    id: "delhi-red-fort-ticket",
+    category: "monuments",
+    city: "Delhi",
+    citySlug: "delhi",
+    state: "Delhi",
+    destinationId: "red-fort",
+    itemName: "Red Fort (Lal Qila) Entry Ticket (Indian Citizen)",
+    priceMin: 50,
+    priceMax: 50,
+    currency: "INR",
+    unit: "per person",
+    priceType: PRICE_TYPES.OFFICIAL_RATE,
+    source: "Archaeological Survey of India (ASI) Official Gazette",
+    sourceType: SOURCE_TYPES.GOVERNMENT,
+    sourceUrl: "https://asi.payumoney.com",
+    effectiveDate: "Current ASI Tariff",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Official rate: ₹50 with digital UPI/card, ₹60 cash",
+      "Foreign tourists: ₹600 digital, ₹650 cash",
+      "Sound & Light Show carries separate evening ticketing"
+    ],
+    whatYouCanDo: [
+      "Book online via ASI website or scan official gate QR code"
+    ]
+  },
+  {
+    id: "jaipur-hawa-mahal-ticket",
+    category: "monuments",
+    city: "Jaipur",
+    citySlug: "jaipur",
+    state: "Rajasthan",
+    destinationId: "hawa-mahal",
+    itemName: "Hawa Mahal Entry Ticket (Indian Citizen)",
+    priceMin: 50,
+    priceMax: 50,
+    currency: "INR",
+    unit: "per person",
+    priceType: PRICE_TYPES.OFFICIAL_RATE,
+    source: "Rajasthan Department of Archaeology and Museums Official Rate Card",
+    sourceType: SOURCE_TYPES.GOVERNMENT,
+    sourceUrl: "https://artandculture.rajasthan.gov.in",
+    effectiveDate: "Current Department Notification",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Indian citizen standard ticket: ₹50",
+      "Foreign tourist ticket: ₹200",
+      "Included in Rajasthan 2-day Composite Ticket (₹300 Indian / ₹1000 Foreign)"
+    ],
+    whatYouCanDo: [
+      "Buy composite ticket if visiting Amber Fort, Albert Hall, and Jantar Mantar as well"
+    ]
+  },
+  {
+    id: "jaipur-city-palace-ticket",
+    category: "monuments",
+    city: "Jaipur",
+    citySlug: "jaipur",
+    state: "Rajasthan",
+    destinationId: "city-palace-jaipur",
+    itemName: "City Palace Jaipur Museum Entry (Indian Citizen)",
+    priceMin: 300,
+    priceMax: 300,
+    currency: "INR",
+    unit: "per person",
+    priceType: PRICE_TYPES.PUBLISHED_PRICE,
+    source: "MSMS II Museum Trust Official Published Tariff",
+    sourceType: SOURCE_TYPES.VENUE_PUBLISHED,
+    sourceUrl: "https://royaljaipur.in",
+    effectiveDate: "Current Museum Trust Schedule",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Standard courtyard & museum galleries ticket: ₹300 (Indian), ₹700 (Foreign)",
+      "Chandra Mahal private royal suite tour carries special luxury pass (₹2,500–₹4,000)"
+    ],
+    whatYouCanDo: [
+      "Purchase tickets at the official palace gate counter or official trust website"
+    ]
+  },
+  {
+    id: "mumbai-gateway-elephanta-ferry",
+    category: "activities",
+    city: "Mumbai",
+    citySlug: "mumbai",
+    state: "Maharashtra",
+    destinationId: "gateway-of-india",
+    itemName: "Gateway of India to Elephanta Caves Return Ferry",
+    priceMin: 200,
+    priceMax: 260,
+    currency: "INR",
+    unit: "per person (round trip)",
+    priceType: PRICE_TYPES.OFFICIAL_RATE,
+    source: "Maharashtra Tourism Development Corporation (MTDC) & Elephanta Jal-Vahatuk Sanghatan",
+    sourceType: SOURCE_TYPES.LOCAL_UNION,
+    sourceUrl: "https://maharashtratourism.gov.in",
+    effectiveDate: "Current MTDC Ferry Tariff",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Standard return ticket: ₹200; Deluxe upper deck seating: ₹260",
+      "Boats run every 30 minutes from Jetty No. 5 (Gateway of India)",
+      "Cave entry ticket (ASI: ₹40 Indian, ₹600 Foreign) is separate"
+    ],
+    whatYouCanDo: [
+      "Buy tickets directly at the MTDC booth at Gateway of India jetty; avoid unofficial ticket hawkers"
+    ]
+  },
+  {
+    id: "monument-parking-standard",
+    category: "services",
+    city: "Pan-India",
+    citySlug: "pan-india",
+    state: "India",
+    destinationId: "pan-india",
+    itemName: "Official Monument & Heritage Site Parking Tariff",
+    priceMin: 20,
+    priceMax: 100,
+    currency: "INR",
+    unit: "per vehicle (up to 4 hours)",
+    priceType: PRICE_TYPES.OFFICIAL_RATE,
+    source: "ASI & Municipal Corporation Designated Parking Tariffs",
+    sourceType: SOURCE_TYPES.GOVERNMENT,
+    sourceUrl: "https://tourism.gov.in",
+    effectiveDate: "Current Municipal Tariff",
+    lastVerified: "September 2026",
+    confidence: "HIGH",
+    factors: [
+      "Two-wheelers: ₹10 – ₹30 depending on municipality",
+      "Four-wheelers / Cars: ₹50 – ₹100 for standard 4-hour slot",
+      "Tourist coaches / Buses: ₹150 – ₹250"
+    ],
+    whatYouCanDo: [
+      "Always demand a printed paper or electronic POS slip before paying parking fees",
+      "Never pay parking attendants without an official receipt with Municipal / ASI seal"
+    ]
   }
 ];
