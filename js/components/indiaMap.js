@@ -57,117 +57,103 @@ export function renderIndiaMap(containerId = 'india-map-mount') {
   const defaultState = STATES_DATA['rajasthan'];
 
   mount.innerHTML = `
-    <section class="raahi-map-section" id="interactive-map">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow">SPATIAL CODEX // LEAFLET GIS ENGINE</span>
-            <h2 class="heading-large" style="text-transform: uppercase;">INTERACTIVE MAP OF INDIA</h2>
-          </div>
-          <p style="color: var(--muted); font-size: 0.95rem; max-width: 440px;">
-            Explore all 28 States & 8 UTs using the Leaflet interactive map console. Search any city, district, or monument to inspect coordinates, regional details, and direct state codex links.
-          </p>
-        </div>
-
-        <!-- Spatial Search Console -->
-        <div class="raahi-search-console" style="margin-bottom: 20px; display: flex; gap: 12px; position: relative;">
-          <div class="search-input-wrapper" style="flex: 1; position: relative;">
-            <input type="text" id="raahi-map-query-input" class="raahi-map-input" 
-              placeholder="Scan any Indian state, city, or destination (e.g., Jaipur, Dehradun, Varanasi, Hampi, Kerala, Ladakh)..." 
-              autocomplete="off" style="width: 100%; padding: 14px 18px; background: rgba(13, 20, 16, 0.9); border: 1px solid var(--line); border-radius: 8px; color: #fff; font-family: var(--font-body); font-size: 0.9rem;" />
-            <div id="raahi-map-autocomplete" class="autocomplete-dropdown" style="position: absolute; top: 100%; left: 0; right: 0; background: #0d1410; border: 1px solid var(--line); border-top: none; border-radius: 0 0 8px 8px; z-index: 1000; max-height: 250px; overflow-y: auto; display: none;"></div>
-          </div>
-          <button id="raahi-map-search-btn" class="btn gold" style="padding: 12px 24px;">
-            🔍 RESOLVE MAP
-          </button>
-          <button id="raahi-map-toggle-view" class="btn light" style="padding: 12px 20px;">
-            🗺️ SVG/GIS TOGGLE
-          </button>
-        </div>
-
-        <!-- Telemetry & Status Header -->
-        <div class="spatial-telemetry-bar" style="display: flex; justify-content: space-between; align-items: center; background: rgba(13, 20, 16, 0.7); padding: 10px 18px; border: 1px solid var(--line); border-bottom: none; border-radius: 8px 8px 0 0; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.08em;">
-          <span style="color: var(--muted-bright); display: inline-flex; align-items: center; gap: 6px;">
-            <span style="width: 8px; height: 8px; background: var(--emerald, #10b981); border-radius: 50%; box-shadow: 0 0 8px var(--emerald, #10b981);"></span> 
-            LIVE SPATIAL VECTOR MAP // LEAFLET GIS ENGINE
-          </span>
-          <span id="raahi-map-status" style="color: var(--emerald, #10b981);">VECTOR LOCKED // RAJASTHAN</span>
-        </div>
-
-        <div class="map-container" style="display: grid; grid-template-columns: 1fr 340px; gap: 24px; min-height: 520px;">
-          <!-- Left: Leaflet Interactive Map Viewport -->
-          <div id="leaflet-map-view" style="width: 100%; height: 520px; border-radius: 0 0 0 12px; border: 1px solid var(--line); overflow: hidden; background: #080d0a; position: relative;">
-            <div id="raahi-leaflet-map" style="width: 100%; height: 100%;"></div>
-          </div>
-
-          <!-- Alternative: SVG Vector Map (Hidden by default, toggleable) -->
-          <div id="svg-map-view" class="india-svg-wrapper" style="display: none; width: 100%; height: 520px; border-radius: 0 0 0 12px; border: 1px solid var(--line); background: #080d0a; padding: 20px;">
-            <svg class="india-svg-map" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-              <g id="states-group">
-                <path class="state-path" data-slug="ladakh" d="M260,30 L320,50 L340,90 L300,110 L250,90 Z" />
-                <path class="state-path" data-slug="jammu-and-kashmir" d="M220,70 L255,85 L245,120 L210,105 Z" />
-                <path class="state-path" data-slug="himachal-pradesh" d="M255,100 L295,115 L285,145 L245,130 Z" />
-                <path class="state-path" data-slug="punjab" d="M210,120 L245,130 L235,160 L195,145 Z" />
-                <path class="state-path" data-slug="uttarakhand" d="M285,130 L325,140 L315,175 L275,160 Z" />
-                <path class="state-path" data-slug="haryana" d="M230,150 L265,155 L255,185 L220,175 Z" />
-                <path class="state-path" data-slug="delhi" d="M252,168 A 5 5 0 1 1 252,169 Z" />
-                <path class="state-path active" data-slug="rajasthan" d="M160,170 L230,175 L220,260 L140,240 Z" />
-                <path class="state-path" data-slug="gujarat" d="M120,245 L185,255 L175,320 L100,300 Z" />
-                <path class="state-path" data-slug="uttar-pradesh" d="M255,175 L350,185 L330,250 L240,230 Z" />
-                <path class="state-path" data-slug="madhya-pradesh" d="M220,240 L330,250 L310,330 L200,310 Z" />
-                <path class="state-path" data-slug="maharashtra" d="M170,320 L270,330 L250,420 L160,400 Z" />
-                <path class="state-path" data-slug="goa" d="M180,430 L195,435 L190,455 L175,450 Z" />
-                <path class="state-path" data-slug="bihar" d="M345,210 L410,215 L395,260 L335,250 Z" />
-                <path class="state-path" data-slug="west-bengal" d="M395,255 L430,260 L410,340 L380,315 Z" />
-                <path class="state-path" data-slug="odisha" d="M330,320 L400,330 L370,410 L310,390 Z" />
-                <path class="state-path" data-slug="karnataka" d="M190,410 L255,420 L230,520 L180,490 Z" />
-                <path class="state-path" data-slug="kerala" d="M200,510 L230,515 L215,610 L190,590 Z" />
-                <path class="state-path" data-slug="tamil-nadu" d="M230,500 L290,490 L260,620 L210,610 Z" />
-                <path class="state-path" data-slug="assam" d="M455,215 L530,210 L510,260 L445,245 Z" />
-              </g>
-            </svg>
-          </div>
-
-          <!-- Right: Interactive State Preview Panel -->
-          <div class="map-preview-panel" id="map-preview-panel" style="background: rgba(13, 20, 16, 0.85); padding: 24px; border-radius: 0 0 12px 0; border: 1px solid var(--line); border-left: none; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <span class="map-preview-badge" id="map-preview-badge" style="display: inline-block; font-family: var(--font-display); font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 8px;">
-                ${defaultState.region.toUpperCase()} INDIA • ${defaultState.type.toUpperCase()}
-              </span>
-              <h3 class="map-preview-title" id="map-preview-title" style="font-size: 1.4rem; color: #fff; margin-bottom: 10px;">
-                ${defaultState.name}
-              </h3>
-              <p class="map-preview-story" id="map-preview-story" style="font-size: 0.85rem; color: var(--muted-bright); line-height: 1.5; margin-bottom: 20px;">
-                ${defaultState.tagline}
-              </p>
-              
-              <div class="map-preview-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 20px;">
-                <div class="map-stat-item">
-                  <small style="display: block; font-size: 0.68rem; color: var(--muted); text-transform: uppercase;">Capital</small>
-                  <span id="map-preview-capital" style="font-size: 0.88rem; color: #fff; font-weight: 600;">${defaultState.capital}</span>
-                </div>
-                <div class="map-stat-item">
-                  <small style="display: block; font-size: 0.68rem; color: var(--muted); text-transform: uppercase;">Destinations</small>
-                  <span id="map-preview-count" style="font-size: 0.88rem; color: #fff; font-weight: 600;">${DataRegistry.getDestinationsByState(defaultState.slug).length || 6} Places</span>
-                </div>
-                <div class="map-stat-item">
-                  <small style="display: block; font-size: 0.68rem; color: var(--muted); text-transform: uppercase;">Best Season</small>
-                  <span id="map-preview-season" style="font-size: 0.88rem; color: #fff; font-weight: 600;">${defaultState.quickStats.bestTime}</span>
-                </div>
-                <div class="map-stat-item">
-                  <small style="display: block; font-size: 0.68rem; color: var(--muted); text-transform: uppercase;">Ideal Trip</small>
-                  <span id="map-preview-duration" style="font-size: 0.88rem; color: #fff; font-weight: 600;">${defaultState.quickStats.idealDuration}</span>
-                </div>
-              </div>
-            </div>
-
-            <a href="#/states/${defaultState.slug}" class="btn light" id="map-preview-link" style="justify-content: center; width: 100%; text-align: center;">
-              EXPLORE ${defaultState.name.toUpperCase()} CODEX →
-            </a>
-          </div>
-        </div>
+    <!-- Spatial Search Console -->
+    <div class="raahi-search-console" style="margin-bottom: 20px; display: flex; gap: 12px; position: relative;">
+      <div class="search-input-wrapper" style="flex: 1; position: relative;">
+        <input type="text" id="raahi-map-query-input" class="raahi-map-input" 
+          placeholder="Scan any Indian state, city, or destination (e.g., Jaipur, Dehradun, Varanasi, Hampi, Kerala, Ladakh)..." 
+          autocomplete="off" style="width: 100%; padding: 14px 18px; background: rgba(13, 20, 16, 0.9); border: 1px solid var(--line); border-radius: 8px; color: #fff; font-family: var(--font-body); font-size: 0.9rem;" />
+        <div id="raahi-map-autocomplete" class="autocomplete-dropdown" style="position: absolute; top: 100%; left: 0; right: 0; background: #0d1410; border: 1px solid var(--line); border-top: none; border-radius: 0 0 8px 8px; z-index: 1000; max-height: 250px; overflow-y: auto; display: none;"></div>
       </div>
-    </section>
+      <button id="raahi-map-search-btn" class="btn gold" style="padding: 12px 24px;">
+        🔍 RESOLVE MAP
+      </button>
+      <button id="raahi-map-toggle-view" class="btn light" style="padding: 12px 20px;">
+        🗺️ SVG/GIS TOGGLE
+      </button>
+    </div>
+
+    <!-- Telemetry & Status Header -->
+    <div class="spatial-telemetry-bar" style="display: flex; justify-content: space-between; align-items: center; background: rgba(13, 20, 16, 0.7); padding: 10px 18px; border: 1px solid var(--line); border-bottom: none; border-radius: 8px 8px 0 0; font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.08em;">
+      <span style="color: var(--muted-bright); display: inline-flex; align-items: center; gap: 6px;">
+        <span style="width: 8px; height: 8px; background: var(--emerald, #10b981); border-radius: 50%; box-shadow: 0 0 8px var(--emerald, #10b981);"></span> 
+        LIVE SPATIAL VECTOR MAP // LEAFLET GIS ENGINE
+      </span>
+      <span id="raahi-map-status" style="color: var(--emerald, #10b981);">VECTOR LOCKED // RAJASTHAN</span>
+    </div>
+
+    <div class="map-container" style="display: grid; grid-template-columns: 1fr 340px; gap: 24px; min-height: 520px; margin-top: 0;">
+      <!-- Left: Leaflet Interactive Map Viewport -->
+      <div id="leaflet-map-view" style="width: 100%; height: 520px; border-radius: 0 0 0 12px; border: 1px solid var(--line); overflow: hidden; background: #080d0a; position: relative;">
+        <div id="raahi-leaflet-map" style="width: 100%; height: 100%;"></div>
+      </div>
+
+      <!-- Alternative: SVG Vector Map (Hidden by default, toggleable) -->
+      <div id="svg-map-view" class="india-svg-wrapper" style="display: none; width: 100%; height: 520px; border-radius: 0 0 0 12px; border: 1px solid var(--line); background: #080d0a; padding: 20px;">
+        <svg class="india-svg-map" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+          <g id="states-group">
+            <path class="state-path" data-slug="ladakh" d="M260,30 L320,50 L340,90 L300,110 L250,90 Z" />
+            <path class="state-path" data-slug="jammu-and-kashmir" d="M220,70 L255,85 L245,120 L210,105 Z" />
+            <path class="state-path" data-slug="himachal-pradesh" d="M255,100 L295,115 L285,145 L245,130 Z" />
+            <path class="state-path" data-slug="punjab" d="M210,120 L245,130 L235,160 L195,145 Z" />
+            <path class="state-path" data-slug="uttarakhand" d="M285,130 L325,140 L315,175 L275,160 Z" />
+            <path class="state-path" data-slug="haryana" d="M230,150 L265,155 L255,185 L220,175 Z" />
+            <path class="state-path" data-slug="delhi" d="M252,168 A 5 5 0 1 1 252,169 Z" />
+            <path class="state-path active" data-slug="rajasthan" d="M160,170 L230,175 L220,260 L140,240 Z" />
+            <path class="state-path" data-slug="gujarat" d="M120,245 L185,255 L175,320 L100,300 Z" />
+            <path class="state-path" data-slug="uttar-pradesh" d="M255,175 L350,185 L330,250 L240,230 Z" />
+            <path class="state-path" data-slug="madhya-pradesh" d="M220,240 L330,250 L310,330 L200,310 Z" />
+            <path class="state-path" data-slug="maharashtra" d="M170,320 L270,330 L250,420 L160,400 Z" />
+            <path class="state-path" data-slug="goa" d="M180,430 L195,435 L190,455 L175,450 Z" />
+            <path class="state-path" data-slug="bihar" d="M345,210 L410,215 L395,260 L335,250 Z" />
+            <path class="state-path" data-slug="west-bengal" d="M395,255 L430,260 L410,340 L380,315 Z" />
+            <path class="state-path" data-slug="odisha" d="M330,320 L400,330 L370,410 L310,390 Z" />
+            <path class="state-path" data-slug="karnataka" d="M190,410 L255,420 L230,520 L180,490 Z" />
+            <path class="state-path" data-slug="kerala" d="M200,510 L230,515 L215,610 L190,590 Z" />
+            <path class="state-path" data-slug="tamil-nadu" d="M230,500 L290,490 L260,620 L210,610 Z" />
+            <path class="state-path" data-slug="assam" d="M455,215 L530,210 L510,260 L445,245 Z" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Right: Interactive State Preview Panel -->
+      <div class="map-preview-panel" id="map-preview-panel" style="background: rgba(13, 20, 16, 0.85); padding: 24px; border-radius: 0 0 12px 0; border: 1px solid var(--line); border-left: none; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="map-preview-badge" id="map-preview-badge" style="display: inline-block; font-family: var(--font-display); font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 8px;">
+            ${defaultState.region.toUpperCase()} INDIA • ${defaultState.type.toUpperCase()}
+          </span>
+          <h3 class="map-preview-title" id="map-preview-title" style="font-size: 1.4rem; color: #fff; margin-bottom: 10px;">
+            ${defaultState.name}
+          </h3>
+          <p class="map-preview-story" id="map-preview-story" style="font-size: 0.85rem; color: var(--muted-bright); line-height: 1.5; margin-bottom: 20px;">
+            ${defaultState.tagline}
+          </p>
+          
+          <div class="map-preview-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 20px;">
+            <div class="map-stat-item">
+              <small style="display: block; font-size: 0.68rem; color: var(--muted); text-transform: uppercase;">Capital</small>
+              <span id="map-preview-capital" style="font-size: 0.88rem; color: #fff; font-weight: 600;">${defaultState.capital}</span>
+            </div>
+            <div class="map-stat-item">
+              <small style="display: block; font-size: 0.68rem; color: var(--muted); text-transform: uppercase;">Destinations</small>
+              <span id="map-preview-count" style="font-size: 0.88rem; color: #fff; font-weight: 600;">${DataRegistry.getDestinationsByState(defaultState.slug).length || 6} Places</span>
+            </div>
+            <div class="map-stat-item">
+              <small style="display: block; font-size: 0.68rem; color: var(--muted); text-transform: uppercase;">Best Season</small>
+              <span id="map-preview-season" style="font-size: 0.88rem; color: #fff; font-weight: 600;">${defaultState.quickStats.bestTime}</span>
+            </div>
+            <div class="map-stat-item">
+              <small style="display: block; font-size: 0.68rem; color: var(--muted); text-transform: uppercase;">Ideal Trip</small>
+              <span id="map-preview-duration" style="font-size: 0.88rem; color: #fff; font-weight: 600;">${defaultState.quickStats.idealDuration}</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="#/states/${defaultState.slug}" class="btn light" id="map-preview-link" style="justify-content: center; width: 100%; text-align: center;">
+          EXPLORE ${defaultState.name.toUpperCase()} CODEX →
+        </a>
+      </div>
+    </div>
   `;
 
   // Initialize Leaflet GIS Map after DOM mount

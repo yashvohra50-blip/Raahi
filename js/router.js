@@ -222,7 +222,7 @@ function renderHomeView() {
 
   // 1. Mount India Map
   const mapMount = document.getElementById('india-map-mount');
-  if (mapMount && !mapMount.hasChildNodes()) {
+  if (mapMount) {
     renderIndiaMap('india-map-mount');
   }
 
