@@ -11,26 +11,30 @@ export function initSearchModal() {
   const modalHtml = `
     <div class="search-overlay" id="raahi-search-overlay" onclick="window.raahiCloseSearchModal()"></div>
     <div class="search-modal" id="raahi-search-modal" role="dialog" aria-modal="true" aria-label="Global Travel Search">
-      <div class="search-input-wrapper">
-        <span class="search-icon">🔍</span>
-        <input 
-          type="text" 
-          id="global-search-input" 
-          class="global-search-input" 
-          placeholder="Search states, destinations, forts, beaches, food, temples... (Ctrl+K)" 
-          autocomplete="off"
-        />
-        <button class="search-close-btn" onclick="window.raahiCloseSearchModal()" title="Close Search (Esc)">✕</button>
-      </div>
+      <div class="search-modal-header">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="global-search-input" 
+            class="global-search-input" 
+            placeholder="Search all 28 States, 8 UTs, monuments, beaches, food, culture... (Ctrl+K)" 
+            autocomplete="off"
+          />
+          <span class="search-kbd-hint"><kbd>Ctrl</kbd> + <kbd>K</kbd></span>
+          <button class="search-close-btn" onclick="window.raahiCloseSearchModal()" title="Close Search (Esc)">✕</button>
+        </div>
 
-      <div class="search-quick-tags" id="search-quick-tags">
-        <span class="quick-tag-label">POPULAR:</span>
-        <button class="search-tag-chip" data-q="Jaipur">Jaipur</button>
-        <button class="search-tag-chip" data-q="Royal Fortresses">🏰 Forts</button>
-        <button class="search-tag-chip" data-q="Backwaters">🌊 Beaches</button>
-        <button class="search-tag-chip" data-q="Spiti Valley">🏔️ Himalayas</button>
-        <button class="search-tag-chip" data-q="Varanasi">🛕 Spiritual</button>
-        <button class="search-tag-chip" data-q="Kaziranga">🐅 Wildlife</button>
+        <div class="search-quick-tags" id="search-quick-tags">
+          <span class="quick-tag-label">POPULAR:</span>
+          <button class="search-tag-chip" data-q="Jaipur">🏰 Jaipur</button>
+          <button class="search-tag-chip" data-q="Royal Fortresses">🏛️ Forts</button>
+          <button class="search-tag-chip" data-q="Backwaters">🌊 Beaches</button>
+          <button class="search-tag-chip" data-q="Spiti Valley">🏔️ Himalayas</button>
+          <button class="search-tag-chip" data-q="Varanasi">🛕 Spiritual</button>
+          <button class="search-tag-chip" data-q="Kaziranga">🐅 Wildlife</button>
+          <button class="search-tag-chip" data-q="Kerala">🌴 Backwaters</button>
+        </div>
       </div>
 
       <div class="search-results-list" id="search-results-list">
@@ -41,7 +45,7 @@ export function initSearchModal() {
 
       <div class="search-footer-hint">
         <span><kbd>↑</kbd> <kbd>↓</kbd> Navigate</span>
-        <span><kbd>Enter</kbd> Select</span>
+        <span><kbd>↵ Enter</kbd> Open Page</span>
         <span><kbd>Esc</kbd> Close</span>
       </div>
     </div>
