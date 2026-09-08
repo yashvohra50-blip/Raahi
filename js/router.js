@@ -436,7 +436,7 @@ function renderStatesContainer() {
             const destCount = s.destinationsCount || (s.featuredDestinations ? s.featuredDestinations.length : 3);
             return `
               <div class="state-card" style="flex: 0 0 320px; height: 440px; scroll-snap-align: start;" data-state="${s.slug}" onclick="window.location.hash='#/states/${s.slug}'">
-                <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
+                <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
                 <div class="state-dest-count">${destCount} DESTINATIONS</div>
                 <div class="state-card-content">
                   <span class="eyebrow" style="margin-bottom: 4px;">${s.type.toUpperCase()} • ${s.region.toUpperCase()}</span>
@@ -458,7 +458,7 @@ function renderStatesContainer() {
           const destCount = s.destinationsCount || (s.featuredDestinations ? s.featuredDestinations.length : 3);
           return `
             <div class="state-card" data-state="${s.slug}" onclick="window.location.hash='#/states/${s.slug}'">
-              <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
+              <img src="${s.heroImage}" alt="${s.name}" class="state-card-image" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
               <div class="state-dest-count">${destCount} DESTINATIONS • ${s.type === 'Union Territory' ? 'UT' : s.region.toUpperCase()}</div>
               <div class="state-card-content">
                 <span class="eyebrow" style="margin-bottom: 6px;">${s.eyebrow || s.type.toUpperCase()}</span>
@@ -496,7 +496,7 @@ function updateStatesCarouselStage() {
   setTimeout(() => {
     stage.innerHTML = `
       <div class="states-hero-carousel-card" style="position: relative; min-height: 440px; display: flex; align-items: flex-end; padding: 40px; background: #070b09; overflow: hidden; cursor: pointer;" onclick="window.location.hash='#/states/${s.slug}'">
-        <img src="${s.heroImage}" alt="${s.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
+        <img src="${s.heroImage}" alt="${s.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
         
         <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,7,5,0.92) 0%, rgba(3,7,5,0.65) 50%, rgba(3,7,5,0.3) 100%), linear-gradient(0deg, rgba(3,7,5,0.95) 0%, transparent 60%); pointer-events: none;"></div>
 
@@ -740,7 +740,7 @@ function renderDestinationsContainer() {
             const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 80) + '...' : '');
             return `
               <div class="destination-card" style="flex: 0 0 320px; height: 460px; scroll-snap-align: start;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-                <img src="${imgUrl}" alt="${dest.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
+                <img src="${imgUrl}" alt="${dest.name}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
                 <div class="dest-copy">
                   <small>${dest.state.toUpperCase()} • ${dest.region.toUpperCase()}</small>
                   <h3>${dest.name}</h3>
@@ -767,7 +767,7 @@ function renderDestinationsContainer() {
       const descText = dest.tagline || dest.shortDescription || dest.shortDesc || (dest.description ? dest.description.slice(0, 100) + '...' : '');
       return `
         <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-          <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
+          <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
           <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
           <div class="state-card-content">
             <span class="eyebrow" style="margin-bottom: 4px;">${dest.state} • ${dest.region.toUpperCase()}</span>
@@ -825,7 +825,7 @@ function updateDestCarouselStage() {
   setTimeout(() => {
     stage.innerHTML = `
       <div class="dest-hero-carousel-card" style="position: relative; min-height: 440px; display: flex; align-items: flex-end; padding: 40px; background: #070b09; overflow: hidden; cursor: pointer;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-        <img src="${imgUrl}" alt="${dest.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
+        <img src="${imgUrl}" alt="${dest.name}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9) brightness(0.68); transition: transform 0.8s ease;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
         
         <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,7,5,0.92) 0%, rgba(3,7,5,0.65) 50%, rgba(3,7,5,0.3) 100%), linear-gradient(0deg, rgba(3,7,5,0.95) 0%, transparent 60%); pointer-events: none;"></div>
 
@@ -1110,7 +1110,7 @@ function renderStateView(stateSlug) {
             const imgUrl = VERIFIED_IMAGE_MAP[dest.slug] || dest.heroImage || 'assets/images/destinations/amber-fort.jpg';
             return `
               <div class="state-card" style="height: 480px;" onclick="window.location.hash='#/destinations/${dest.slug}'">
-                <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
+                <img src="${imgUrl}" alt="${dest.name}" class="state-card-image" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200'" />
                 <div class="state-dest-count">${dest.type.toUpperCase()} • ⏱️ ${dest.idealDuration || '2-3 Days'}</div>
                 <div class="state-card-content">
                   <span class="eyebrow" style="margin-bottom: 4px;">${state.name} • ${dest.bestSeason || 'BEST: OCT-MAR'}</span>

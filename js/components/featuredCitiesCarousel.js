@@ -119,7 +119,7 @@ export function initFeaturedCitiesCarousel(mountId = 'featured-cities-mount') {
           alt="${city.name}, ${city.state}" 
           class="featured-card-bg" 
           loading="${index === 0 ? 'eager' : 'lazy'}"
-          onerror="this.src='${city.fallbackImage || 'assets/images/destinations/fallback-raahi.jpg'}'"
+          onerror="this.onerror=null; this.src='${city.fallbackImage || 'assets/images/destinations/fallback-raahi.jpg'}'"
         />
       </div>
 

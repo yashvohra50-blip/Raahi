@@ -112,7 +112,7 @@ export function initExploreByExperience(mountId = 'explore-experience-mount') {
                 alt="${cat.name}" 
                 class="experience-card-bg" 
                 loading="lazy" 
-                onerror="this.src='assets/images/destinations/fallback-raahi.jpg'" 
+                onerror="this.onerror=null; this.src='assets/images/destinations/fallback-raahi.jpg'" 
               />
               <div class="experience-card-overlay"></div>
               <span class="experience-card-count">${cat.count}</span>
