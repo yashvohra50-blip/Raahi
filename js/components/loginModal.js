@@ -257,9 +257,10 @@ window.raahiNextQuote = function() {
 // Global window functions
 window.raahiRenderLoginPage = (tab = 'login') => renderLoginPage(tab);
 
-window.raahiOpenAuthModal = (tab = 'login') => {
-  window.location.hash = `#/${tab}`;
+window.openAuthModal = (tab = 'login') => {
+  window.location.hash = '#/login';
 };
+window.raahiOpenAuthModal = window.openAuthModal;
 
 window.raahiSwitchAuthTab = function(tab) {
   window.location.hash = `#/${tab}`;
@@ -330,8 +331,9 @@ function updateAuthNavButton() {
   if (user) {
     navContainer.innerHTML = `
       <div class="raahi-user-profile-menu">
-        <button class="raahi-user-avatar-btn" onclick="window.raahiToggleUserDropdown(event)" title="${user.name}">
-          <span>${user.avatar || '👤'}</span>
+        <button id="auth-trigger-btn" class="btn btn-outline" onclick="window.raahiToggleUserDropdown(event)" style="display: inline-flex; align-items: center; gap: 8px;" title="${user.name}">
+          <span class="telemetry-dot active"></span>
+          <span id="auth-btn-text">OPERATOR: ${user.name.toUpperCase()} [ONLINE]</span>
         </button>
         <div class="raahi-user-dropdown" id="raahi-user-dropdown">
           <div class="user-dropdown-header">
@@ -339,15 +341,16 @@ function updateAuthNavButton() {
             <small>${user.email}</small>
           </div>
           <a href="#journey-discovery" class="user-dropdown-item" onclick="window.raahiOpenJourneyDrawer()">♡ My Saved Journeys</a>
-          <a href="#stays" class="user-dropdown-item">🏰 Verified Stays</a>
+          <a href="javascript:void(0)" class="user-dropdown-item" onclick="window.raahiOpenSecurityModal()">🛡️ Security Audit & Firebase Auth</a>
           <button class="user-dropdown-item logout" onclick="window.raahiLogout()">✕ Sign Out</button>
         </div>
       </div>
     `;
   } else {
     navContainer.innerHTML = `
-      <button onclick="window.location.hash='#/login'" class="btn gold" style="padding: 7px 16px; font-size: 0.75rem; font-weight: 700; border-radius: 99px; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
-        🔑 SIGN IN
+      <button id="auth-trigger-btn" class="btn btn-outline" onclick="openAuthModal()" style="display: inline-flex; align-items: center; gap: 8px;">
+        <span class="telemetry-dot"></span>
+        <span id="auth-btn-text">OPERATOR SIGN IN</span>
       </button>
     `;
   }
