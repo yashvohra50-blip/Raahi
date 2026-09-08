@@ -4,23 +4,24 @@
 
 // --- FIREBASE PRODUCTION CLIENT CONFIG ---
 const firebaseConfig = {
-  apiKey: "AIzaSyCC55Kg-iZ9BIasgbazDzzf86C5nFJnusU",
-  authDomain: "raahi-50794.firebaseapp.com",
-  projectId: "raahi-50794",
-  storageBucket: "raahi-50794.firebasestorage.app",
-  messagingSenderId: "30439141474",
-  appId: "1:30439141474:web:294f728b48c81890a7213b"
+  apiKey: "AIzaSyCa0McMQMyBjI_xJsXsXhKvpREf724abMo",
+  authDomain: "raahi-app-46d8b.firebaseapp.com",
+  projectId: "raahi-app-46d8b",
+  storageBucket: "raahi-app-46d8b.firebasestorage.app",
+  messagingSenderId: "919927623736",
+  appId: "1:919927623736:web:d28a19d21a1233543e16cd"
 };
 
-// Guarantee SDK initialization
+// Re-initialize cleanly
 if (typeof firebase !== 'undefined') {
-  if (!firebase.apps.length) {
-    try {
+  if (firebase.apps.length > 0) {
+    firebase.app().delete().then(() => {
       firebase.initializeApp(firebaseConfig);
-      console.log("[Firebase] Initialized successfully");
-    } catch (e) {
-      console.warn("[Firebase] initializeApp warning:", e);
-    }
+      console.log("[Firebase] Cleanly re-initialized with project raahi-app-46d8b");
+    });
+  } else {
+    firebase.initializeApp(firebaseConfig);
+    console.log("[Firebase] Initialized with project raahi-app-46d8b");
   }
 } else {
   console.error("[Firebase] Fatal: SDK script not found in <head>");
