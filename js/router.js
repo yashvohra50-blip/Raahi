@@ -319,9 +319,17 @@ function handleRoute() {
     } else if (hash === '#/journey') {
       if (journeyView) journeyView.style.display = 'block';
       renderJourneyBuilderView();
+    } else if (hash === '#login' || hash === '#/login' || hash === '#auth' || hash === '#/auth' || hash === '#signup' || hash === '#/signup') {
+      if (homeView) homeView.style.display = 'block';
+      renderHomeView();
+      const tab = (hash.includes('signup')) ? 'signup' : 'login';
+      setTimeout(() => {
+        if (window.raahiOpenAuthModal) window.raahiOpenAuthModal(tab);
+      }, 100);
     } else {
       if (homeView) homeView.style.display = 'block';
       renderHomeView();
+
 
       const sectionId = (!hash.startsWith('#/') && hash.startsWith('#')) ? hash.replace('#', '') : null;
       if (sectionId) {
