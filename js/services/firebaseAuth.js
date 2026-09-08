@@ -350,3 +350,93 @@ function showToast(msg) {
 window.raahiTriggerFirebaseSignIn = (provider) => triggerFirebaseSignIn(provider);
 window.raahiOpenSecurityModal = () => openSecurityModal();
 window.raahiCloseSecurityModal = () => closeSecurityModal();
+
+// Isolated Event Listener Attachment for Operator Auth Modal
+document.addEventListener("DOMContentLoaded", function() {
+  const modal = document.getElementById("auth-modal");
+  const statusBox = document.getElementById("auth-status-box");
+  const btnGoogle = document.getElementById("btn-google-auth");
+  const btnGithub = document.getElementById("btn-github-auth");
+  const btnClose = document.getElementById("modal-close-btn");
+
+  function showStatus(msg, isError = true) {
+    if (!statusBox) return;
+    statusBox.style.display = "block";
+    statusBox.style.background = isError ? "rgba(239, 68, 68, 0.15)" : "rgba(16, 185, 129, 0.15)";
+    statusBox.style.border = isError ? "1px solid #ef4444" : "1px solid #10b981";
+    statusBox.style.color = isError ? "#f87171" : "#34d399";
+    statusBox.textContent = msg;
+  }
+
+  // Open & Close
+  window.openAuthModal = function() {
+    if (modal) modal.style.display = "flex";
+    if (statusBox) statusBox.style.display = "none";
+  };
+  if (btnClose) {
+    btnClose.addEventListener("click", () => {
+      if (modal) modal.style.display = "none";
+    });
+  }
+
+  // GOOGLE CLICK HANDLER
+  if (btnGoogle) {
+    btnGoogle.addEventListener("click", async function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      showStatus("Connecting to Google...", false);
+
+      if (typeof firebase === 'undefined' || !firebase.auth) {
+        showStatus("Firebase SDK failed to load. Check network.");
+        return;
+      }
+
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+
+      try {
+        const result = await firebase.auth().signInWithPopup(provider);
+        console.log("Logged in user:", result.user);
+        showStatus("Authentication successful! Entering...", false);
+        setTimeout(() => {
+          if (modal) modal.style.display = "none";
+          if (typeof window.enterDashboard === 'function') window.enterDashboard();
+        }, 800);
+      } catch (err) {
+        console.error("Auth popup error:", err);
+        showStatus(err.code + ": " + err.message, true);
+      }
+    });
+  }
+
+  // GITHUB CLICK HANDLER
+  if (btnGithub) {
+    btnGithub.addEventListener("click", async function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      showStatus("Connecting to GitHub...", false);
+
+      if (typeof firebase === 'undefined' || !firebase.auth) {
+        showStatus("Firebase SDK failed to load. Check network.");
+        return;
+      }
+
+      const provider = new firebase.auth.GithubAuthProvider();
+
+      try {
+        const result = await firebase.auth().signInWithPopup(provider);
+        console.log("Logged in user:", result.user);
+        showStatus("Authentication successful! Entering...", false);
+        setTimeout(() => {
+          if (modal) modal.style.display = "none";
+          if (typeof window.enterDashboard === 'function') window.enterDashboard();
+        }, 800);
+      } catch (err) {
+        console.error("Auth popup error:", err);
+        showStatus(err.code + ": " + err.message, true);
+      }
+    });
+  }
+});
