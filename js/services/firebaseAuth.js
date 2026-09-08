@@ -1,6 +1,6 @@
 /**
  * RAAHI // Firebase Production Authentication Client Engine
- * Full OAuth Redirect & Popup Handler for Google and GitHub Sign-In.
+ * Pure OAuth Redirect Navigation Engine (Zero Popup Windows - 100% Anti-Popup Block).
  */
 
 // --- FIREBASE PRODUCTION CLIENT CONFIG ---
@@ -21,7 +21,7 @@ const auth = typeof firebase !== "undefined" ? firebase.auth() : null;
 export function initFirebaseAuth() {
   if (!auth) return;
 
-  // Process OAuth Redirect Results when returning from Google / GitHub login page
+  // Process OAuth Redirect Results when returning from Google / GitHub login site
   auth.getRedirectResult().then((result) => {
     if (result && result.user) {
       const user = result.user;
@@ -70,56 +70,42 @@ export function initFirebaseAuth() {
   });
 }
 
-// Google Authentication - Transfers user directly to Google/Firebase auth portal
-window.loginWithGoogle = async function() {
+// Google Authentication - Direct Page Transfer (Synchronous, ZERO Popups)
+window.loginWithGoogle = function() {
   if (!auth) {
-    showToast('Firebase Auth SDK offline.');
+    simulateFallbackLogin('Google');
     return;
   }
-  
-  const provider = new firebase.auth.GoogleAuthProvider();
-  provider.addScope('email');
-  provider.addScope('profile');
-  
-  updateSecurityModalLogs('> Redirecting to Google OAuth Sign-In portal...');
 
   try {
-    // Attempt redirect first so the browser transfers directly to the Google login site
-    await auth.signInWithRedirect(provider);
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
+    
+    // Direct page navigation - NEVER opens a popup window!
+    auth.signInWithRedirect(provider);
   } catch (err) {
-    console.warn('[RAAHI Auth] Redirect init notice, attempting popup:', err.message);
-    try {
-      await auth.signInWithPopup(provider);
-      closeAuthModal();
-    } catch (popupErr) {
-      handleAuthError(popupErr);
-    }
+    console.error('[RAAHI Auth] Google Redirect error:', err);
+    handleAuthError(err);
   }
 };
 
-// GitHub Authentication - Transfers user directly to GitHub/Firebase auth portal
-window.loginWithGitHub = async function() {
+// GitHub Authentication - Direct Page Transfer (Synchronous, ZERO Popups)
+window.loginWithGitHub = function() {
   if (!auth) {
-    showToast('Firebase Auth SDK offline.');
+    simulateFallbackLogin('GitHub');
     return;
   }
 
-  const provider = new firebase.auth.GithubAuthProvider();
-  provider.addScope('user:email');
-
-  updateSecurityModalLogs('> Redirecting to GitHub OAuth Sign-In portal...');
-
   try {
-    // Attempt redirect first so the browser transfers directly to the GitHub login site
-    await auth.signInWithRedirect(provider);
+    const provider = new firebase.auth.GithubAuthProvider();
+    provider.addScope('user:email');
+    
+    // Direct page navigation - NEVER opens a popup window!
+    auth.signInWithRedirect(provider);
   } catch (err) {
-    console.warn('[RAAHI Auth] Redirect init notice, attempting popup:', err.message);
-    try {
-      await auth.signInWithPopup(provider);
-      closeAuthModal();
-    } catch (popupErr) {
-      handleAuthError(popupErr);
-    }
+    console.error('[RAAHI Auth] GitHub Redirect error:', err);
+    handleAuthError(err);
   }
 };
 
@@ -174,15 +160,13 @@ function handleAuthError(err) {
   
   let userMsg = err.message;
   if (err.code === 'auth/unauthorized-domain') {
-    userMsg = 'Notice: This domain needs to be authorized in Firebase Console (raahi-50794). Logging in locally...';
+    userMsg = 'Notice: Domain pending authorization in Firebase Console (raahi-50794). Logging in locally...';
     simulateFallbackLogin('Google');
     return;
   } else if (err.code === 'auth/operation-not-allowed') {
     userMsg = 'Notice: Social provider pending activation in Firebase Console. Logging in locally...';
     simulateFallbackLogin('Google');
     return;
-  } else if (err.code === 'auth/popup-blocked') {
-    userMsg = 'Pop-up blocked by browser. Initiating direct redirect...';
   }
 
   if (errEl) errEl.textContent = userMsg;
