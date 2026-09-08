@@ -8,10 +8,13 @@ import { initSearchModal } from './components/searchModal.js';
 import { updateJourneyBadgeCount, isPlaceSaved, updateAllSaveButtons } from './journeyBuilder.js';
 import { DataRegistry, RAAHI_DATA } from './data/dataRegistry.js';
 import { experiencesData } from './data/experiencesData.js';
+import { fetchGooglePlacePhoto, enhanceImagesWithGooglePlaces } from './services/placesPhotoService.js';
 
 // Expose navigation functions globally for inline HTML event handlers
 window.raahiNavigate = (hash) => navigateTo(hash);
 window.arvoraNavigate = window.raahiNavigate;
+window.fetchGooglePlacePhoto = fetchGooglePlacePhoto;
+window.enhanceImagesWithGooglePlaces = enhanceImagesWithGooglePlaces;
 
 function initDiscoveryFilters() {
   const chips = document.querySelectorAll('#discovery-filter-chips .filter-chip');
@@ -63,6 +66,7 @@ function bootstrapApp() {
   initAssistant();
   updateJourneyBadgeCount();
   updateAllSaveButtons();
+  setTimeout(() => enhanceImagesWithGooglePlaces(), 300);
   
   // 2. Sticky Nav Controller
   const nav = document.querySelector('.nav');

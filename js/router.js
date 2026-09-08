@@ -12,8 +12,7 @@ import { staysData } from './data/staysData.js';
 import { searchIndex } from './data/searchIndex.js';
 import { renderCinematicRoute } from './cinematicPage.js';
 import { renderIndiaMap } from './components/indiaMap.js';
-import { 
-  renderJourneyBuilderView, 
+import { renderJourneyBuilderView, 
   addToJourney, 
   addMultipleToJourney, 
   isPlaceSaved, 
@@ -21,6 +20,7 @@ import {
   updateJourneyBadgeCount, 
   updateAllSaveButtons 
 } from './journeyBuilder.js';
+import { fetchGooglePlacePhoto, enhanceImagesWithGooglePlaces } from './services/placesPhotoService.js';
 
 export const VERIFIED_IMAGE_MAP = {
   'amber-fort': 'assets/images/destinations/amber-fort.jpg',
